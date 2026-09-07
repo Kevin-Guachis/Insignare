@@ -1,0 +1,24 @@
+header {
+  padding: 25px;
+  background: #111;
+  color: white;
+}
+
+nav {
+  display: flex;
+  gap: 25px;
+  padding: 15px 25px;
+  background: #222;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+footer {
+  padding: 30px;
+  background: #111;
+  color: white;
+  text-align: center;
+}
