@@ -1,1 +1,10 @@
-/* Reservado para las variables CSS del proyecto. */
+:root {
+  --color-primary: #322e59;
+  --color-accent: #326cf1;
+  --color-background: #f6f7f8;
+  --color-white: #fff;
+  --color-text: #322e59;
+  --color-border: #dedee2;
+  --border-radius: 10px;
+  --container-width: 1520px;
+}
