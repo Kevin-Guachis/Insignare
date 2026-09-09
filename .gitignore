@@ -22,3 +22,18 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Frontend
+/frontend/node_modules/
+/frontend/dist/
+
+# Backend: archivos locales y subidas
+/backend/.env
+/backend/config/database.local.php
+/backend/uploads/images/*
+!/backend/uploads/images/.gitkeep
+/backend/uploads/documents/*
+!/backend/uploads/documents/.gitkeep
+
+!/backend/uploads/images/.htaccess
+!/backend/uploads/documents/.htaccess
