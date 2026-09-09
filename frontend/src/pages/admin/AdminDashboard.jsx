@@ -1,3 +1,4 @@
+import FooterServices from "../../components/admin/FooterServices";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import SiteSettingsForm from "../../components/admin/SiteSettingsForm";
 import { useEffect, useState } from "react";
@@ -157,7 +158,7 @@ function AdminDashboard() {
             </>
           )}
         </section>
-        <div id="panel-footer" hidden={section !== "footer"}><SiteSettingsForm /></div>
+        <div id="panel-footer" hidden={section !== "footer"}><SiteSettingsForm /><FooterServices /></div>
       </div>
     </main>
   );

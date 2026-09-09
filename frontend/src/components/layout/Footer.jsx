@@ -1,7 +1,9 @@
+import { useFooterServices } from "../../hooks/useFooterServices";
 import { useSiteSettings } from "../../hooks/useSiteSettings";
 import logo from "../../assets/images/logo-insignare.png";
 
 function Footer() {
+  const services = useFooterServices();
   const settings = useSiteSettings();
   return (
     <footer className="site-footer">
@@ -41,9 +43,7 @@ function Footer() {
           <section className="site-footer__services" aria-labelledby="footer-services-title">
             <h2 id="footer-services-title">Servicios</h2>
             <ul className="site-footer__service-list">
-              <li>Ingreso a la universidad</li>
-              <li>Material gratuito</li>
-              <li>Calculadoras</li>
+              {services.map(service => <li key={service.id}>{service.enlace ? <a href={service.enlace}>{service.nombre}</a> : service.nombre}</li>)}
             </ul>
           </section>
         </div>

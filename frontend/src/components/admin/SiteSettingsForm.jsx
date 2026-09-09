@@ -33,7 +33,7 @@ export default function SiteSettingsForm() {
    finally {setBusy(false);}
  }
  return <section className="admin-news__card" aria-labelledby="settings-title">
-   <div className="admin-news__toolbar"><h2 id="settings-title">Configuración del sitio</h2></div>
+   <div className="admin-news__toolbar"><h2 id="settings-title">Configuración de contacto del Footer</h2></div>
    {error && <p className="admin-login__error" role="alert">{error}</p>}
    {!values ? <p role="status">{error ? "Recarga el panel para reintentar." : "Cargando configuración..."}</p> :
    <form className="admin-news-form" onSubmit={submit} aria-busy={busy}>

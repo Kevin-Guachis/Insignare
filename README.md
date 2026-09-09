@@ -204,3 +204,14 @@ php -d upload_max_filesize=10M -d post_max_size=12M -S localhost:8000 -t backend
 ```
 En producción configura esos límites y permisos de escritura de uploads/documents
 en el servidor. Conserva la prohibición de ejecución/acceso directo a uploads.
+
+## Convenciones del panel administrativo
+
+- Usar Bootstrap Icons para acciones de filas: bi-pencil para editar, bi-eye para elementos activos y bi-eye-slash para inactivos, bi-trash para eliminar.
+- Colores: editar en azul institucional (var(--color-accent)); visibilidad activa en amarillo oscuro (#a87800), inactiva en gris (#64748b); eliminar en rojo (#dc2626). El color no sustituye el nombre accesible.
+- Los controles son botones reales con type, title (tooltip), aria-label descriptivo e iconos aria-hidden. Mantener foco visible, hover, estado disabled y área de interacción mínima de 44 px.
+- Usar admin-news-primary para acciones principales y admin-news-secondary para acciones secundarias o iconos. Guardar configuración afecta únicamente al formulario de contacto; Servicios tiene su propio guardado.
+- Separar módulos en tarjetas admin-news__card, con título claro, descripción breve cuando aporte contexto y 24 px entre tarjetas independientes.
+- Mantener tablas en escritorio. A 650 px o menos, presentar las filas como tarjetas con etiquetas data-label, acciones que puedan saltar de línea y textos largos que se ajusten. Evitar desbordamiento horizontal del documento.
+- Antes de eliminar, mostrar una confirmación que identifique el registro, con Cancelar y Eliminar. Deshabilitar los controles durante la operación y presentar errores sin perder los datos.
+
