@@ -49,19 +49,88 @@
 }
 
 .site-nav__link {
+
   display: inline-flex;
+
   align-items: center;
+
   gap: 10px;
+
   padding-block: 12px;
+
   border: 0;
+
   background: transparent;
+
   color: var(--color-primary);
+
   font-size: 18px;
+
   font-weight: 600;
+
   white-space: nowrap;
+
+  text-decoration: none;
+
 }
 
-.site-nav a, .site-nav button { cursor: pointer; text-decoration: none; }
+
+/* Grupo enlace + botón desplegable */
+
+.site-nav__link-group {
+
+  display: flex;
+
+  align-items: center;
+
+}
+
+
+/* Botón pequeño de flecha */
+
+.site-nav__submenu-toggle {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 30px;
+
+  height: 35px;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: var(--color-primary);
+
+  cursor: pointer;
+
+}
+
+
+.site-nav__submenu-toggle .site-nav__chevron {
+
+  display: block;
+
+}
+
+
+.site-nav__submenu-toggle[aria-expanded="true"] .site-nav__chevron {
+
+  transform: translateY(2px) rotate(225deg);
+
+}
+
+.site-nav a,
+.site-nav button {
+  cursor: pointer;
+  text-decoration: none;
+}
 
 .site-nav__chevron {
   width: 9px;
@@ -169,9 +238,19 @@
     flex-direction: column;
   }
 
-  .site-nav__link {
+  .site-nav__link-group {
+
     width: 100%;
+
     justify-content: space-between;
+
+  }
+
+
+  .site-nav__link-group .site-nav__link {
+
+    flex: 1;
+
   }
 }
 
@@ -218,7 +297,7 @@
   padding-bottom: 78px;
 }
 
-.site-footer__columns > * {
+.site-footer__columns>* {
   min-width: 0;
 }
 
@@ -287,7 +366,7 @@
 }
 
 .site-footer__contact-list a,
-.site-footer__contact-list li > span:last-child {
+.site-footer__contact-list li>span:last-child {
   overflow-wrap: anywhere;
 }
 
@@ -399,7 +478,10 @@
   }
 }
 
-.site-nav__item { position: relative; }
+.site-nav__item {
+  position: relative;
+}
+
 .site-nav__submenu {
   position: absolute;
   top: 100%;
@@ -412,36 +494,46 @@
   border-radius: var(--border-radius);
   background: var(--color-white);
 }
+
 .site-nav__submenu a {
   display: block;
   padding: 10px 12px;
   color: var(--color-primary);
   border-radius: 6px;
 }
+
 .site-nav__submenu a:hover,
 .site-nav__submenu a:focus-visible {
   background: var(--color-background);
 }
-.site-nav__link[aria-expanded="true"] .site-nav__chevron {
+
+.site-nav__submenu-toggle[aria-expanded="true"] .site-nav__chevron {
+
   transform: translateY(2px) rotate(225deg);
+
 }
+
 @media (max-width: 1100px) {
   .site-nav__submenu {
     position: static;
     min-width: 0;
     margin-bottom: 8px;
   }
+
   .site-footer__brand {
     gap: 8px;
   }
+
   .site-footer__brand-name {
     font-size: clamp(14px, 1.7vw, 19px);
   }
+
   .site-footer__about p,
   .site-footer__contact-list,
   .site-footer__service-list {
     font-size: 14px;
   }
+
   .site-footer__contact-list li,
   .site-footer__service-list li {
     gap: 8px;
@@ -464,8 +556,16 @@
   cursor: pointer;
 }
 
-.whatsapp-contact:disabled { opacity: 1; cursor: default; }
-.whatsapp-contact__text { font-size: 20px; font-weight: 600; }
+.whatsapp-contact:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.whatsapp-contact__text {
+  font-size: 20px;
+  font-weight: 600;
+}
+
 .whatsapp-contact__circle {
   display: grid;
   place-items: center;
@@ -476,11 +576,25 @@
   background: #1fce60;
   box-shadow: 0 3px 18px #00000014;
 }
-@media (max-width: 600px) {
-  .whatsapp-contact { right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); }
-  .whatsapp-contact__text { display: none; }
-  .whatsapp-contact__circle { width: 48px; height: 48px; }
-  /* Deja espacio de desplazamiento para apartar el control del último contenido. */
-  body:has(.whatsapp-contact) { padding-bottom: 76px; background: var(--color-primary); }
-}
 
+@media (max-width: 600px) {
+  .whatsapp-contact {
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  .whatsapp-contact__text {
+    display: none;
+  }
+
+  .whatsapp-contact__circle {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Deja espacio de desplazamiento para apartar el control del último contenido. */
+  body:has(.whatsapp-contact) {
+    padding-bottom: 76px;
+    background: var(--color-primary);
+  }
+}
