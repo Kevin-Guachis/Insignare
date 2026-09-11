@@ -215,3 +215,358 @@ en el servidor. Conserva la prohibición de ejecución/acceso directo a uploads.
 - Mantener tablas en escritorio. A 650 px o menos, presentar las filas como tarjetas con etiquetas data-label, acciones que puedan saltar de línea y textos largos que se ajusten. Evitar desbordamiento horizontal del documento.
 - Antes de eliminar, mostrar una confirmación que identifique el registro, con Cancelar y Eliminar. Deshabilitar los controles durante la operación y presentar errores sin perder los datos.
 
+
+## Ingreso a la U: fase 1
+
+Importa backend/database/universities_schema.sql en la base configurada. Crea la tabla
+universities (id, nombre, slug único, logo, descripcion, imagen_portada, orden, activo,
+created_at, updated_at), con utf8mb4. No inserta universidades ni credenciales ficticias.
+
+En el panel, abre Universidades y crea un registro. El slug admite minúsculas, números
+y guiones; debe ser único. Cambiarlo modifica la URL pública. Logo y portada son opcionales.
+Las acciones de editar, activar/desactivar y eliminar usan Bootstrap Icons, los colores
+y etiquetas accesibles definidos en las convenciones anteriores. La eliminación pide
+confirmación y conserva los archivos físicos, que podrían estar compartidos.
+
+Rutas públicas:
+- /ingreso-a-la-u: listado de universidades activas, ordenadas por orden e id.
+- /ingreso-a-la-u/:slug: una única plantilla UniversityPage. Un slug inexistente o inactivo muestra 404.
+El Navbar existente se conserva; el módulo puede abrirse directamente por su ruta.
+
+API en backend/api/universities:
+- GET list.php: público, solo activas.
+- GET admin.php: listado administrativo.
+- POST create.php: crear.
+- PUT update.php: editar, incluido orden y activo.
+- DELETE delete.php: eliminar por id.
+- POST upload.php: FormData con imagen; sirve para logo y portada.
+
+Todos los endpoints administrativos reutilizan require_admin y las sesiones existentes.
+La subida reutiliza la implementación actual de noticias sin modificarla: JPG/JPEG,
+PNG y WebP, hasta 5 MiB, 8000 px por lado y 40 megapíxeles, con validación del tipo,
+nombres aleatorios y almacenamiento en backend/uploads/images. MySQL guarda las rutas.
+Los slugs duplicados devuelven un error de validación, sin detalles SQL.
+
+Organización frontend:
+- pages/IngresoAU.jsx: listado.
+- components/university/UniversityCard.jsx y UniversityPage.jsx: tarjeta y plantilla.
+- components/admin/UniversitiesAdmin.jsx y UniversityForm.jsx: administración.
+- services/universities.js y hooks/useUniversities.js: API y actualización de datos.
+- styles/universities.css: estilos públicos limitados a este módulo.
+Se reutilizan el servicio fetch, estilos administrativos, Header y Footer existentes.
+Sin nuevas dependencias. Las vistas públicas refrescan al recuperar foco, cada 30 segundos
+y tras recibir una notificación del panel en otra pestaña del mismo origen.
+
+Prueba: crear una universidad, subir logo/portada, editarla, abrir listado y detalle,
+desactivar/activar y comprobar que no se publica estando inactiva. Revisar también
+rechazo de slug duplicado y acceso 401 a las operaciones sin sesión.
+
+Pendiente para fase 2: proceso de admisión, examen, documentos y galería.
+
+
+## Ingreso a la U: fase 2, secciones por universidad
+
+Importa backend/database/university_sections_schema.sql después de universities_schema.sql.
+Crea university_sections: id, university_id, tipo, titulo, orden, activo y timestamps.
+La clave foránea apunta a universities. Eliminar definitivamente una universidad elimina
+también sus secciones (ON DELETE CASCADE); desactivarla conserva todos sus datos.
+No se insertan secciones predeterminadas: cada universidad define las que necesita.
+
+Tipos disponibles:
+- admission: Proceso de admisión.
+- exam: Estructura del examen.
+- academic_offer: Oferta académica.
+- documents: Documentos.
+- gallery: Galería.
+
+Dentro de Universidades, edita una universidad guardada y utiliza Secciones.
+La universidad se asigna automáticamente. El formulario de secciones es independiente
+del formulario de información general. Permite título, tipo, orden y estado, con
+acciones Bootstrap Icons, confirmación al eliminar y tabla adaptable a tarjetas móviles.
+
+API en backend/api/university-sections:
+- GET list.php?university_id=ID: público, devuelve únicamente secciones activas de una universidad activa.
+- GET admin.php?university_id=ID: todas las secciones, requiere sesión.
+- POST create.php: university_id, tipo, titulo, orden, activo.
+- PUT update.php: los mismos campos e id.
+- DELETE delete.php: id y university_id.
+
+Los endpoints reutilizan require_admin y las respuestas JSON existentes. El helper
+university_sections.php valida tipos, títulos, orden, estado y pertenencia de la sección.
+No se permite mover una sección a otra universidad mediante la edición.
+
+Frontend:
+- UniversitySectionsAdmin.jsx: lista y formulario dentro de la edición.
+- universitySections.js: servicio API, con cookies y notificaciones entre pestañas.
+- useUniversitySections.js: carga por universidad, refresco y estados de error.
+- UniversitySectionRenderer.jsx: selecciona un componente por tipo, filtra y ordena.
+- universitySectionTypes.js: etiquetas del selector administrativo.
+Por ahora todas las secciones muestran su título y Contenido próximamente.
+
+Para agregar un tipo futuro:
+1. Añadir el identificador a UNIVERSITY_SECTION_TYPES en el helper PHP.
+2. Añadir su etiqueta a universitySectionTypes.js.
+3. Crear el componente público y registrarlo en renderers de UniversitySectionRenderer.
+4. Crear la estructura específica de contenido cuando se implemente esa fase.
+El campo tipo es VARCHAR; no requiere cambiar un ENUM. Los tipos desconocidos no se renderizan.
+
+Pendiente: contenido real de admisión, examen, oferta académica, documentos y galería.
+
+
+## Ingreso a la U: fase 3, proceso de admisión
+
+Importa backend/database/admissions_schema.sql después de los esquemas de universidades
+y secciones. Crea:
+- university_admissions: un proceso por universidad (university_id UNIQUE), título,
+  descripción general, orden, estado y timestamps.
+- admission_steps: etapas vinculadas al proceso, con título, descripción, fecha opcional,
+  imagen opcional, texto/URL de botón opcionales, orden, estado y timestamps.
+
+La eliminación definitiva de una universidad elimina su proceso; eliminar el proceso
+elimina sus etapas mediante claves foráneas. No se borran archivos físicos compartidos.
+Eliminar o desactivar una sección NO elimina el proceso: el contenido permanece guardado.
+La ubicación pública del bloque depende del orden de university_sections; el orden del
+proceso se conserva como metadato, pues solo existe un proceso por universidad.
+
+Uso administrativo:
+1. Edita una universidad y crea una sección de tipo admission, si todavía no existe.
+2. En esa sección pulsa el icono Administrar proceso de admisión.
+3. Completa título, descripción general y estado; pulsa Guardar proceso.
+4. Agrega etapas con Nueva etapa. Fecha, imagen y botón son opcionales.
+5. Ordena mediante el campo Orden; los empates se resuelven por id.
+6. Edita, activa/desactiva o elimina usando los iconos y confirmaciones habituales.
+
+API bajo backend/api/admissions:
+- GET get.php?university_id=ID: proceso público con etapas activas.
+- GET steps.php?university_id=ID: solo etapas públicas activas y ordenadas.
+- GET admin.php?university_id=ID: proceso y todas las etapas, requiere sesión.
+- POST create.php y PUT update.php: university_id, titulo, descripcion_general, orden,
+  activo; update requiere también id.
+- DELETE delete.php: id y university_id; elimina el proceso y sus etapas.
+- POST step_create.php y PUT step_update.php: admission_id, university_id, titulo,
+  descripcion, fecha, imagen, boton_texto, boton_url, orden, activo. Editar requiere id.
+- DELETE step_delete.php: id, admission_id y university_id.
+- POST upload.php: FormData con imagen; reutiliza la validación y almacenamiento de noticias.
+
+Todos los endpoints administrativos usan require_admin, PDO y respuestas JSON existentes.
+Los identificadores se validan junto a su padre. Solo se publica si universidad, sección
+admission y proceso están activos; además se filtran las etapas inactivas. Sin proceso
+publicable, get devuelve admission:null y steps:[], sin mostrar información administrativa.
+
+Imágenes: JPG/JPEG, PNG y WebP, hasta 5 MiB, con los mismos límites de dimensiones,
+nombres aleatorios y backend/uploads/images ya utilizados. Los botones aceptan rutas
+locales que comiencen con / o URLs HTTP/HTTPS; no se aceptan protocolos ejecutables.
+El texto del botón es obligatorio cuando se indica URL. Sin URL, no aparece botón.
+El contenido se renderiza como texto, nunca como HTML arbitrario.
+
+Frontend:
+- services/admissions.js y hooks/useAdmission.js: API y actualización pública.
+- AdmissionAdmin.jsx y AdmissionStepForm.jsx: formularios independientes.
+- AdmissionSectionContainer.jsx: carga por university_id.
+- AdmissionSection.jsx: recibe admission y steps y presenta tarjetas responsive.
+- UniversitySectionRenderer registra admission con su contenedor real; los demás tipos
+  mantienen sus placeholders de fase 2.
+
+Para futuros bloques, crea su esquema/helper/API y componente de contenido, regístralo
+por tipo en UniversitySectionRenderer y añade su editor desde las secciones correspondientes.
+No introduzcas condiciones por slug EPN/UCE. Las etapas actuales no tienen tipo propio;
+cualquier futura variante de etapa debe diseñarse en una fase específica.
+
+Validación recomendada: crear proceso y etapas con/sin imagen, probar 2 y 10 etapas,
+orden y visibilidad, fechas/URLs inválidas, proceso duplicado, pertenencia a universidad,
+eliminación con confirmación y protección 401 sin sesión.
+
+
+## Ingreso a la U: fase 4, estructura del examen
+
+Importa backend/database/exams_schema.sql después de los esquemas de universidades
+y secciones. Crea:
+- university_exams: un bloque por universidad (university_id UNIQUE), titulo,
+  descripcion_general, duracion, cantidad_preguntas, activo y timestamps.
+- exam_categories: exam_id, nombre, descripcion, cantidad_preguntas, imagen,
+  orden, activo y timestamps. Las áreas son registros dinámicos, no columnas fijas.
+
+Duración es texto (por ejemplo, 60 minutos). Las cantidades de preguntas son enteros
+no negativos opcionales: NULL significa que todavía no se ha publicado el dato.
+El valor 0 se conserva y se muestra. El total del examen se administra por separado;
+no se recalcula al ocultar categorías ni se obliga a coincidir con su suma.
+
+Para administrar:
+1. Edita una universidad y agrega una sección de tipo exam si no existe.
+2. Pulsa Administrar estructura del examen en las acciones de esa sección.
+3. Guarda título, descripción, duración, cantidad total y estado del examen.
+4. Agrega categorías con nombre, descripción, imagen opcional, cantidad, orden y estado.
+5. Usa los iconos para editar, activar/desactivar y eliminar con confirmación.
+Los formularios del examen y las categorías son independientes y mantienen las
+convenciones de Bootstrap Icons, colores y responsive del panel.
+
+Endpoints en backend/api/exams:
+- GET get.php?university_id=ID: examen y categorías públicas.
+- GET categories.php?university_id=ID: categorías públicas activas y ordenadas.
+- GET admin.php?university_id=ID: examen y todas sus categorías; requiere sesión.
+- POST create.php: university_id, titulo, descripcion_general, duracion,
+  cantidad_preguntas y activo.
+- PUT update.php: mismos campos e id.
+- DELETE delete.php: id y university_id.
+- POST category_create.php: exam_id, university_id, nombre, descripcion,
+  cantidad_preguntas, imagen, orden y activo.
+- PUT category_update.php: mismos campos e id.
+- DELETE category_delete.php: id, exam_id y university_id.
+- POST upload.php: FormData con imagen; reutiliza validación y almacenamiento existentes.
+
+El helper exams.php usa PDO y respuestas JSON existentes. Todas las operaciones
+administrativas requieren require_admin y validan la pertenencia de los registros.
+Solo se publica cuando universidad, sección exam y examen están activos; las categorías
+también se filtran por activo y se ordenan por orden e id. Sin examen publicable,
+get devuelve exam:null y categories:[].
+
+Las imágenes mantienen JPG/JPEG, PNG y WebP, límite 5 MiB y dimensiones actuales,
+nombres aleatorios y backend/uploads/images. No se modifica la subida de noticias.
+La eliminación del examen elimina sus categorías por clave foránea; eliminar la
+universidad elimina el examen. No se borran archivos físicos que podrían estar compartidos.
+Desactivar o eliminar la sección conserva el examen para poder reutilizarlo.
+
+Frontend creado:
+- services/exams.js y hooks/useExam.js.
+- ExamAdmin.jsx y ExamCategoryForm.jsx.
+- ExamSectionContainer.jsx (carga) y ExamSection.jsx (presentación).
+La integración se registra únicamente en el tipo exam de UniversitySectionRenderer.
+Las tarjetas admiten cualquier cantidad de categorías; en móvil usan una columna.
+
+Para agregar otro tipo de sección, sigue la convención de fase 2: registrar el tipo
+en backend y configuración frontend, crear su helper/API y componente, y asociarlo
+en UniversitySectionRenderer. No agregar condiciones específicas para EPN o UCE.
+El bloque admission y sus endpoints permanecen independientes.
+
+Validación: probar 3, 5 y 10 categorías, datos opcionales y cero, subida de imágenes,
+edición, orden, visibilidad, examen único por universidad, rechazo de cantidades
+negativas/decimales, pertenencia de categorías y protección 401 sin sesión.
+
+
+## Ingreso a la U: fase 5, oferta académica
+
+Importa backend/database/academic_offers_schema.sql después de universidades y secciones.
+Crea university_academic_offers: id, university_id, titulo, descripcion, imagen,
+documento, documento_nombre, boton_texto, boton_url, orden, activo y timestamps.
+Una universidad puede tener varias ofertas por periodo, modalidad u otro criterio.
+No existe una tabla de carreras ni lógica específica para una universidad.
+
+Para administrar:
+1. Edita una universidad y agrega una sección academic_offer si no existe.
+2. Pulsa Administrar oferta académica en las acciones de esa sección.
+3. Crea ofertas con título, descripción opcional, imagen, PDF y/o enlace.
+4. Usa los iconos para editar, activar/desactivar y eliminar con confirmación.
+El orden público es orden e id. La sección conserva su propia posición en la página.
+
+API en backend/api/academic-offers:
+- GET list.php?university_id=ID: ofertas activas de universidad y sección activas.
+- GET admin.php?university_id=ID: todas las ofertas, requiere sesión.
+- POST create.php: university_id, titulo, descripcion, imagen, documento,
+  documento_nombre, boton_texto, boton_url, orden, activo.
+- PUT update.php: mismos campos e id.
+- DELETE delete.php: id y university_id.
+- POST upload_image.php: FormData con imagen.
+- POST upload_document.php: FormData con documento.
+
+El helper academic_offers.php valida pertenencia, campos, estado, orden, rutas de
+archivos subidos y URLs HTTP/HTTPS o rutas locales. Si hay URL, se requiere texto
+del botón. Todos los endpoints administrativos reutilizan require_admin y JSON/PDO.
+
+Formatos y almacenamiento reutilizados:
+- JPG/JPEG, PNG y WebP: hasta 5 MiB y límites de dimensiones existentes.
+- PDF: hasta 10 MiB, con validaciones existentes.
+- backend/uploads/images y backend/uploads/documents.
+- Nombres físicos aleatorios; documento_nombre conserva el nombre original limpio.
+El servidor PHP debe admitir esos tamaños (upload_max_filesize y post_max_size).
+Quitar un archivo elimina su referencia al guardar, no su archivo físico.
+La eliminación de la universidad elimina sus ofertas por clave foránea.
+Los archivos físicos se conservan porque podrían estar compartidos.
+
+Frontend:
+- services/academicOffers.js y hooks/useAcademicOffers.js.
+- AcademicOffersAdmin.jsx y AcademicOfferForm.jsx.
+- AcademicOfferSectionContainer.jsx y AcademicOfferSection.jsx.
+La integración sustituye únicamente el placeholder academic_offer del renderer.
+Sin PDF no aparece Ver documento; sin URL no aparece botón de enlace. Los PDF abren
+en nueva pestaña, usando el nombre visible, sin mostrar el identificador físico.
+El bloque admite solo imagen, solo PDF, ambos o imagen con enlace.
+El contenido se centra en escritorio; imágenes y botones se adaptan en móvil.
+
+Validación: crear/subir/editar, combinar archivos, quitar referencias, ordenar,
+activar/desactivar, eliminar, comprobar rutas públicas y protección 401 sin sesión.
+No se modifican las funcionalidades de admisión, examen, noticias ni autenticación.
+
+
+## Ingreso a la U: fase 6, documentos universitarios
+
+Importa backend/database/university_documents_schema.sql después de universidades y
+secciones. Crea university_documents: id, university_id, titulo, descripcion, archivo,
+documento_nombre, orden, activo y timestamps. Una universidad admite múltiples documentos.
+
+Dentro de Editar universidad > Secciones, crea una sección documents si no existe y
+pulsa Administrar documentos. Crea un título y selecciona un PDF obligatorio. La descripción
+es opcional. Editar permite reemplazar el PDF, cambiar orden y estado. Las acciones utilizan
+Bootstrap Icons con tooltip, aria-label y los colores habituales. Eliminar pide confirmación.
+
+API en backend/api/university-documents:
+- GET list.php?university_id=ID: documentos activos de universidad y sección activas.
+- GET admin.php?university_id=ID: listado completo, protegido.
+- POST create.php: university_id, titulo, descripcion, archivo, documento_nombre, orden, activo.
+- PUT update.php: mismos campos e id.
+- DELETE delete.php: id y university_id.
+- POST upload.php: FormData con documento; devuelve documento (ruta) y documento_nombre.
+El servicio frontend adapta la ruta devuelta al campo archivo del nuevo módulo.
+
+Se reutilizan require_admin, PDO, respuestas JSON y el flujo PDF existente sin modificar
+noticias ni ofertas. Solo PDF, hasta 10 MiB: extensión, firma/cierre PDF, contenido y MIME
+mediante fileinfo cuando está disponible en PHP, tal como en el cargador existente.
+Los límites upload_max_filesize y post_max_size del servidor deben permitir ese tamaño.
+
+Almacenamiento: backend/uploads/documents/<nombre aleatorio>.pdf.
+archivo guarda la URL segura /api/news/document.php?file=..., que sirve application/pdf.
+documento_nombre guarda el nombre original limpio para la vista pública y el administrador.
+No mostrar el identificador físico como etiqueta. El archivo es obligatorio y debe
+corresponder a un PDF ya subido; no se aceptan rutas externas ni rutas arbitrarias.
+Eliminar borra el registro, no el archivo físico que podría estar compartido.
+Eliminar una universidad elimina sus documentos mediante clave foránea.
+
+Frontend:
+- services/universityDocuments.js y hooks/useUniversityDocuments.js.
+- UniversityDocumentsAdmin.jsx y UniversityDocumentForm.jsx.
+- DocumentsSectionContainer.jsx y DocumentsSection.jsx.
+Solo se sustituye el renderer documents. La lista pública muestra Documentos importantes,
+título, descripción opcional, nombre visible y Ver documento en nueva pestaña con
+noopener noreferrer. En móvil cada documento aparece en su propia tarjeta.
+
+Validación: creación y reemplazo desde el panel, nombre original, apertura PDF, orden,
+estado, eliminación, rechazo de PDF falso y ruta inválida, pertenencia a universidad,
+protección 401 y convivencia con admisión, examen y oferta académica.
+
+
+## Galería universitaria (Fase 7)
+
+Importar backend/database/university_gallery_schema.sql en la base existente.
+Crea university_gallery con clave foránea a universities y orden, estado, título
+opcional, descripción e imagen. No modifica datos de otros módulos.
+
+API en backend/api/university-gallery/:
+- GET list.php?university_id=ID: imágenes activas, ordenadas por orden e id; requiere universidad y sección gallery activas.
+- GET admin.php?university_id=ID: todas las imágenes (administrador).
+- POST create.php: university_id, titulo, descripcion, imagen, orden, activo.
+- PUT update.php: los mismos campos e id.
+- DELETE delete.php: id y university_id; requiere confirmación en el panel.
+- POST upload.php: FormData con imagen; devuelve imagen (URL segura).
+
+Las escrituras y el listado administrativo reutilizan require_admin, PDO y JSON.
+El upload reutiliza el validador existente: JPG/JPEG, PNG y WEBP, hasta 5 MiB,
+validación de contenido y dimensiones, nombre aleatorio y almacenamiento en
+backend/uploads/images/. La base guarda la URL /api/news/image.php?file=...
+Eliminar borra el registro, conservando el archivo físico que puede estar compartido.
+
+Administración: Universidades > Editar > Secciones > Galería > Administrar galería.
+GalleryImageForm permite subir/reemplazar, ordenar y activar imágenes.
+Se mantienen Bootstrap Icons, tooltips, aria-label y confirmación de eliminación.
+GallerySection utiliza tarjetas en grid: tres columnas grandes, dos intermedias,
+una hasta 600px. El listado administrativo reutiliza las tarjetas móviles actuales.
+El servicio universityGallery y su hook actualizan al guardar, al enfocar y cada
+30 segundos. No se cambian las demás secciones.

@@ -1,3 +1,5 @@
+import IngresoAU from "./pages/IngresoAU";
+import UniversityPage from "./components/university/UniversityPage";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedAdminRoute from "./components/admin/ProtectedAdminRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -13,6 +15,8 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
       <Routes>
+        <Route path="/ingreso-a-la-u" element={<IngresoAU />} />
+        <Route path="/ingreso-a-la-u/:slug" element={<UniversityPage />} />
         <Route path="/" element={<Home />} />
 
         <Route path="/noticias/:slug" element={<NewsDetail />} />

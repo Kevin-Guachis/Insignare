@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS university_academic_offers (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ university_id BIGINT UNSIGNED NOT NULL,
+ titulo VARCHAR(190) NOT NULL,
+ descripcion TEXT NOT NULL,
+ imagen VARCHAR(255) NULL,
+ documento VARCHAR(255) NULL,
+ documento_nombre VARCHAR(255) NULL,
+ boton_texto VARCHAR(190) NULL,
+ boton_url VARCHAR(500) NULL,
+ orden INT UNSIGNED NOT NULL DEFAULT 0,
+ activo TINYINT(1) NOT NULL DEFAULT 1,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ INDEX academic_offer_order (university_id,activo,orden,id),
+ FOREIGN KEY (university_id) REFERENCES universities(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

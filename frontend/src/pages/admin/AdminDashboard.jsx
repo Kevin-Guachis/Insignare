@@ -1,3 +1,4 @@
+import UniversitiesAdmin from "../../components/admin/UniversitiesAdmin";
 import FooterServices from "../../components/admin/FooterServices";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import SiteSettingsForm from "../../components/admin/SiteSettingsForm";
@@ -9,7 +10,7 @@ import NewsForm from "../../components/admin/NewsForm";
 import "../../styles/admin.css";
 import "../../styles/admin-news.css";
 
-const sections = [{ id: "home", label: "Home" }, { id: "footer", label: "Footer" }];
+const sections = [{ id: "home", label: "Home" }, { id: "footer", label: "Footer" }, { id: "universities", label: "Universidades" }];
 
 function AdminDashboard() {
   const { admin, logout } = useAuth();
@@ -158,6 +159,7 @@ function AdminDashboard() {
             </>
           )}
         </section>
+        <div id="panel-universities" hidden={section !== "universities"}><UniversitiesAdmin /></div>
         <div id="panel-footer" hidden={section !== "footer"}><SiteSettingsForm /><FooterServices /></div>
       </div>
     </main>
