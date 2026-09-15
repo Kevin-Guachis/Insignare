@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useUniversities } from "../../hooks/useUniversities";
 
-const REFERENCE_SITE = "https://lightcoral-reindeer-735935.hostingersite.com";
+
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,8 +54,7 @@ function Navbar() {
     {
       id: "siov",
       label: "SIOV",
-      path: "/siov/index.html",
-      local: true,
+      path: "/siov"
     },
   ];
 
@@ -126,7 +125,7 @@ function Navbar() {
         id="primary-navigation"
         className={`site-nav__list${isOpen ? " site-nav__list--open" : ""}`}
       >
-        {navigation.map(({ id, label, path, submenu, local }) => (
+        {navigation.map(({ id, label, path, submenu }) => (
           <li className="site-nav__item" key={id}>
             {submenu ? (
               <>
@@ -177,17 +176,13 @@ function Navbar() {
                 </ul>
               </>
             ) : (
-              <a
+              <Link
                 className="site-nav__link"
-                href={
-                  local
-                    ? path
-                    : REFERENCE_SITE + path
-                }
+                to={path}
                 onClick={closeNavigation}
               >
                 {label}
-              </a>
+              </Link>
             )}
           </li>
         ))}

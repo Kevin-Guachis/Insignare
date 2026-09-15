@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"; import { AuthProvider } from "./context/AuthContext";
 import LoadingScreen from "./components/layout/LoadingScreen";
-//import PageTransition from "./components/layout/PageTransition";
 import IngresoAU from "./pages/IngresoAU";
+import Siov from "./pages/Siov";
 import UniversityPage from "./components/university/UniversityPage";
 import ProtectedAdminRoute from "./components/admin/ProtectedAdminRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -23,11 +23,12 @@ function AnimatedRoutes() {
 
     if (location !== displayLocation) {
 
-      setTransitioning(true);
+
 
 
       const timer = setTimeout(() => {
 
+        setTransitioning(true);
         setDisplayLocation(location);
 
         window.scrollTo({
@@ -58,7 +59,7 @@ function AnimatedRoutes() {
 
       <div
         className={
-          transitioning
+          (transitioning || location !== displayLocation)
             ? "page-transition-overlay active"
             : "page-transition-overlay"
         }
@@ -101,6 +102,11 @@ function AnimatedRoutes() {
             />
           </Route>
 
+          <Route
+            path="/siov"
+            element={<Siov />}
+          />
+          
           <Route
             path="*"
             element={<NotFound />}

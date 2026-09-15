@@ -1,3 +1,4 @@
+import SiovAdmin from "../../components/admin/SiovAdmin";
 import UniversitiesAdmin from "../../components/admin/UniversitiesAdmin";
 import FooterServices from "../../components/admin/FooterServices";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -10,7 +11,7 @@ import NewsForm from "../../components/admin/NewsForm";
 import "../../styles/admin.css";
 import "../../styles/admin-news.css";
 
-const sections = [{ id: "home", label: "Home" }, { id: "footer", label: "Footer" }, { id: "universities", label: "Universidades" }];
+const sections = [{ id: "home", label: "Home" }, { id: "footer", label: "Footer" }, { id: "universities", label: "Universidades" }, { id: "siov", label: "SIOV" }];
 
 function AdminDashboard() {
   const { admin, logout } = useAuth();
@@ -159,6 +160,7 @@ function AdminDashboard() {
             </>
           )}
         </section>
+        {section==="siov"&&<div id="panel-siov"><SiovAdmin /></div>}
         <div id="panel-universities" hidden={section !== "universities"}><UniversitiesAdmin /></div>
         <div id="panel-footer" hidden={section !== "footer"}><SiteSettingsForm /><FooterServices /></div>
       </div>

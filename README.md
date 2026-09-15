@@ -570,3 +570,8 @@ GallerySection utiliza tarjetas en grid: tres columnas grandes, dos intermedias,
 una hasta 600px. El listado administrativo reutiliza las tarjetas móviles actuales.
 El servicio universityGallery y su hook actualizan al guardar, al enfocar y cada
 30 segundos. No se cambian las demás secciones.
+
+## SIOV administrable
+Migración, catálogo, privacidad, APIs y validación: [docs/SIOV.md](docs/SIOV.md).
+Importación inicial: php backend/scripts/import_siov.php. No sobrescribe contenido existente.
+
