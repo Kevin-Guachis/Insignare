@@ -1,3 +1,4 @@
+import MaterialResourcesAdmin from "../../components/admin/MaterialResourcesAdmin";
 import ContactSettingsForm from "../../components/admin/ContactSettingsForm";
 import TestimonialsAdmin from "../../components/admin/TestimonialsAdmin";
 import SiovAdmin from "../../components/admin/SiovAdmin";
@@ -13,7 +14,7 @@ import NewsForm from "../../components/admin/NewsForm";
 import "../../styles/admin.css";
 import "../../styles/admin-news.css";
 
-const sections = [{ id: "home", label: "Home" }, { id: "footer", label: "Footer" }, { id: "universities", label: "Universidades" }, { id: "siov", label: "SIOV" }, { id: "testimonials", label: "Testimonios" }, { id: "contacto", label: "Contacto" }];
+const sections = [{ id: "home", label: "Home" }, { id: "footer", label: "Footer" }, { id: "universities", label: "Universidades" }, { id: "siov", label: "SIOV" }, { id: "testimonials", label: "Testimonios" }, { id: "contacto", label: "Contacto" }, { id: "material", label: "Material Filtrado" }];
 
 function AdminDashboard() {
   const { admin, logout } = useAuth();
@@ -162,6 +163,7 @@ function AdminDashboard() {
             </>
           )}
         </section>
+        {section==="material"&&<div id="panel-material"><MaterialResourcesAdmin /></div>}
         {section==="contacto"&&<div id="panel-contacto"><ContactSettingsForm /></div>}
         {section==="testimonials"&&<div id="panel-testimonials"><TestimonialsAdmin /></div>}
         {section==="siov"&&<div id="panel-siov"><SiovAdmin /></div>}

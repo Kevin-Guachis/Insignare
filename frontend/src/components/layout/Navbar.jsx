@@ -35,7 +35,7 @@ function Navbar() {
     {
       id: "resources",
       label: "MATERIAL GRATIS",
-      path: "/about-3/",
+      path: "/material-filtrado",
     },
     {
       id: "calculators",

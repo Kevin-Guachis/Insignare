@@ -1,3 +1,4 @@
+import MaterialFiltrado from "./pages/MaterialFiltrado";
 import Calculadoras from "./pages/Calculadoras";
 import Testimonials from "./pages/Testimonials";
 import { useEffect, useState } from "react";
@@ -74,6 +75,7 @@ function AnimatedRoutes() {
       <div className="page-transition-initial">
 
         <Routes location={displayLocation}>
+          <Route path="/material-filtrado" element={<MaterialFiltrado />} />
           <Route path="/calculadoras" element={<Calculadoras />} />
           <Route path="/testimonials" element={<Testimonials />} />
 
