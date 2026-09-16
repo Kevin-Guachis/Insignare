@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/admin/AdminLogin";
 import NotaGrado from "./pages/NotaGrado";
 import NotaPostulacion from "./pages/NotaPostulacion";
+import Contacto from "./pages/Contacto";
 
 function AnimatedRoutes() {
 
@@ -117,10 +118,17 @@ function AnimatedRoutes() {
             path="/calculadoras/nota-grado"
             element={<NotaGrado />}
           />
+
           <Route
             path="/calculadoras/nota-postulacion"
             element={<NotaPostulacion />}
           />
+
+          <Route
+            path="/contacto"
+            element={<Contacto />}
+          />
+
           <Route
             path="*"
             element={<NotFound />}

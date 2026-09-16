@@ -30,7 +30,7 @@ function Navbar() {
     {
       id: "contact",
       label: "CONTACTO",
-      path: "/contact-3/",
+      path: "/contacto",
     },
     {
       id: "resources",
@@ -44,7 +44,7 @@ function Navbar() {
       submenu: [
         {
           label: "Nota de postulación",
-          path: "/why-choose-me-2/",
+          path: "/calculadoras/nota-postulacion",
         },
         {
           label: "Nota de grado",
