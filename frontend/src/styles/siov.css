@@ -336,3 +336,5 @@
 .siov-page .contact-item{overflow-wrap:anywhere;}
 @media(max-width:600px){.siov-page .card-panel,.siov-page .intro-panel{padding:1.1rem;}.siov-page .area-row{flex-wrap:wrap;gap:.5rem;}.siov-page .area-name{width:calc(100% - 40px);}.siov-page .area-bar-track{min-width:80px;}.siov-page .charts-grid{grid-template-columns:minmax(0,1fr);}.siov-page .top10-item{flex-wrap:wrap;}.siov-page .btn-download-primary{padding:1rem;}.siov-page .contact-footer{padding:1rem;}.siov-page .scope-grid{grid-template-columns:minmax(0,1fr);}}
 @media(prefers-reduced-motion:reduce){.siov-page .download-pulse{animation:none;}}
+
+.siov-page .siov-chart{position:relative;height:300px;min-width:0;}
