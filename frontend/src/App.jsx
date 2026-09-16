@@ -1,3 +1,4 @@
+import Testimonials from "./pages/Testimonials";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"; import { AuthProvider } from "./context/AuthContext";
 import LoadingScreen from "./components/layout/LoadingScreen";
@@ -69,6 +70,7 @@ function AnimatedRoutes() {
       <div className="page-transition-initial">
 
         <Routes location={displayLocation}>
+          <Route path="/testimonials" element={<Testimonials />} />
 
           <Route
             path="/ingreso-a-la-u"

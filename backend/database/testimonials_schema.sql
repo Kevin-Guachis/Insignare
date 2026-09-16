@@ -1,0 +1,24 @@
+-- Importar una vez en la base de datos configurada. No modifica tablas existentes.
+CREATE TABLE IF NOT EXISTS testimonials (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ titulo VARCHAR(190) NOT NULL,
+ detalle_legacy VARCHAR(190) NULL,
+ comentario_legacy TEXT NULL,
+ imagen VARCHAR(255) NOT NULL,
+ orden INT UNSIGNED NOT NULL DEFAULT 0,
+ activo TINYINT(1) NOT NULL DEFAULT 1,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ INDEX testimonials_visible (activo, orden, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS student_reviews (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ nombre VARCHAR(120) NOT NULL,
+ calificacion TINYINT UNSIGNED NOT NULL,
+ comentario TEXT NOT NULL,
+ activo TINYINT(1) NOT NULL DEFAULT 1,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ INDEX reviews_visible (activo, id),
+ CHECK (calificacion BETWEEN 1 AND 5)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
