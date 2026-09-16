@@ -1,340 +1,2114 @@
+/* =========================================================
+   SIOV - Sistema Inteligente de Orientación Vocacional
+   Estilos alineados con la identidad visual de Insignare
+   ========================================================= */
 
-.siov-page{
-  --ink:#1B2430;
-  --paper:#F7F5EF;
-  --card:#FFFFFF;
-  --line:#E4E0D6;
-  --brand:#1B4F82;
-  --brand-2:#7BA7C7;
-  --brand-dark:#153d65;
-  --muted:#6B7280;
-  --radius:14px;
-  --shadow:0 6px 24px rgba(27,36,48,.08);
+.siov-page {
+  /* =======================================================
+     PALETA INSIGNARE
+     ======================================================= */
+  --siov-primary: #322e59;
+  --siov-primary-dark: #272346;
+  --siov-accent: #326cf1;
+  --siov-accent-dark: #285bc9;
+
+  --siov-background: #f6f7f8;
+  --siov-surface: #ffffff;
+  --siov-surface-soft: #f8f9fc;
+
+  --siov-text: #322e59;
+  --siov-text-secondary: #667085;
+  --siov-text-light: #ffffff;
+
+  --siov-border: #dedee2;
+  --siov-border-light: #e8e8ed;
+
+  --siov-blue-soft: #eef4ff;
+  --siov-blue-medium: #dce8ff;
+
+  --siov-warning-bg: #fff6dc;
+  --siov-warning-border: #e4b84c;
+  --siov-warning-text: #674d00;
+
+  --siov-success: #198754;
+  --siov-danger: #dc3545;
+
+  --siov-radius: 12px;
+  --siov-radius-small: 8px;
+
+  --siov-shadow: 0 6px 24px rgba(50, 46, 89, 0.08);
+  --siov-shadow-hover: 0 10px 30px rgba(50, 46, 89, 0.13);
+
+  --siov-content-width: 980px;
+
+  /* Tipografía coherente con Insignare */
+  font-family: Arial, Helvetica, sans-serif;
+
+  min-width: 0;
+  color: var(--siov-text);
+  background: var(--siov-background);
+
+  line-height: 1.55;
 }
 
-.siov-page{
-  background:var(--paper);
-  color:var(--ink);
-  font-family:'Inter','Segoe UI',sans-serif;
+
+/* =========================================================
+   RESET LOCAL
+   ========================================================= */
+
+.siov-page *,
+.siov-page *::before,
+.siov-page *::after {
+  box-sizing: border-box;
 }
 
-.siov-page .font-display{ font-family:'Source Serif 4','Georgia',serif; }
-
-.siov-page .siov-navbar{
-  background:var(--brand);
-  color:#fff;
-  padding:.9rem 0;
-  border-bottom: 4px solid var(--brand-2);
-}
-.siov-page .siov-navbar .brand-logo{
-  width:48px; height:48px; object-fit:contain;
-}
-.siov-page .siov-navbar small{ color:#B9C2CE; }
-
-.siov-page .siov-shell{
-  max-width:900px;
-  margin:0 auto;
-  padding:2.5rem 1rem 4rem;
+.siov-page h1,
+.siov-page h2,
+.siov-page h3,
+.siov-page h4,
+.siov-page h5,
+.siov-page h6,
+.siov-page p {
+  margin-top: 0;
 }
 
-.siov-page .card-panel{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:2rem;
+.siov-page img {
+  max-width: 100%;
 }
 
-/* INTRO PANEL */
-.siov-page .intro-panel {
-  background: linear-gradient(135deg, var(--brand) 0%, #2563a8 100%);
-  color: #fff;
-  border-radius: var(--radius);
-  padding: 2.5rem 2rem;
+.siov-page button,
+.siov-page input,
+.siov-page select,
+.siov-page textarea {
+  font-family: inherit;
+}
+
+
+/* =========================================================
+   TIPOGRAFÍA
+   ========================================================= */
+
+.siov-page h2,
+.siov-page h3,
+.siov-page h4 {
+  color: var(--siov-primary);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.siov-page h2 {
+  font-size: clamp(1.7rem, 2.5vw, 2.15rem);
+}
+
+.siov-page h3 {
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+}
+
+.siov-page h4 {
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+}
+
+.siov-page p {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.siov-page .font-display {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================================================
+   NAVBAR INTERNA SIOV
+   ========================================================= */
+
+.siov-page .siov-navbar {
+  background: var(--siov-primary);
+  color: var(--siov-text-light);
+
+  padding: 0.85rem 0;
+
+  border-bottom: 3px solid var(--siov-accent);
+}
+
+.siov-page .siov-navbar .brand-logo {
+  width: 48px;
+  height: 48px;
+
+  object-fit: contain;
+}
+
+.siov-page .siov-navbar small {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================= */
+
+.siov-page .siov-shell {
+  width: min(
+    var(--siov-content-width),
+    calc(100% - 40px)
+  );
+
+  margin: 0 auto;
+
+  padding: 2.5rem 0 4rem;
+}
+
+
+/* =========================================================
+   TARJETAS GENERALES
+   ========================================================= */
+
+.siov-page .card-panel {
+  background: var(--siov-surface);
+
+  border: 1px solid var(--siov-border-light);
+  border-radius: var(--siov-radius);
+
+  box-shadow: var(--siov-shadow);
+
+  padding: 2rem;
+
   margin-bottom: 1.5rem;
+}
+
+
+/* =========================================================
+   PANEL DE INTRODUCCIÓN
+   ========================================================= */
+
+.siov-page .intro-panel {
+  position: relative;
+
+  background:
+    linear-gradient(
+      135deg,
+      #285a91 0%,
+      #326ca8 55%,
+      #326cf1 100%
+    );
+
+  color: #ffffff;
+
   border: none;
-  box-shadow: 0 8px 32px rgba(27,79,130,.22);
+  border-radius: 14px;
+
+  padding: 2.35rem 2rem;
+
+  margin-bottom: 1.5rem;
+
+  box-shadow:
+    0 10px 32px rgba(50, 46, 89, 0.18);
 }
-.siov-page .intro-panel h2 { color:#fff; margin-bottom:.5rem; }
+
+.siov-page .intro-panel h2 {
+  color: #ffffff;
+
+  margin-bottom: 0.65rem;
+
+  font-size: clamp(1.8rem, 3vw, 2.25rem);
+
+  font-weight: 700;
+
+  line-height: 1.2;
+}
+
+.siov-page .intro-panel p {
+  color: rgba(255, 255, 255, 0.94);
+
+  font-size: 1rem;
+
+  line-height: 1.65;
+
+  margin-bottom: 0.8rem;
+}
+
+
+/* =========================================================
+   BADGE "INSTRUCCIONES DEL TEST"
+   ========================================================= */
+
 .siov-page .intro-panel .scope-badge {
-  display:inline-block;
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.35);
-  border-radius: 99px;
-  padding: .3rem .9rem;
-  font-size:.82rem;
-  font-weight:800;
-  letter-spacing:.04em;
-  margin-bottom: 1.2rem;
+  display: inline-flex;
+
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.13);
+
+  border: 1px solid rgba(255, 255, 255, 0.34);
+
+  border-radius: 999px;
+
+  padding: 0.38rem 0.9rem;
+
+  margin-bottom: 1.25rem;
+
+  color: #ffffff;
+
+  font-size: 0.82rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.02em;
 }
-.siov-page .intro-panel .intro-meta {
-  display:flex; flex-wrap:wrap; gap:.7rem; margin-top:1.2rem;
+
+
+/* =========================================================
+   INFORMACIÓN SUPERIOR
+   ========================================================= */
+
+.siov-page .intro-meta {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 0.75rem;
+
+  margin-top: 1.25rem;
 }
+
 .siov-page .intro-panel .intro-tag {
-  background: rgba(255,255,255,0.18);
+  background: rgba(255, 255, 255, 0.14);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
   border-radius: 8px;
-  padding: .45rem .9rem;
-  font-size:1.3rem;
+
+  padding: 0.55rem 0.9rem;
+
+  color: #ffffff;
+
+  font-size: 0.95rem;
+
+  line-height: 1.4;
 }
-.siov-page .intro-warning {
-  background: rgba(255,255,255,0.12);
-  border-left: 4px solid var(--brand-2);
-  border-radius: 0 8px 8px 0;
-  padding: .8rem 1rem;
-  margin-top: 1.2rem;
-  font-size:1.3rem;
-}
+
+
+/* =========================================================
+   GRID DEL ALCANCE
+   ========================================================= */
+
 .siov-page .scope-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
-  gap:.7rem;
-  margin-top:1.2rem;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 0.75rem;
+
+  margin-top: 1.35rem;
 }
+
 .siov-page .scope-item {
-  background: rgba(255,255,255,0.12);
+  min-width: 0;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
   border-radius: 10px;
-  padding: .8rem 1rem;
-  font-size:1.3rem;
-  border: 1px solid rgba(255,255,255,.2);
-}
-.siov-page .scope-item strong { display:block; font-size:1.3rem; margin-bottom:.25rem; }
 
-.siov-page .step-eyebrow{
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  font-size:1.3rem;
-  color:var(--brand-2);
-  font-weight:700;
+  padding: 1rem;
+
+  color: #ffffff;
+
+  font-size: 0.95rem;
+
+  line-height: 1.55;
 }
 
-.siov-page .btn-brand{
-  background:var(--brand);
-  border-color:var(--brand);
-  color:#fff;
-  font-weight:600;
+.siov-page .scope-item strong {
+  display: block;
+
+  margin-bottom: 0.35rem;
+
+  color: #ffffff;
+
+  font-size: 1rem;
+
+  font-weight: 700;
+
+  line-height: 1.35;
 }
-.siov-page .btn-brand:hover{ background:var(--brand-dark); border-color:var(--brand-dark); color:#fff; }
+
+
+/* =========================================================
+   ADVERTENCIA
+   ========================================================= */
+
+.siov-page .intro-warning {
+  background: rgba(255, 255, 255, 0.11);
+
+  border-left: 4px solid #8db6ff;
+
+  border-radius: 0 8px 8px 0;
+
+  padding: 0.85rem 1rem;
+
+  margin-top: 1.25rem;
+
+  color: #ffffff;
+
+  font-size: 0.95rem;
+
+  line-height: 1.65;
+}
+
+.siov-page .intro-warning strong {
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   TÍTULOS DE SECCIONES
+   ========================================================= */
+
+.siov-page .step-eyebrow {
+  display: block;
+
+  margin-bottom: 0.35rem;
+
+  color: var(--siov-accent);
+
+  font-size: 0.78rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+
+.siov-page .btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 0.45rem;
+
+  min-height: 44px;
+
+  padding: 0.7rem 1.15rem;
+
+  border: 1px solid transparent;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 0.95rem;
+
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  text-align: center;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.siov-page .btn:disabled {
+  opacity: 0.55;
+
+  cursor: default;
+
+  transform: none;
+}
+
+
+/* Botón principal */
+
+.siov-page .btn-brand {
+  background: var(--siov-accent);
+
+  border-color: var(--siov-accent);
+
+  color: #ffffff;
+
+  font-weight: 600;
+}
+
+.siov-page .btn-brand:hover:not(:disabled) {
+  background: var(--siov-accent-dark);
+
+  border-color: var(--siov-accent-dark);
+
+  color: #ffffff;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 14px rgba(50, 108, 241, 0.22);
+}
+
+
+/* Botón descarga */
 
 .siov-page .btn-download-primary {
-  background: linear-gradient(135deg, var(--brand) 0%, #2563a8 100%);
-  border: none;
-  color: #fff;
-  font-weight: 700;
-  font-size: 1.2rem;
-  padding: 1rem 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 6px 24px rgba(27,79,130,.35);
-  transition: all .2s;
   display: inline-flex;
+
   align-items: center;
-  gap: .6rem;
-  letter-spacing: .01em;
+
+  justify-content: center;
+
+  gap: 0.6rem;
+
+  background: var(--siov-accent);
+
+  border: 1px solid var(--siov-accent);
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 1rem;
+
+  font-weight: 700;
+
+  line-height: 1.25;
+
+  padding: 0.85rem 1.5rem;
+
+  border-radius: 9px;
+
+  box-shadow:
+    0 5px 18px rgba(50, 108, 241, 0.24);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
 }
+
 .siov-page .btn-download-primary:hover {
+  background: var(--siov-accent-dark);
+
+  border-color: var(--siov-accent-dark);
+
+  color: #ffffff;
+
   transform: translateY(-2px);
-  box-shadow: 0 10px 32px rgba(27,79,130,.45);
-  color: #fff;
-  background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 100%);
-}
-.siov-page .btn-download-primary:active { transform: translateY(0); }
 
-.siov-page .btn-outline-brand{
-  border-color:var(--brand);
-  color:var(--brand);
-  font-weight:600;
-}
-.siov-page .btn-outline-brand:hover{ background:var(--brand); color:#fff; }
-
-.siov-page .progress{ height:10px; border-radius:99px; background:#EAE6DA; }
-.siov-page .progress-bar{ background:var(--brand-2); }
-
-.siov-page .pregunta-numero{
-  font-family:'Source Serif 4',serif;
-  font-size:1.6rem;
-  line-height:1.6;
+  box-shadow:
+    0 8px 24px rgba(50, 108, 241, 0.3);
 }
 
-.siov-page .opcion-interes{
-  border:2px solid var(--line);
-  border-radius:12px;
-  padding:1.1rem 1.3rem;
-  cursor:pointer;
-  transition:.15s ease;
-  background:#fff;
-}
-.siov-page .opcion-interes:hover{ border-color:var(--brand-2); }
-.siov-page .opcion-interes.selected{
-  border-color:var(--brand);
-  background:#EEF4FA;
-}
-.siov-page .opcion-interes.selected.no-interesa{
-  border-color:#9CA3AF;
-  background:#F2F2F2;
+.siov-page .btn-download-primary:active {
+  transform: translateY(0);
 }
 
-.siov-page .area-row{
-  display:flex;
-  align-items:center;
-  gap:1rem;
-  padding:.65rem 0;
-  border-bottom:1px solid var(--line);
-}
-.siov-page .area-rank{
-  width:30px;height:30px;border-radius:50%;
-  background:var(--brand);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  font-size:.85rem;font-weight:700;flex-shrink:0;
-}
-.siov-page .area-bar-track{
-  flex:1;height:10px;border-radius:99px;background:#EAE6DA;overflow:hidden;
-}
-.siov-page .area-bar-fill{ height:100%; border-radius:99px; }
 
-.siov-page .career-card{
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:1rem 1.2rem;
-  background:#fff;
+/* Botón outline */
+
+.siov-page .btn-outline-brand {
+  background: #ffffff;
+
+  border-color: var(--siov-accent);
+
+  color: var(--siov-accent);
+
+  font-weight: 600;
 }
 
-.siov-page .uni-table th{ background:#EEF4FA; font-size:.82rem; white-space:nowrap; }
-.siov-page .uni-table td, .siov-page .uni-table th{ vertical-align:middle; font-size:.88rem; }
-.siov-page .uni-block-header{ padding-bottom:.5rem; border-bottom:2px solid var(--line); }
-.siov-page .badge-modalidad{
-  display:inline-block;
-  white-space:nowrap;
-  background:#EEF4FA;
-  color:var(--brand);
-  border:1px solid var(--brand);
-  border-radius:99px;
-  padding:.25rem .7rem;
-  font-size:.78rem;
-  font-weight:600;
+.siov-page .btn-outline-brand:hover {
+  background: var(--siov-accent);
+
+  border-color: var(--siov-accent);
+
+  color: #ffffff;
 }
 
-.siov-page .top10-item{
-  display:flex;align-items:center;gap:.8rem;
-  padding:.7rem 1rem;border:1px solid var(--line);border-radius:10px;background:#fff;
-}
-.siov-page .top10-medal{ font-size:2.3rem; width:34px; text-align:center; }
 
-/* CONTACT FOOTER */
+/* Botón secundario */
+
+.siov-page .btn-outline-secondary {
+  background: #ffffff;
+
+  border-color: var(--siov-border);
+
+  color: #555b68;
+}
+
+.siov-page .btn-outline-secondary:hover {
+  background: var(--siov-background);
+
+  border-color: #bfc1c8;
+
+  color: var(--siov-primary);
+}
+
+
+/* =========================================================
+   PROGRESO
+   ========================================================= */
+
+.siov-page .progress {
+  width: 100%;
+
+  height: 8px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background: #e8e9ee;
+}
+
+.siov-page .progress-bar {
+  height: 100%;
+
+  background: var(--siov-accent);
+
+  border-radius: inherit;
+
+  transition: width 0.25s ease;
+}
+
+
+/* =========================================================
+   PREGUNTAS
+   ========================================================= */
+
+.siov-page .pregunta-numero {
+  color: var(--siov-primary);
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+
+  font-weight: 700;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   OPCIONES DE INTERÉS
+   ========================================================= */
+
+.siov-page .opcion-interes {
+  width: 100%;
+
+  display: block;
+
+  background: #ffffff;
+
+  border: 2px solid var(--siov-border);
+
+  border-radius: 10px;
+
+  padding: 0.95rem 1.1rem;
+
+  color: var(--siov-text);
+
+  font-family: inherit;
+
+  font-size: 0.98rem;
+
+  line-height: 1.5;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.16s ease,
+    background-color 0.16s ease,
+    box-shadow 0.16s ease,
+    transform 0.16s ease;
+}
+
+.siov-page .opcion-interes:hover {
+  border-color: #9dbcf9;
+
+  background: #fafcff;
+
+  transform: translateY(-1px);
+}
+
+.siov-page .opcion-interes.selected {
+  background: var(--siov-blue-soft);
+
+  border-color: var(--siov-accent);
+
+  box-shadow:
+    0 3px 10px rgba(50, 108, 241, 0.1);
+}
+
+.siov-page .opcion-interes.selected.no-interesa {
+  background: #f4f4f5;
+
+  border-color: #a5a7ad;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   ÁREAS / RESULTADOS
+   ========================================================= */
+
+.siov-page .area-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 1rem;
+
+  padding: 0.75rem 0;
+
+  border-bottom: 1px solid var(--siov-border-light);
+}
+
+.siov-page .area-row:last-child {
+  border-bottom: none;
+}
+
+.siov-page .area-rank {
+  width: 30px;
+  height: 30px;
+
+  flex: 0 0 30px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--siov-primary);
+
+  color: #ffffff;
+
+  font-size: 0.82rem;
+
+  font-weight: 700;
+}
+
+.siov-page .area-name {
+  width: 230px;
+
+  min-width: 0;
+
+  color: var(--siov-primary);
+
+  font-size: 0.95rem;
+
+  font-weight: 600;
+}
+
+.siov-page .area-score {
+  width: 90px;
+
+  color: var(--siov-primary);
+
+  font-size: 0.9rem;
+
+  font-weight: 700;
+
+  text-align: right;
+}
+
+.siov-page .area-bar-track {
+  flex: 1;
+
+  min-width: 80px;
+
+  height: 9px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background: #e7e8ed;
+}
+
+.siov-page .area-bar-fill {
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: var(--siov-accent);
+}
+
+
+/* =========================================================
+   TARJETAS DE CARRERA
+   ========================================================= */
+
+.siov-page .career-card {
+  background: #ffffff;
+
+  border: 1px solid var(--siov-border);
+
+  border-radius: 10px;
+
+  padding: 1rem 1.15rem;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.siov-page .career-card:hover {
+  border-color: #c8d7f5;
+
+  box-shadow:
+    0 4px 14px rgba(50, 46, 89, 0.07);
+}
+
+
+/* =========================================================
+   UNIVERSIDADES
+   ========================================================= */
+
+.siov-page .uni-block-header {
+  padding-bottom: 0.65rem;
+
+  border-bottom: 2px solid var(--siov-border-light);
+}
+
+.siov-page .uni-table {
+  width: 100%;
+}
+
+.siov-page .uni-table th {
+  background: var(--siov-blue-soft);
+
+  color: var(--siov-primary);
+
+  font-size: 0.82rem;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.siov-page .uni-table td,
+.siov-page .uni-table th {
+  vertical-align: middle;
+
+  padding: 0.65rem;
+
+  font-size: 0.88rem;
+}
+
+.siov-page .uni-table tbody tr:hover {
+  background: #fafbfe;
+}
+
+.siov-page .badge-modalidad {
+  display: inline-block;
+
+  white-space: nowrap;
+
+  background: var(--siov-blue-soft);
+
+  color: var(--siov-primary);
+
+  border: 1px solid #b9cdf5;
+
+  border-radius: 999px;
+
+  padding: 0.25rem 0.65rem;
+
+  font-size: 0.76rem;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   TOP 10
+   ========================================================= */
+
+.siov-page .top10-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.8rem;
+
+  padding: 0.7rem 0.95rem;
+
+  background: #ffffff;
+
+  border: 1px solid var(--siov-border-light);
+
+  border-radius: 9px;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.siov-page .top10-item:hover {
+  border-color: #c8d7f5;
+
+  box-shadow:
+    0 3px 12px rgba(50, 46, 89, 0.06);
+}
+
+.siov-page .top10-medal {
+  width: 34px;
+
+  flex: 0 0 34px;
+
+  font-size: 1.8rem;
+
+  line-height: 1;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   CONTACTO
+   ========================================================= */
+
 .siov-page .contact-footer {
-  background: var(--brand);
-  color: #fff;
-  border-radius: var(--radius);
-  padding: 1.8rem 2rem;
+  background: var(--siov-primary);
+
+  color: #ffffff;
+
+  border-radius: var(--siov-radius);
+
+  padding: 1.6rem 1.8rem;
+
   margin-bottom: 2rem;
 }
-.siov-page .contact-footer h4 { color:#fff; margin-bottom:1rem; }
-.siov-page .contact-item {
-  display:flex; align-items:center; gap:.6rem;
-  font-size:.9rem; margin-bottom:.5rem;
-}
-.siov-page .contact-icon {
-  width: 28px; height:28px;
-  background: rgba(255,255,255,.18);
-  border-radius: 50%;
-  display:flex; align-items:center; justify-content:center;
-  font-size:.9rem; flex-shrink:0;
+
+.siov-page .contact-footer h4 {
+  color: #ffffff;
+
+  margin-bottom: 0.9rem;
 }
 
-/* DOWNLOAD SECTION */
+.siov-page .contact-footer p {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.siov-page .contact-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.65rem;
+
+  margin-bottom: 0.5rem;
+
+  color: rgba(255, 255, 255, 0.92);
+
+  font-size: 0.9rem;
+
+  line-height: 1.45;
+
+  overflow-wrap: anywhere;
+}
+
+.siov-page .contact-icon {
+  width: 28px;
+  height: 28px;
+
+  flex: 0 0 28px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.13);
+
+  border-radius: 50%;
+
+  color: #ffffff;
+
+  font-size: 0.85rem;
+}
+
+
+/* =========================================================
+   SECCIÓN DE DESCARGA
+   ========================================================= */
+
 .siov-page .download-section {
   text-align: center;
-  padding: 2.5rem 2rem;
-  background: linear-gradient(135deg, #f0f6ff 0%, #e8f2ff 100%);
-  border: 2px solid var(--brand-2);
-  border-radius: var(--radius);
+
+  padding: 2rem;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f4f7ff 0%,
+      #edf3ff 100%
+    );
+
+  border: 1px solid #c9d9f8;
+
+  border-radius: var(--siov-radius);
 }
+
+.siov-page .download-section h3,
+.siov-page .download-section h4 {
+  color: var(--siov-primary);
+}
+
 .siov-page .download-pulse {
-  animation: pulse-glow 2s infinite;
-}
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 6px 24px rgba(27,79,130,.35); }
-  50% { box-shadow: 0 6px 40px rgba(27,79,130,.55), 0 0 0 8px rgba(27,79,130,.08); }
+  animation: siov-pulse-glow 2.2s infinite;
 }
 
-@media print{
-  .siov-page .no-print{ display:none !important; }
-  .siov-page{ background:#fff; color:#000; font-size:11pt; }
-  .siov-page .siov-shell{ max-width:100%; padding:0; margin:0; }
-  .siov-page .card-panel{
-    box-shadow:none;
-    border:1px solid #ccc;
-    border-radius:0;
-    padding:1rem;
-    page-break-inside:avoid;
-    break-inside:avoid;
-    margin-bottom:1rem !important;
+@keyframes siov-pulse-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 5px 18px rgba(50, 108, 241, 0.22);
   }
-  .siov-page .uni-block{ page-break-inside:avoid; break-inside:avoid; }
-  .siov-page canvas{ max-width:100% !important; max-height:280px !important; }
-  .siov-page .badge-modalidad{ border:1px solid #333; color:#000; background:#fff; }
-  .siov-page .area-row{ break-inside:avoid; }
-  .siov-page a{ color:#000 !important; text-decoration:none !important; }
-  .siov-page .btn{ display:none !important; }
-  .siov-page h2, .siov-page h3, .siov-page h4{ break-after:avoid; }
+
+  50% {
+    box-shadow:
+      0 7px 25px rgba(50, 108, 241, 0.3),
+      0 0 0 6px rgba(50, 108, 241, 0.07);
+  }
 }
 
-.siov-page .siov-static-1{font-size:1.05rem; opacity:.95; margin-bottom:0;}
 
-.siov-page .siov-static-2{color:var(--brand);}
+/* =========================================================
+   GRÁFICOS
+   ========================================================= */
 
-.siov-page .siov-static-3{font-size:.95rem;}
+.siov-page .charts-grid {
+  display: grid;
 
-.siov-page .siov-static-4{color:var(--brand);}
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
 
-.siov-page .siov-static-5{font-size:.92rem;}
+  gap: 24px;
+}
 
-.siov-page .siov-static-6{color:var(--brand);}
+.siov-page .charts-grid > div {
+  min-width: 0;
+}
 
-.siov-page .siov-static-7{font-size:.92rem;}
+.siov-page .siov-chart {
+  position: relative;
 
-.siov-page .siov-static-8{background:#EEF4FA; border:1px solid var(--brand-2); border-radius:10px; font-size:.9rem;}
+  width: 100%;
 
-.siov-page .siov-static-9{color:var(--brand-2);}
+  height: 300px;
 
-.siov-page .siov-static-10{color:var(--brand-2);}
+  min-width: 0;
+}
 
-/* Utilities used by the original SIOV, scoped instead of global Bootstrap. */
-.siov-page{min-width:0;line-height:1.5;}
-.siov-page *{box-sizing:border-box;}
-.siov-page h2{font-size:2rem;} .siov-page h3{font-size:1.65rem;} .siov-page h4{font-size:1.35rem;}
-.siov-page h2,.siov-page h3,.siov-page h4,.siov-page p{margin-top:0;}
-.siov-page .row{display:flex;flex-wrap:wrap;gap:1rem;}
-.siov-page .row>[class*="col-"]{min-width:0;flex:1 1 250px;}
-.siov-page .col-12{flex-basis:100%!important;}
-.siov-page .d-flex{display:flex;} .siov-page .flex-column{flex-direction:column;}
-.siov-page .flex-wrap{flex-wrap:wrap;} .siov-page .flex-grow-1{flex-grow:1;min-width:0;}
-.siov-page .justify-content-between{justify-content:space-between;} .siov-page .justify-content-end{justify-content:flex-end;}
-.siov-page .align-items-center{align-items:center;}
-.siov-page .gap-2{gap:.5rem;} .siov-page .gap-3{gap:1rem;}
-.siov-page .mb-0{margin-bottom:0;} .siov-page .mb-1{margin-bottom:.25rem;} .siov-page .mb-2{margin-bottom:.5rem;}
-.siov-page .mb-3{margin-bottom:1rem;} .siov-page .mb-4{margin-bottom:1.5rem;}
-.siov-page .mt-2{margin-top:.5rem;} .siov-page .mt-3{margin-top:1rem;} .siov-page .mt-4{margin-top:1.5rem;}
-.siov-page .fw-semibold{font-weight:600;} .siov-page .fw-bold{font-weight:700;}
-.siov-page .text-muted{color:var(--muted);} .siov-page .text-end{text-align:right;} .siov-page .text-center{text-align:center;}
-.siov-page .small,.siov-page small{font-size:.875rem;}
-.siov-page .btn{display:inline-block;cursor:pointer;padding:.7rem 1.2rem;border:1px solid;border-radius:8px;font:inherit;text-decoration:none;text-align:center;}
-.siov-page button:disabled{opacity:.55;cursor:default;}
-.siov-page :is(button,input,select,a):focus-visible{outline:3px solid var(--brand-2);outline-offset:3px;}
-.siov-page .btn-outline-secondary{background:white;color:#555;}
-.siov-page .form-control,.siov-page .form-select{display:block;width:100%;padding:.7rem;border:1px solid var(--line);border-radius:8px;font:inherit;background:white;}
-.siov-page .form-label{display:block;margin-bottom:.4rem;}
-.siov-page .table-responsive{max-width:100%;overflow-x:auto;}
-.siov-page .table{border-collapse:collapse;width:100%;}
-.siov-page .table td,.siov-page .table th{padding:.55rem;border:1px solid var(--line);}
-.siov-page .badge{padding:.3rem .65rem;border-radius:99px;color:white;}
-.siov-page .bg-secondary{background:#6b7280;}
-.siov-page .alert{padding:1rem;border-radius:8px;background:#fff4d6;}
-.siov-page .area-name{width:230px;min-width:0;} .siov-page .area-score{width:110px;}
-.siov-page .opcion-interes{width:100%;font:inherit;}
-.siov-page .charts-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;}
-.siov-page .charts-grid>div{min-width:0;}
-.siov-page .download-section button{cursor:pointer;max-width:100%;}
-.siov-page .contact-item{overflow-wrap:anywhere;}
-@media(max-width:600px){.siov-page .card-panel,.siov-page .intro-panel{padding:1.1rem;}.siov-page .area-row{flex-wrap:wrap;gap:.5rem;}.siov-page .area-name{width:calc(100% - 40px);}.siov-page .area-bar-track{min-width:80px;}.siov-page .charts-grid{grid-template-columns:minmax(0,1fr);}.siov-page .top10-item{flex-wrap:wrap;}.siov-page .btn-download-primary{padding:1rem;}.siov-page .contact-footer{padding:1rem;}.siov-page .scope-grid{grid-template-columns:minmax(0,1fr);}}
-@media(prefers-reduced-motion:reduce){.siov-page .download-pulse{animation:none;}}
 
-.siov-page .siov-chart{position:relative;height:300px;min-width:0;}
+/* =========================================================
+   FORMULARIOS
+   ========================================================= */
+
+.siov-page .form-control,
+.siov-page .form-select {
+  display: block;
+
+  width: 100%;
+
+  min-height: 44px;
+
+  padding: 0.68rem 0.8rem;
+
+  background: #ffffff;
+
+  border: 1px solid var(--siov-border);
+
+  border-radius: 8px;
+
+  color: var(--siov-text);
+
+  font-family: inherit;
+
+  font-size: 0.95rem;
+
+  line-height: 1.4;
+
+  outline: none;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.siov-page .form-control:focus,
+.siov-page .form-select:focus {
+  border-color: var(--siov-accent);
+
+  box-shadow:
+    0 0 0 3px rgba(50, 108, 241, 0.12);
+}
+
+.siov-page .form-label {
+  display: block;
+
+  margin-bottom: 0.4rem;
+
+  color: var(--siov-primary);
+
+  font-size: 0.9rem;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   TABLAS
+   ========================================================= */
+
+.siov-page .table-responsive {
+  width: 100%;
+
+  max-width: 100%;
+
+  overflow-x: auto;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.siov-page .table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+.siov-page .table td,
+.siov-page .table th {
+  padding: 0.6rem;
+
+  border: 1px solid var(--siov-border);
+
+  font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.siov-page .badge {
+  display: inline-block;
+
+  padding: 0.3rem 0.65rem;
+
+  border-radius: 999px;
+
+  color: #ffffff;
+
+  font-size: 0.78rem;
+
+  font-weight: 600;
+
+  line-height: 1.2;
+}
+
+.siov-page .bg-secondary {
+  background: #6b7280;
+}
+
+
+/* =========================================================
+   ALERTAS
+   ========================================================= */
+
+.siov-page .alert {
+  padding: 0.9rem 1rem;
+
+  border-radius: 8px;
+
+  background: var(--siov-warning-bg);
+
+  border: 1px solid #efdca5;
+
+  color: var(--siov-warning-text);
+
+  font-size: 0.92rem;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   UTILIDADES USADAS POR EL SIOV
+   ========================================================= */
+
+.siov-page .row {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 1rem;
+}
+
+.siov-page .row > [class*="col-"] {
+  min-width: 0;
+
+  flex: 1 1 250px;
+}
+
+.siov-page .col-12 {
+  flex-basis: 100% !important;
+}
+
+.siov-page .d-flex {
+  display: flex;
+}
+
+.siov-page .flex-column {
+  flex-direction: column;
+}
+
+.siov-page .flex-wrap {
+  flex-wrap: wrap;
+}
+
+.siov-page .flex-grow-1 {
+  flex-grow: 1;
+
+  min-width: 0;
+}
+
+.siov-page .justify-content-between {
+  justify-content: space-between;
+}
+
+.siov-page .justify-content-end {
+  justify-content: flex-end;
+}
+
+.siov-page .align-items-center {
+  align-items: center;
+}
+
+.siov-page .gap-2 {
+  gap: 0.5rem;
+}
+
+.siov-page .gap-3 {
+  gap: 1rem;
+}
+
+.siov-page .mb-0 {
+  margin-bottom: 0;
+}
+
+.siov-page .mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.siov-page .mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.siov-page .mb-3 {
+  margin-bottom: 1rem;
+}
+
+.siov-page .mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.siov-page .mt-2 {
+  margin-top: 0.5rem;
+}
+
+.siov-page .mt-3 {
+  margin-top: 1rem;
+}
+
+.siov-page .mt-4 {
+  margin-top: 1.5rem;
+}
+
+.siov-page .fw-semibold {
+  font-weight: 600;
+}
+
+.siov-page .fw-bold {
+  font-weight: 700;
+}
+
+.siov-page .text-muted {
+  color: var(--siov-text-secondary);
+}
+
+.siov-page .text-end {
+  text-align: right;
+}
+
+.siov-page .text-center {
+  text-align: center;
+}
+
+.siov-page .small,
+.siov-page small {
+  font-size: 0.875rem;
+}
+
+
+/* =========================================================
+   ACCESIBILIDAD / FOCUS
+   ========================================================= */
+
+.siov-page :is(
+  button,
+  input,
+  select,
+  textarea,
+  a
+):focus-visible {
+  outline: 3px solid rgba(50, 108, 241, 0.4);
+
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .siov-page .siov-shell {
+    width: min(
+      100% - 32px,
+      760px
+    );
+
+    padding-top: 2rem;
+  }
+
+  .siov-page .scope-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .siov-page .card-panel {
+    padding: 1.5rem;
+  }
+
+  .siov-page .intro-panel {
+    padding: 2rem 1.5rem;
+  }
+
+  .siov-page .charts-grid {
+    grid-template-columns:
+      minmax(0, 1fr);
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - MÓVIL
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .siov-page {
+    font-size: 15px;
+  }
+
+  .siov-page .siov-shell {
+    width: calc(100% - 24px);
+
+    padding:
+      1.25rem 0 3rem;
+  }
+
+  .siov-page .card-panel {
+    padding: 1.15rem;
+
+    border-radius: 10px;
+
+    margin-bottom: 1rem;
+  }
+
+  .siov-page .intro-panel {
+    padding: 1.35rem 1.15rem;
+
+    border-radius: 11px;
+
+    margin-bottom: 1rem;
+  }
+
+  .siov-page .intro-panel h2 {
+    font-size: 1.7rem;
+
+    line-height: 1.25;
+  }
+
+  .siov-page .intro-panel p {
+    font-size: 0.94rem;
+
+    line-height: 1.6;
+  }
+
+  .siov-page .scope-grid {
+    grid-template-columns:
+      minmax(0, 1fr);
+
+    gap: 0.6rem;
+
+    margin-top: 1rem;
+  }
+
+  .siov-page .scope-item {
+    padding: 0.85rem;
+
+    font-size: 0.92rem;
+  }
+
+  .siov-page .scope-item strong {
+    font-size: 0.96rem;
+  }
+
+  .siov-page .intro-warning {
+    font-size: 0.9rem;
+
+    padding: 0.75rem 0.85rem;
+  }
+
+  .siov-page .intro-meta {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .siov-page .intro-panel .intro-tag {
+    width: 100%;
+
+    font-size: 0.9rem;
+  }
+
+  .siov-page .pregunta-numero {
+    font-size: 1.05rem;
+  }
+
+  .siov-page .opcion-interes {
+    padding: 0.85rem;
+
+    font-size: 0.94rem;
+  }
+
+  .siov-page .area-row {
+    flex-wrap: wrap;
+
+    gap: 0.5rem;
+  }
+
+  .siov-page .area-name {
+    width: calc(100% - 40px);
+
+    font-size: 0.92rem;
+  }
+
+  .siov-page .area-score {
+    width: auto;
+
+    margin-left: auto;
+
+    font-size: 0.86rem;
+  }
+
+  .siov-page .area-bar-track {
+    width: 100%;
+
+    flex-basis: 100%;
+
+    height: 8px;
+  }
+
+  .siov-page .career-card {
+    padding: 0.9rem;
+  }
+
+  .siov-page .top10-item {
+    align-items: flex-start;
+
+    padding: 0.7rem 0.8rem;
+  }
+
+  .siov-page .top10-medal {
+    font-size: 1.6rem;
+  }
+
+  .siov-page .uni-table {
+    min-width: 620px;
+  }
+
+  .siov-page .download-section {
+    padding: 1.35rem 1rem;
+  }
+
+  .siov-page .btn-download-primary {
+    width: 100%;
+
+    padding: 0.85rem 1rem;
+
+    font-size: 0.94rem;
+  }
+
+  .siov-page .contact-footer {
+    padding: 1.2rem;
+
+    border-radius: 10px;
+  }
+
+  .siov-page .contact-item {
+    align-items: flex-start;
+
+    font-size: 0.86rem;
+  }
+
+  .siov-page .siov-chart {
+    height: 260px;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - MÓVILES MUY PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .siov-page .siov-shell {
+    width: calc(100% - 18px);
+  }
+
+  .siov-page .intro-panel,
+  .siov-page .card-panel {
+    padding: 1rem;
+  }
+
+  .siov-page .intro-panel h2 {
+    font-size: 1.5rem;
+  }
+
+  .siov-page .scope-item {
+    font-size: 0.88rem;
+  }
+
+  .siov-page .btn {
+    width: 100%;
+  }
+
+  .siov-page .siov-chart {
+    height: 230px;
+  }
+}
+
+
+/* =========================================================
+   REDUCIR ANIMACIONES SI EL USUARIO LO SOLICITA
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .siov-page *,
+  .siov-page *::before,
+  .siov-page *::after {
+    scroll-behavior: auto !important;
+
+    transition-duration: 0.01ms !important;
+
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+  }
+
+  .siov-page .download-pulse {
+    animation: none;
+  }
+}
+
+
+/* =========================================================
+   IMPRESIÓN / PDF
+   ========================================================= */
+
+@media print {
+
+  .siov-page {
+    background: #ffffff;
+
+    color: #000000;
+
+    font-size: 11pt;
+  }
+
+  .siov-page .no-print {
+    display: none !important;
+  }
+
+  .siov-page .siov-shell {
+    width: 100%;
+
+    max-width: none;
+
+    padding: 0;
+
+    margin: 0;
+  }
+
+  .siov-page .card-panel {
+    box-shadow: none;
+
+    border: 1px solid #cccccc;
+
+    border-radius: 0;
+
+    padding: 1rem;
+
+    margin-bottom: 1rem;
+
+    page-break-inside: avoid;
+
+    break-inside: avoid;
+  }
+
+  .siov-page .intro-panel {
+    box-shadow: none;
+
+    background: #ffffff;
+
+    color: #000000;
+
+    border: 1px solid #cccccc;
+  }
+
+  .siov-page .intro-panel h2,
+  .siov-page .intro-panel p,
+  .siov-page .scope-item,
+  .siov-page .scope-item strong,
+  .siov-page .intro-warning {
+    color: #000000;
+  }
+
+  .siov-page .scope-item {
+    background: #ffffff;
+
+    border: 1px solid #cccccc;
+  }
+
+  .siov-page .intro-warning {
+    background: #ffffff;
+
+    border: 1px solid #cccccc;
+  }
+
+  .siov-page .uni-block {
+    page-break-inside: avoid;
+
+    break-inside: avoid;
+  }
+
+  .siov-page canvas {
+    max-width: 100% !important;
+
+    max-height: 280px !important;
+  }
+
+  .siov-page .badge-modalidad {
+    background: #ffffff;
+
+    color: #000000;
+
+    border: 1px solid #333333;
+  }
+
+  .siov-page .area-row {
+    break-inside: avoid;
+  }
+
+  .siov-page a {
+    color: #000000 !important;
+
+    text-decoration: none !important;
+  }
+
+  .siov-page .btn {
+    display: none !important;
+  }
+
+  .siov-page h2,
+  .siov-page h3,
+  .siov-page h4 {
+    break-after: avoid;
+  }
+}
+
+/* =========================================================
+   AJUSTE FINAL SIOV
+   Ancho, bloques "evalúa / no evalúa" y responsive
+   ========================================================= */
+
+
+/* =========================================================
+   1. MAYOR ANCHO EN PANTALLAS GRANDES
+   ========================================================= */
+
+.siov-page {
+  --siov-content-width: 1180px;
+}
+
+
+/* =========================================================
+   2. CONTENEDOR PRINCIPAL
+   ========================================================= */
+
+.siov-page .siov-shell {
+  width: min(
+    var(--siov-content-width),
+    calc(100% - 48px)
+  );
+
+  padding-top: 2.5rem;
+}
+
+
+/* =========================================================
+   3. INTRO MÁS EQUILIBRADO EN ESCRITORIO
+   ========================================================= */
+
+.siov-page .intro-panel {
+  padding: 2.25rem 2rem;
+}
+
+.siov-page .intro-panel h2 {
+  margin-bottom: 0.7rem;
+}
+
+.siov-page .intro-panel p {
+  max-width: 1120px;
+}
+
+
+/* =========================================================
+   4. BLOQUES "ESTE TEST EVALÚA / NO EVALÚA"
+   ========================================================= */
+
+/*
+   El JSX actual utiliza:
+
+   <div className="row">
+      <div className="col-md-6">
+         <h6 className="... siov-static-4">
+         <ul className="... siov-static-5">
+      </div>
+
+      <div className="col-md-6">
+         <h6 className="... siov-static-6">
+         <ul className="... siov-static-7">
+      </div>
+   </div>
+
+   Aquí convertimos esos dos bloques en tarjetas
+   visualmente equilibradas.
+*/
+
+.siov-page #screen-intro .card-panel .row {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 1rem;
+
+  margin-top: 1rem;
+}
+
+
+/* Cada columna */
+
+.siov-page #screen-intro .card-panel .row > .col-md-6 {
+  min-width: 0;
+
+  flex: none;
+
+  background: #fafbfe;
+
+  border: 1px solid var(--siov-border-light);
+
+  border-radius: 10px;
+
+  padding: 1rem 1.1rem;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+/* Hover muy sutil */
+
+.siov-page #screen-intro .card-panel .row > .col-md-6:hover {
+  border-color: #ccd8ef;
+
+  box-shadow:
+    0 4px 14px rgba(50, 46, 89, 0.06);
+}
+
+
+/* Títulos de ambos bloques */
+
+.siov-page #screen-intro .siov-static-4,
+.siov-page #screen-intro .siov-static-6 {
+  display: flex;
+
+  align-items: center;
+
+  min-height: 32px;
+
+  margin-bottom: 0.65rem;
+
+  padding-bottom: 0.55rem;
+
+  border-bottom: 1px solid var(--siov-border-light);
+
+  color: var(--siov-primary);
+
+  font-size: 0.88rem;
+
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+
+/* Lista */
+
+.siov-page #screen-intro .siov-static-5,
+.siov-page #screen-intro .siov-static-7 {
+  margin: 0;
+
+  padding-left: 1.15rem;
+
+  color: var(--siov-text-secondary);
+
+  font-size: 0.9rem;
+
+  line-height: 1.55;
+}
+
+
+/* Espacio entre elementos de lista */
+
+.siov-page #screen-intro .siov-static-5 li,
+.siov-page #screen-intro .siov-static-7 li {
+  margin-bottom: 0.35rem;
+}
+
+.siov-page #screen-intro .siov-static-5 li:last-child,
+.siov-page #screen-intro .siov-static-7 li:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   5. RECOMENDACIÓN
+   ========================================================= */
+
+.siov-page #screen-intro .siov-static-8 {
+  margin-top: 1.1rem;
+
+  padding: 0.85rem 1rem;
+
+  background: #fff8e5;
+
+  border: 1px solid #ead9a5;
+
+  border-radius: 9px;
+
+  color: #6a5200;
+
+  font-size: 0.9rem;
+
+  line-height: 1.6;
+}
+
+.siov-page #screen-intro .siov-static-8 strong {
+  color: #5d4700;
+}
+
+
+/* =========================================================
+   6. BOTÓN DE COMENZAR
+   ========================================================= */
+
+.siov-page #screen-intro > .d-flex {
+  margin-top: 0.25rem;
+}
+
+.siov-page #screen-intro > .d-flex .btn-brand {
+  min-height: 46px;
+
+  padding:
+    0.75rem 1.35rem;
+
+  font-size: 0.95rem;
+
+  border-radius: 8px;
+}
+
+
+/* =========================================================
+   7. ALCANCE DEL TEST
+   ========================================================= */
+
+.siov-page #screen-intro > .card-panel {
+  padding: 1.8rem 2rem;
+}
+
+.siov-page #screen-intro > .card-panel > h4 {
+  margin-bottom: 0.8rem;
+}
+
+.siov-page #screen-intro > .card-panel > p {
+  margin-bottom: 0.8rem;
+
+  color: var(--siov-text-secondary);
+
+  font-size: 0.95rem;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   8. RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .siov-page {
+    --siov-content-width: 900px;
+  }
+
+  .siov-page .siov-shell {
+    width: calc(100% - 32px);
+  }
+
+  .siov-page .intro-panel {
+    padding: 2rem 1.5rem;
+  }
+
+  .siov-page .scope-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .siov-page #screen-intro > .card-panel {
+    padding: 1.5rem;
+  }
+}
+
+
+/* =========================================================
+   9. RESPONSIVE - MÓVIL
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .siov-page .siov-shell {
+    width: calc(100% - 24px);
+
+    padding-top: 1.25rem;
+  }
+
+  .siov-page .intro-panel {
+    padding: 1.35rem 1.1rem;
+
+    border-radius: 11px;
+  }
+
+  .siov-page .intro-panel h2 {
+    font-size: 1.65rem;
+
+    line-height: 1.25;
+  }
+
+  .siov-page .intro-panel p {
+    font-size: 0.94rem;
+
+    line-height: 1.6;
+  }
+
+
+  /* Las 4 estadísticas pasan a una columna */
+
+  .siov-page .scope-grid {
+    grid-template-columns:
+      minmax(0, 1fr);
+
+    gap: 0.6rem;
+  }
+
+
+  /* Evaluación / no evaluación también pasa a una columna */
+
+  .siov-page #screen-intro .card-panel .row {
+    grid-template-columns:
+      minmax(0, 1fr);
+
+    gap: 0.75rem;
+  }
+
+
+  .siov-page #screen-intro .card-panel .row > .col-md-6 {
+    padding: 0.9rem;
+  }
+
+
+  /* Texto de las listas */
+
+  .siov-page #screen-intro .siov-static-5,
+  .siov-page #screen-intro .siov-static-7 {
+    font-size: 0.88rem;
+
+    line-height: 1.5;
+  }
+
+
+  /* Botón */
+
+  .siov-page #screen-intro > .d-flex {
+    justify-content: stretch;
+  }
+
+  .siov-page #screen-intro > .d-flex .btn-brand {
+    width: 100%;
+
+    min-height: 46px;
+  }
+
+
+  /* Alcance */
+
+  .siov-page #screen-intro > .card-panel {
+    padding: 1.15rem;
+  }
+}
+
+
+/* =========================================================
+   10. MÓVILES MUY PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .siov-page .siov-shell {
+    width: calc(100% - 18px);
+  }
+
+  .siov-page .intro-panel {
+    padding: 1.1rem 0.95rem;
+  }
+
+  .siov-page .intro-panel h2 {
+    font-size: 1.45rem;
+  }
+
+  .siov-page .intro-panel p {
+    font-size: 0.9rem;
+  }
+
+  .siov-page .scope-item {
+    padding: 0.75rem;
+
+    font-size: 0.88rem;
+  }
+
+  .siov-page #screen-intro .card-panel .row > .col-md-6 {
+    padding: 0.8rem;
+  }
+
+  .siov-page #screen-intro .siov-static-4,
+  .siov-page #screen-intro .siov-static-6 {
+    font-size: 0.84rem;
+  }
+}
+
+
+/* =========================================================
+   11. PANTALLAS GRANDES
+   ========================================================= */
+
+@media (min-width: 1200px) {
+
+  .siov-page .siov-shell {
+    padding-top: 2.75rem;
+  }
+
+  .siov-page .intro-panel {
+    padding:
+      2.35rem 2rem;
+  }
+
+  .siov-page .card-panel {
+    padding: 2rem;
+  }
+}
+
+
+/* =========================================================
+   12. EVITAR QUE EL TEXTO SE VEA DEMASIADO GRANDE
+   ========================================================= */
+
+.siov-page #screen-intro .siov-static-1 {
+  font-size: 1rem;
+
+  line-height: 1.65;
+}
+
+.siov-page #screen-intro .siov-static-3 {
+  font-size: 0.95rem;
+
+  line-height: 1.6;
+}
+
+.siov-page #screen-intro .siov-static-5,
+.siov-page #screen-intro .siov-static-7 {
+  font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   13. ESPACIADO GENERAL
+   ========================================================= */
+
+.siov-page #screen-intro .card-panel {
+  margin-bottom: 1.25rem;
+}
+
+.siov-page #screen-intro .card-panel:last-of-type {
+  margin-bottom: 1rem;
+}
