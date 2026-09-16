@@ -40,6 +40,7 @@ function Navbar() {
     {
       id: "calculators",
       label: "CALCULADORAS",
+      path: "/calculadoras",
       submenu: [
         {
           label: "Nota de postulación",
@@ -47,7 +48,7 @@ function Navbar() {
         },
         {
           label: "Nota de grado",
-          path: "/privacy-policy/",
+          path: "/calculadoras/nota-grado",
         },
       ],
     },
@@ -130,13 +131,25 @@ function Navbar() {
             {submenu ? (
               <>
                 <div className="site-nav__link-group">
-                  <Link
-                    className="site-nav__link"
-                    to={path}
-                    onClick={closeNavigation}
-                  >
-                    {label}
-                  </Link>
+                  {path ? (
+                    <Link
+                      className="site-nav__link"
+                      to={path}
+                      onClick={closeNavigation}
+                    >
+                      {label}
+                    </Link>
+                  ) : (
+                    <button
+                      className="site-nav__link"
+                      type="button"
+                      aria-expanded={openSubmenu === id}
+                      aria-controls={`nav-submenu-${id}`}
+                      onClick={() => setOpenSubmenu(openSubmenu === id ? null : id)}
+                    >
+                      {label}
+                    </button>
+                  )}
 
                   <button
                     className="site-nav__submenu-toggle"

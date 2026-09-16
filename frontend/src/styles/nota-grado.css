@@ -1,0 +1,420 @@
+/* =========================================================
+   CALCULADORA DE NOTA DE GRADO
+   Instituto Politécnico Insignare
+========================================================= */
+
+.nota-grado-page {
+  min-height: 100vh;
+  padding: 40px 0 70px;
+  background: #f5f8fa;
+  color: #1c3040;
+}
+
+/* =========================================================
+   ENCABEZADO
+========================================================= */
+
+.nota-grado-header {
+  max-width: 1200px;
+  margin: 0 auto 34px;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.nota-grado-header h1 {
+  margin: 0 0 8px;
+  color: #0d3f5f;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  line-height: 1.15;
+  letter-spacing: 0.4px;
+  font-weight: 700;
+}
+
+.nota-grado-header p {
+  margin: 0;
+  color: #5c7286;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+}
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+========================================================= */
+
+.nota-grado-main {
+  width: min(1200px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+/* =========================================================
+   TARJETAS
+========================================================= */
+
+.nota-card {
+  margin-bottom: 22px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #d7e2ea;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(13, 63, 95, 0.08);
+}
+
+.nota-card h2 {
+  margin: 0 0 6px;
+  padding-left: 12px;
+  border-left: 5px solid #6f93b8;
+  color: #0d3f5f;
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.nota-desc {
+  margin: 0 0 20px 17px;
+  color: #5c7286;
+  font-size: 0.9rem;
+}
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.nota-grid {
+  display: grid;
+  gap: 20px;
+  margin-left: 17px;
+}
+
+.nota-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.nota-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* =========================================================
+   CAMPOS
+========================================================= */
+
+.nota-card label {
+  display: block;
+  margin-bottom: 6px;
+  color: #0d3f5f;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.nota-card input[type="number"] {
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 11px;
+  border: 1.5px solid #d7e2ea;
+  border-radius: 7px;
+  outline: none;
+  background: #f5f8fa;
+  color: #1c3040;
+  font-size: 1rem;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.nota-card input[type="number"]:focus {
+  border-color: #6f93b8;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(111, 147, 184, 0.14);
+}
+
+/* =========================================================
+   SUBTOTALES
+========================================================= */
+
+.nota-subtotal {
+  margin: 15px 17px 0;
+  color: #0d3f5f;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+/* =========================================================
+   INFORMACIÓN
+========================================================= */
+
+.nota-info {
+  margin: 16px 17px 0;
+  padding: 12px 14px;
+  border-left: 4px solid #6f93b8;
+  border-radius: 5px;
+  background: #eef4f9;
+  color: #3d5468;
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+/* =========================================================
+   CHECKBOX
+========================================================= */
+
+.nota-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 15px 0 5px 17px;
+}
+
+.nota-checkbox input {
+  width: 17px;
+  height: 17px;
+  accent-color: #0d3f5f;
+  cursor: pointer;
+}
+
+.nota-checkbox label {
+  margin: 0;
+  color: #3d5468;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* =========================================================
+   BOTÓN CALCULAR
+========================================================= */
+
+.nota-calc-btn {
+  display: block;
+  width: min(100%, 320px);
+  margin: 12px auto 26px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #0d3f5f;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.nota-calc-btn:hover {
+  background: #082a41;
+  box-shadow: 0 7px 18px rgba(13, 63, 95, 0.2);
+}
+
+.nota-calc-btn:active {
+  transform: scale(0.98);
+}
+
+/* =========================================================
+   RESULTADO
+========================================================= */
+
+.nota-result-card {
+  margin: 26px 0 0;
+  padding: 28px;
+  border-radius: 12px;
+  background: #0d3f5f;
+  color: #ffffff;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(13, 63, 95, 0.25);
+  animation: notaResultAppear 0.35s ease;
+}
+
+.nota-final-label {
+  margin-bottom: 7px;
+  color: #a9c2dc;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.nota-final-score {
+  margin-bottom: 5px;
+  font-size: clamp(2.8rem, 7vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.nota-final-out {
+  margin-bottom: 20px;
+  color: #a9c2dc;
+  font-size: 1rem;
+}
+
+/* =========================================================
+   DESGLOSE
+========================================================= */
+
+.nota-breakdown {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 14px 18px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.nota-breakdown div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.nota-breakdown div:last-child {
+  border-bottom: none;
+}
+
+.nota-breakdown span {
+  color: #a9c2dc;
+}
+
+.nota-breakdown strong {
+  color: #ffffff;
+  text-align: right;
+}
+
+/* =========================================================
+   ADVERTENCIA
+========================================================= */
+
+.nota-warning {
+  margin-top: 15px;
+  color: #ffd479;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   ANIMACIÓN
+========================================================= */
+
+@keyframes notaResultAppear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .nota-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nota-grado-main {
+    width: min(100% - 36px, 760px);
+  }
+}
+
+/* =========================================================
+   MÓVIL
+========================================================= */
+
+@media (max-width: 600px) {
+  .nota-grado-page {
+    padding: 28px 0 50px;
+  }
+
+  .nota-grado-header {
+    margin-bottom: 26px;
+    padding: 0 18px;
+  }
+
+  .nota-grado-main {
+    width: calc(100% - 28px);
+  }
+
+  .nota-card {
+    padding: 19px 16px;
+    margin-bottom: 16px;
+    border-radius: 10px;
+  }
+
+  .nota-card h2 {
+    font-size: 1rem;
+  }
+
+  .nota-desc {
+    margin-left: 17px;
+    font-size: 0.82rem;
+  }
+
+  .nota-grid,
+  .nota-grid-3,
+  .nota-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .nota-grid {
+    margin-left: 0;
+  }
+
+  .nota-subtotal,
+  .nota-info {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .nota-checkbox {
+    margin-left: 0;
+  }
+
+  .nota-calc-btn {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .nota-result-card {
+    padding: 22px 15px;
+  }
+
+  .nota-breakdown {
+    padding: 12px;
+    font-size: 0.8rem;
+  }
+
+  .nota-breakdown div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .nota-breakdown strong {
+    text-align: left;
+  }
+}
+
+/* =========================================================
+   REDUCIR ANIMACIONES
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .nota-result-card {
+    animation: none;
+  }
+
+  .nota-calc-btn,
+  .nota-card input[type="number"] {
+    transition: none;
+  }
+}

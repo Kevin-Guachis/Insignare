@@ -1,3 +1,4 @@
+import Calculadoras from "./pages/Calculadoras";
 import Testimonials from "./pages/Testimonials";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"; import { AuthProvider } from "./context/AuthContext";
@@ -11,6 +12,8 @@ import Home from "./pages/Home";
 import NewsDetail from "./pages/NewsDetail";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/admin/AdminLogin";
+import NotaGrado from "./pages/NotaGrado";
+import NotaPostulacion from "./pages/NotaPostulacion";
 
 function AnimatedRoutes() {
 
@@ -70,6 +73,7 @@ function AnimatedRoutes() {
       <div className="page-transition-initial">
 
         <Routes location={displayLocation}>
+          <Route path="/calculadoras" element={<Calculadoras />} />
           <Route path="/testimonials" element={<Testimonials />} />
 
           <Route
@@ -108,7 +112,15 @@ function AnimatedRoutes() {
             path="/siov"
             element={<Siov />}
           />
-          
+
+          <Route
+            path="/calculadoras/nota-grado"
+            element={<NotaGrado />}
+          />
+          <Route
+            path="/calculadoras/nota-postulacion"
+            element={<NotaPostulacion />}
+          />
           <Route
             path="*"
             element={<NotFound />}

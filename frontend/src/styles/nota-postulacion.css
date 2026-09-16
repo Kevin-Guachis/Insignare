@@ -1,0 +1,394 @@
+/* =========================================================
+   CALCULADORA DE NOTA DE POSTULACIÓN
+   Instituto Politécnico Insignare
+========================================================= */
+
+.nota-postulacion-page {
+  width: 100%;
+  min-height: auto;
+  padding: 50px 30px 70px;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   ENCABEZADO
+========================================================= */
+
+.nota-postulacion-header {
+  max-width: 1100px;
+  margin: 0 auto 32px;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.nota-postulacion-header h1 {
+  margin: 0 0 8px;
+  color: #0d3f5f;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.nota-postulacion-header p {
+  margin: 0;
+  color: #5c7286;
+  font-size: 1rem;
+}
+
+/* =========================================================
+   CONTENEDOR
+========================================================= */
+
+.nota-postulacion-main {
+  width: min(1100px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+/* =========================================================
+   TARJETA PRINCIPAL
+========================================================= */
+
+.postulacion-card {
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #d7e2ea;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(13, 63, 95, 0.08);
+}
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.postulacion-inputs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.postulacion-input-group label {
+  display: block;
+  margin-bottom: 7px;
+  color: #0d3f5f;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.postulacion-input-group input {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 13px;
+  border: 1.5px solid #d7e2ea;
+  border-radius: 8px;
+  outline: none;
+  background: #f8fafc;
+  color: #1c3040;
+  font-size: 1rem;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.postulacion-input-group input:focus {
+  border-color: #6f93b8;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(111, 147, 184, 0.14);
+}
+
+/* =========================================================
+   BOTÓN
+========================================================= */
+
+.postulacion-calc-btn {
+  display: block;
+  min-width: 190px;
+  margin: 26px auto 0;
+  padding: 13px 28px;
+  border: none;
+  border-radius: 8px;
+  background: #0d3f5f;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.postulacion-calc-btn:hover {
+  background: #082a41;
+  box-shadow: 0 7px 18px rgba(13, 63, 95, 0.2);
+}
+
+.postulacion-calc-btn:active {
+  transform: scale(0.98);
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.postulacion-error {
+  margin-top: 18px;
+  padding: 11px 14px;
+  border-radius: 7px;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #b42318;
+  text-align: center;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+/* =========================================================
+   RESULTADOS
+========================================================= */
+
+.postulacion-results-section {
+  margin-top: 28px;
+  animation: postulacionAppear 0.35s ease;
+}
+
+.postulacion-results {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(280px, 1fr)
+  );
+  gap: 20px;
+}
+
+/* =========================================================
+   TARJETA DE RESULTADO
+========================================================= */
+
+.postulacion-result-card {
+  padding: 22px;
+  background: #ffffff;
+  border: 1px solid #d7e2ea;
+  border-radius: 11px;
+  box-shadow: 0 5px 16px rgba(13, 63, 95, 0.07);
+}
+
+.postulacion-result-card h2 {
+  margin: 0 0 6px;
+  color: #0d3f5f;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.postulacion-percent {
+  margin-bottom: 12px;
+  color: #64788a;
+  font-size: 0.8rem;
+}
+
+.postulacion-score {
+  margin-bottom: 17px;
+  color: #15803d;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* =========================================================
+   UNIVERSIDADES
+========================================================= */
+
+.postulacion-universities {
+  max-height: 300px;
+  margin: 0;
+  padding: 0 5px 0 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.postulacion-universities li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  margin-bottom: 7px;
+  color: #334155;
+  font-size: 0.9rem;
+}
+
+.postulacion-badge {
+  display: none;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.postulacion-logo {
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  padding: 3px;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  background: #ffffff;
+  object-fit: contain;
+}
+
+.postulacion-uni-name {
+  line-height: 1.25;
+}
+
+/* =========================================================
+   INFORMACIÓN ESPECIAL
+========================================================= */
+
+.postulacion-special {
+  margin-top: 22px;
+  padding: 14px 17px;
+  border: 1px solid #fed7aa;
+  border-left: 4px solid #f59e0b;
+  border-radius: 7px;
+  background: #fff7ed;
+  color: #7c2d12;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   RESULTADO FINAL
+========================================================= */
+
+.postulacion-final {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid #a3e635;
+  border-radius: 8px;
+  background: #f0fdf4;
+  color: #365314;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/* =========================================================
+   SCROLL DE UNIVERSIDADES
+========================================================= */
+
+.postulacion-universities::-webkit-scrollbar {
+  width: 6px;
+}
+
+.postulacion-universities::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.postulacion-universities::-webkit-scrollbar-thumb {
+  background: #b7c7d5;
+  border-radius: 10px;
+}
+
+/* =========================================================
+   ANIMACIÓN
+========================================================= */
+
+@keyframes postulacionAppear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 760px) {
+  .nota-postulacion-main {
+    width: min(100% - 36px, 650px);
+  }
+
+  .postulacion-inputs {
+    grid-template-columns: 1fr;
+  }
+
+  .postulacion-results {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   MÓVIL
+========================================================= */
+
+@media (max-width: 600px) {
+  .nota-postulacion-page {
+    padding: 28px 0 50px;
+  }
+
+  .nota-postulacion-header {
+    padding: 0 16px;
+    margin-bottom: 24px;
+  }
+
+  .nota-postulacion-main {
+    width: calc(100% - 28px);
+  }
+
+  .postulacion-card {
+    padding: 19px 16px;
+    border-radius: 10px;
+  }
+
+  .postulacion-inputs {
+    gap: 16px;
+  }
+
+  .postulacion-calc-btn {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .postulacion-result-card {
+    padding: 19px 16px;
+  }
+
+  .postulacion-score {
+    font-size: 1.8rem;
+  }
+
+  .postulacion-universities {
+    max-height: 350px;
+  }
+
+  .postulacion-special,
+  .postulacion-final {
+    font-size: 0.82rem;
+  }
+}
+
+/* =========================================================
+   REDUCIR ANIMACIONES
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .postulacion-results-section {
+    animation: none;
+  }
+
+  .postulacion-calc-btn,
+  .postulacion-input-group input {
+    transition: none;
+  }
+}
