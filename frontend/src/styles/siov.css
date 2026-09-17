@@ -2118,3 +2118,17 @@
 @media (max-width: 576px) {
   .siov-page .siov-orientation .btn { width: 100%; }
 }
+
+/* Enlaces del bloque de contacto del SIOV */
+.contact-footer a,
+.contact-footer a:visited {
+  color: #9ecbff;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contact-footer a,
+.contact-footer a:visited {
+  color: #ffffff;
+}
