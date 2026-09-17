@@ -5,7 +5,7 @@ require_once __DIR__.'/../../helpers/siov.php';
 require_method('POST');$in=read_json_request();
 if(array_diff(array_keys($in),['evento','dimension_id','minutos']))error_response('Campos no permitidos.',422);
 $event=$in['evento']??'';
-$types=['started'=>null,'completed'=>null,'area'=>'areas','career'=>'careers','university'=>'universities'];
+$types=['started'=>null,'completed'=>null,'orientation_requested'=>null,'area'=>'areas','career'=>'careers','university'=>'universities'];
 if(!is_string($event)||!array_key_exists($event,$types))error_response('Evento inválido.',422);
 $db=get_database();$id=0;$minutes=0;
 if($types[$event]){

@@ -2112,3 +2112,9 @@
 .siov-page #screen-intro .card-panel:last-of-type {
   margin-bottom: 1rem;
 }
+
+.siov-page .siov-orientation { text-align: center; }
+.siov-page .siov-orientation .btn { max-width: 100%; white-space: normal; }
+@media (max-width: 576px) {
+  .siov-page .siov-orientation .btn { width: 100%; }
+}
