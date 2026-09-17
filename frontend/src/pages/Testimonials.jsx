@@ -5,7 +5,7 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import ReviewFields from "../components/testimonials/ReviewFields";
 import { listTestimonials, saveTestimonial } from "../services/testimonials";
-import { siovWarning as warning, siovError as showError, siovSuccess as success } from "../components/siov/alerts";
+import { showWarning as warning, showError, showSuccess as success } from "../utils/alerts";
 import "../styles/testimonials.css";
 
 const empty = { nombre: "", comentario: "", calificacion: 0 };

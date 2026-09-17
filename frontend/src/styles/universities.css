@@ -33,7 +33,6 @@
 .admission-step__body h3 { font-size: 21px; }
 .admission-step__body .university-button { max-width: 100%; }
 .admission-admin__steps { margin-top: 28px; }
-.admission-admin > .admin-news-confirm { margin-top: 24px; }
 @media(max-width:1000px){.admission-steps{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:600px){.admission-steps{grid-template-columns:minmax(0,1fr);}}
 
@@ -48,7 +47,6 @@
 .exam-category__body { padding: 20px; display: flex; flex-direction: column; gap: 14px; overflow-wrap: anywhere; }
 .exam-category__body h3 { font-size: 21px; }
 .exam-admin__categories { margin-top: 28px; }
-.exam-admin > .admin-news-confirm { margin-top: 24px; }
 @media(max-width:1000px){.exam-categories{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:600px){.exam-categories{grid-template-columns:minmax(0,1fr);}}
 

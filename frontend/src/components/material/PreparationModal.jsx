@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { siteConfig } from "../../config/siteConfig";
-import { siovAlert } from "../siov/alerts";
+import { showWarning } from "../../utils/alerts";
 
 const options = [
   [
@@ -46,13 +46,8 @@ export default function PreparationModal({ onClose }) {
     };
   }, []);
 
-  function siovWarning(title, text) {
-    return siovAlert.fire({
-      target: dialog.current,
-      icon: "warning",
-      title,
-      text,
-    });
+  function warnInDialog(title, text) {
+    return showWarning(title, text, { target: dialog.current });
   }
 
   function submit(event) {
@@ -66,7 +61,7 @@ export default function PreparationModal({ onClose }) {
         ([key, , allowed]) => !allowed.includes(values[key])
       )
     ) {
-      siovWarning(
+      warnInDialog(
         "Datos incompletos",
         "Completa las opciones y tu nombre."
       );
@@ -76,7 +71,7 @@ export default function PreparationModal({ onClose }) {
     const destination = siteConfig.whatsapp.phone;
 
     if (!/^[1-9][0-9]{6,14}$/.test(destination || "")) {
-      siovWarning(
+      warnInDialog(
         "WhatsApp no disponible",
         "Por favor, comunícate mediante la página de Contacto."
       );

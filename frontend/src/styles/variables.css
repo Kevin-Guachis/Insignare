@@ -1,4 +1,7 @@
 :root {
+  --admin-primary: #1b4f82;
+  --admin-secondary: #64748b;
+  --admin-control-height: 44px;
   --color-primary: #322e59;
   --color-accent: #326cf1;
   --color-background: #f6f7f8;

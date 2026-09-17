@@ -1,3 +1,4 @@
+import { showSuccess, showError, showWarning } from "../../utils/alerts";
 import { useEffect, useState } from "react";
 import { getAdminSettings, saveSiteSettings } from "../../services/settings";
 import { uploadNewsImage } from "../../services/news";
@@ -16,20 +17,19 @@ export default function SiteSettingsForm() {
  const [file,setFile]=useState(null);
  const [busy,setBusy]=useState(false);
  const [error,setError]=useState("");
- const [message,setMessage]=useState("");
  useEffect(()=>{
    let active=true;
-   getAdminSettings().then(data=>{if(active)setValues(data);}).catch(e=>{if(active)setError(e.message);});
+   getAdminSettings().then(data=>{if(active)setValues(data);}).catch(e=>{if(active){setError("No se pudo cargar la información.");showError(e.message);}});
    return()=>{active=false;};
  },[]);
  async function submit(event) {
-   event.preventDefault();setBusy(true);setError("");setMessage("");
+   event.preventDefault();setBusy(true);setError("");
    try {
      const logo=file ? (await uploadNewsImage(file)).imagen : values.logo;
      setValues(current=>({...current,logo}));setFile(null);
      const saved=await saveSiteSettings({...values,logo});
-     setValues(saved);setMessage("Configuración guardada correctamente.");
-   } catch(e) {setError(e.message);}
+     setValues(saved);showSuccess("Configuración guardada correctamente.");
+   } catch(e){showError(e.message);}
    finally {setBusy(false);}
  }
  return <section className="admin-news__card" aria-labelledby="settings-title">
@@ -45,7 +45,7 @@ export default function SiteSettingsForm() {
         const selected=event.target.files[0];
         if(!selected)return;
         if(!/\.(jpe?g|png|webp)$/i.test(selected.name)||selected.size>5*1024*1024){
-          setError("Selecciona JPG, PNG o WebP de hasta 5 MB.");event.target.value="";return;
+          showWarning("Archivo inválido", "Selecciona JPG, PNG o WebP de hasta 5 MB.");event.target.value="";return;
         }
         setError("");setFile(selected);
       }}/>
@@ -59,7 +59,7 @@ export default function SiteSettingsForm() {
        {name==="whatsapp" && <small>Código de país y número, sin + ni espacios. Se guarda para su uso posterior.</small>}
       </div>)}
      </div>
-     {message && <p className="admin-news-message" role="status">{message}</p>}
+
      <button className="admin-news-primary" type="submit">{busy ? "Guardando..." : "Guardar configuración"}</button>
     </fieldset>
    </form>}

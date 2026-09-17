@@ -1,6 +1,6 @@
+import { showSuccess, showError, showWarning } from "../../utils/alerts";
 import { useEffect, useState } from "react";
 import { getAdminContacto, saveContacto } from "../../services/contacto";
-import { siovError, siovSuccess } from "../siov/alerts";
 
 const fields = [
  ["direccion", "Dirección", "text", 500, true],
@@ -23,18 +23,26 @@ export default function ContactSettingsForm() {
  useEffect(() => {
   let active = true;
   getAdminContacto().then(data => { if(active) { setValues(data); setError(""); } })
-   .catch(e => { if(active) { setError(e.message); siovError(e.message); } });
+   .catch(e => { if(active){setError("No se pudo cargar la información.");showError(e.message);} });
   return () => { active = false; };
  }, [retry]);
  async function submit(event) {
-  event.preventDefault(); setBusy(true); setError("");
+  event.preventDefault();
+  if (busy) return;
+  let mapUrl;
   try {
-   const mapUrl = new URL(values.mapa_url.trim());
+   mapUrl = new URL(values.mapa_url.trim());
    if (mapUrl.protocol !== "https:" || !mapUrl.hostname) {
     throw new Error("Usa una URL HTTPS válida para el mapa.");
    }
-   setValues(await saveContacto({ ...values, mapa_url: mapUrl.href })); await siovSuccess("Contacto actualizado", "Los cambios ya están disponibles en la página pública de Contacto."); }
-  catch(e) { const message = e instanceof TypeError ? "Usa una URL HTTPS válida para el mapa." : e.message; setError(message); await siovError(message); }
+  } catch {
+   await showWarning("URL inválida", "Usa una URL HTTPS válida para el mapa.");
+   return;
+  }
+  setBusy(true); setError("");
+  try {
+   setValues(await saveContacto({ ...values, mapa_url: mapUrl.href })); await showSuccess("Contacto actualizado", "Los cambios ya están disponibles en la página pública de Contacto."); }
+  catch(e) { await showError(e.message); }
   finally { setBusy(false); }
  }
  return <section className="admin-news__card" aria-labelledby="contact-settings-title">

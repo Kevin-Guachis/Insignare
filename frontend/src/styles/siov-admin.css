@@ -1,6 +1,6 @@
 .siov-admin{min-width:0;}
 .siov-admin-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:12px;background:#f5f7fb;border:1px solid var(--color-border);border-radius:12px;margin-block:20px 24px;}
-.siov-admin-tabs button{min-width:0;white-space:normal;overflow-wrap:anywhere;min-height:48px;}
+.siov-admin-tabs button{min-width:0;white-space:normal;overflow-wrap:break-word;min-height:var(--admin-control-height);}
 .siov-admin .admin-news-table{min-width:0;table-layout:fixed;}
 .siov-admin .admin-news-table td:nth-child(2){min-width:0;max-width:none;}
 .siov-admin .admin-news-table th:first-child{width:45%;}

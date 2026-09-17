@@ -1,4 +1,4 @@
-import { siovPdfLoading,siovSuccess,siovError } from "./alerts";
+import { showPdfLoading,showSuccess,showError } from "../../utils/alerts";
 import { useCallback,useRef,useState } from "react";
 import SiovCharts from "./SiovCharts";
 import SiovUniversities from "./SiovUniversities";
@@ -9,7 +9,7 @@ export default function SiovResults({ results,content,student,onReset }){
  const [comparison,setComparison]=useState([]);
  const [ready,setReady]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState("");
  const barRef=useRef(null),radarRef=useRef(null);
- const handleChartError=useCallback(message=>{setError(message);siovError(message);},[]);
+ const handleChartError=useCallback(message=>{setError(message);showError(message);},[]);
  const markReady=useCallback(()=>setReady(true),[]);
  const [p,s,t]=results;
  const nombre="El/La estudiante";
@@ -23,7 +23,7 @@ export default function SiovResults({ results,content,student,onReset }){
  <SiovContact/>
  <div className="download-section no-print mb-4"><h3 className="font-display mb-1">¡Tu informe está listo!</h3><p className="text-muted mb-3">Descarga tu informe completo de orientación vocacional en PDF con todos tus resultados, interpretación profesional y oferta académica personalizada.</p>
  {error&&<p role="alert">{error}</p>}
- <button className="btn-download-primary download-pulse" disabled={!ready||busy} onClick={async()=>{setBusy(true);setError("");siovPdfLoading();try{await generarInformePDF({state:{estudiante:student,comparador:comparison},resultadoAreas:results,...content,barCanvas:barRef.current,radarCanvas:radarRef.current});await siovSuccess("Informe generado","Tu informe se ha generado correctamente.");}catch(e){setError(e.message||"No se pudo generar el PDF.");await siovError(e.message||"No se pudo generar el PDF.");}finally{setBusy(false);}}}>{busy?"Generando informe...":"⬇️ Descargar Informe PDF"}</button>
+ <button className="btn-download-primary download-pulse" disabled={!ready||busy} onClick={async()=>{setBusy(true);setError("");showPdfLoading();try{await generarInformePDF({state:{estudiante:student,comparador:comparison},resultadoAreas:results,...content,barCanvas:barRef.current,radarCanvas:radarRef.current});await showSuccess("Informe generado","Tu informe se ha generado correctamente.");}catch(e){setError(e.message||"No se pudo generar el PDF.");await showError(e.message||"No se pudo generar el PDF.");}finally{setBusy(false);}}}>{busy?"Generando informe...":"⬇️ Descargar Informe PDF"}</button>
  <div className="mt-3"><button className="btn btn-outline-secondary" onClick={onReset}>🔄 Realizar Nuevo Test</button></div></div>
  </section>;
 }

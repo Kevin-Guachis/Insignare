@@ -1,3 +1,4 @@
+import { showError, showWarning } from "../../utils/alerts";
 import { useEffect, useRef, useState } from "react";
 import { saveNews, uploadNewsImage, uploadNewsDocument } from "../../services/news";
 
@@ -18,7 +19,6 @@ function NewsForm({ news, onSaved, onCancel }) {
   const documentRef = useRef(null);
   const [preview, setPreview] = useState("");
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
   const titleRef = useRef(null);
 
   useEffect(() => { titleRef.current?.focus(); }, []);
@@ -30,10 +30,10 @@ function NewsForm({ news, onSaved, onCancel }) {
 
   function chooseImage(event) {
     const selected = event.target.files[0];
-    setError("");
+
     if (!selected) return;
     if (!/\.(jpe?g|png|webp)$/i.test(selected.name) || selected.size > 5 * 1024 * 1024) {
-      setError("Selecciona una imagen JPG, PNG o WebP de hasta 5 MB.");
+      showWarning("Archivo inválido", "Selecciona una imagen JPG, PNG o WebP de hasta 5 MB.");
       event.target.value = "";
       return;
     }
@@ -41,13 +41,12 @@ function NewsForm({ news, onSaved, onCancel }) {
     setPreview(URL.createObjectURL(selected));
   }
 
-
   function chooseDocument(event) {
     const selected = event.target.files[0];
-    setError("");
+
     if (!selected) return;
     if (!/\.pdf$/i.test(selected.name) || selected.size > 10 * 1024 * 1024) {
-      setError("Selecciona un archivo PDF de hasta 10 MB.");
+      showWarning("Archivo inválido", "Selecciona un archivo PDF de hasta 10 MB.");
       event.target.value = "";
       return;
     }
@@ -58,7 +57,7 @@ function NewsForm({ news, onSaved, onCancel }) {
     event.preventDefault();
     if (saving) return;
     setSaving(true);
-    setError("");
+
     try {
       const image = file ? (await uploadNewsImage(file)).imagen : values.imagen;
       // Si guardar falla, conserva la imagen ya subida para poder reintentar.
@@ -72,8 +71,7 @@ function NewsForm({ news, onSaved, onCancel }) {
       setDocumentFile(null);
       const saved = await saveNews({ ...values, imagen: image, documento: document, documento_nombre: documentName, ...(news ? { id: news.id } : {}) });
       onSaved(saved);
-    } catch (error) {
-      setError(error.message);
+    } catch(error){showError(error.message);
     } finally {
       setSaving(false);
     }
@@ -128,7 +126,7 @@ function NewsForm({ news, onSaved, onCancel }) {
             <textarea id="news-content" name="contenido" rows="7" value={values.contenido} onChange={update} maxLength={10000} />
           </div>
           {news && <label className="admin-news-check"><input type="checkbox" checked={values.activo === 1} onChange={(event) => setValues((current) => ({ ...current, activo: event.target.checked ? 1 : 0 }))} />Visible en el Home</label>}
-          {error && <p className="admin-login__error" role="alert">{error}</p>}
+
           <div className="admin-news-actions">
             <button className="admin-news-primary" type="submit">{saving ? "Guardando..." : "Guardar noticia"}</button>
             <button className="admin-news-secondary" type="button" onClick={onCancel}>Cancelar</button>
