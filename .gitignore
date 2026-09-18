@@ -37,3 +37,11 @@ dist-ssr
 
 !/backend/uploads/images/.htaccess
 !/backend/uploads/documents/.htaccess
+
+# Archivos generados para despliegue
+deploy/
+insignare_deploy.zip
+insignare_deploy.tar.gz
+
+# Exportación de base de datos
+insignare_db.sql
