@@ -1,6 +1,22 @@
 Options -Indexes
+
 RewriteEngine On
+
+# Proteger carpetas internas del backend
 RewriteRule ^(?:config|database|scripts|helpers|middleware)(?:/|$) - [F,L]
+
+# Bloquear archivos ocultos
 <FilesMatch "^\.">
     Require all denied
 </FilesMatch>
+
+# No enviar las llamadas de la API a React
+RewriteRule ^api(?:/|$) - [L]
+
+# Servir archivos o carpetas reales normalmente
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# React Router: cualquier otra ruta carga index.html
+RewriteRule ^ index.html [L]
