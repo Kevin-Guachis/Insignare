@@ -1,5 +1,6 @@
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useState } from "react";
-import { getContacto, telephoneLink } from "../../services/contacto";
+import { getContacto } from "../../services/contacto";
 
 export default function SiovContact() {
   const [data, setData] = useState(null);
@@ -30,100 +31,41 @@ export default function SiovContact() {
 
   return (
     <div className="contact-footer no-print mb-4">
-      <h4 className="font-display">📞 Contáctanos</h4>
-
-      <div className="row g-3">
-        <div className="col-md-6">
-
-          {data?.telefono1 && (
-            <div className="contact-item">
-              <span className="contact-icon">📱</span>{" "}
-              <a href={telephoneLink(data.telefono1)}>
-                {data.telefono1}
+      <div className="siov-contact-grid">
+        <section aria-labelledby="siov-contact-title">
+          <h4 id="siov-contact-title" className="font-display">Contacto</h4>
+          <div className="siov-contact-links">
+            {[data?.telefono1, data?.telefono2].map((phone, index) => phone && (
+              <a className="siov-contact-button" href={'tel:' + phone.replace(/[^+0-9]/g, "")} key={index}>
+                <i className="bi bi-telephone contact-icon" aria-hidden="true" />
+                <span>{phone}</span>
               </a>
-            </div>
-          )}
-
-          {data?.telefono2 && (
-            <div className="contact-item">
-              <span className="contact-icon">📱</span>{" "}
-              <a href={telephoneLink(data.telefono2)}>
-                {data.telefono2}
-              </a>
-            </div>
-          )}
-
-          <div className="contact-item">
-            <span className="contact-icon">🌐</span>{" "}
-            <a
-              href="https://institutoinsignare.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="siov-static-9"
-            >
-              institutoinsignare.com
+            ))}
+            <a className="siov-contact-button" href="https://institutoinsignare.com" target="_blank" rel="noopener noreferrer">
+              <i className="bi bi-globe contact-icon" aria-hidden="true" />
+              <span>Sitio web</span>
+            </a>
+            <a className="siov-contact-button" href="https://aulainsignare.com" target="_blank" rel="noopener noreferrer">
+              <i className="bi bi-laptop contact-icon" aria-hidden="true" />
+              <span>Aula virtual</span>
             </a>
           </div>
-
-          <div className="contact-item">
-            <span className="contact-icon">💻</span>{" "}
-            <a
-              href="https://aulainsignare.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="siov-static-10"
-            >
-              aulainsignare.com
-            </a>{" "}
-            (Aula Virtual)
+        </section>
+        <section aria-labelledby="siov-social-title">
+          <h4 id="siov-social-title" className="font-display">Redes sociales</h4>
+          <div className="siov-social-links">
+            {[
+              ["instagram", "Instagram"],
+              ["tiktok", "TikTok"],
+              ["facebook", "Facebook"],
+            ].map(([network, label]) => data?.[network] && (
+              <a className="siov-contact-button" href={data[network]} target="_blank" rel="noopener noreferrer" aria-label={`${label} del Instituto Politécnico Insignare (abre en otra pestaña)`} key={network}>
+                <i className={'bi bi-' + network + ' contact-icon'} aria-hidden="true" />
+                <span>{label}</span>
+              </a>
+            ))}
           </div>
-        </div>
-
-        <div className="col-md-6">
-
-          {data?.facebook && (
-            <div className="contact-item">
-              <span className="contact-icon">📘</span>{" "}
-              Facebook:{" "}
-              <a
-                href={data.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Instituto Politécnico Insignare
-              </a>
-            </div>
-          )}
-
-          {data?.instagram && (
-            <div className="contact-item">
-              <span className="contact-icon">📸</span>{" "}
-              Instagram:{" "}
-              <a
-                href={data.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                inst_insignare
-              </a>
-            </div>
-          )}
-
-          {data?.tiktok && (
-            <div className="contact-item">
-              <span className="contact-icon">🎵</span>{" "}
-              TikTok:{" "}
-              <a
-                href={data.tiktok}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                inst_insignare
-              </a>
-            </div>
-          )}
-
-        </div>
+        </section>
       </div>
     </div>
   );

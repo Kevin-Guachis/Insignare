@@ -53,9 +53,9 @@ export default function MaterialResourcesAdmin() {
    <label className="material-field">Descripción *<textarea rows={5} required maxLength={4000} value={editor.description} onChange={e=>setEditor({...editor,description:e.target.value})}/></label>
    <label className="material-field">Archivo PDF *<input type="file" accept=".pdf,application/pdf" required={!editor.file_path} onChange={e=>{
     const selected=e.target.files?.[0];
-    if(selected&&(!/\.pdf$/i.test(selected.name)||selected.size>10*1024*1024)){e.target.value="";setFile(null);showWarning("Archivo inválido","Selecciona un PDF de hasta 10 MB.");return;}
+    if(selected&&(!/\.pdf$/i.test(selected.name)||selected.size>800 * 1024 * 1024)){e.target.value="";setFile(null);showWarning("Archivo inválido","Selecciona un PDF de hasta 800 MB.");return;}
     setFile(selected||null);
-   }}/><small>PDF de hasta 10 MB. {file?file.name:editor.file_name}</small></label>
+   }}/><small>PDF de hasta 800 MB. {file?file.name:editor.file_name}</small></label>
    <label className="admin-news-check"><input type="checkbox" checked={editor.visible===1} onChange={e=>setEditor({...editor,visible:e.target.checked?1:0})}/>Visible</label>
    <div className="admin-news-actions"><button className="admin-news-primary">{busy?"Guardando...":"Guardar recurso"}</button><button type="button" className="admin-news-secondary" onClick={()=>setEditor(null)}>Cancelar</button></div>
   </fieldset></form>:<>

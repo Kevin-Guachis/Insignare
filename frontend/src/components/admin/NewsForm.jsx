@@ -45,8 +45,8 @@ function NewsForm({ news, onSaved, onCancel }) {
     const selected = event.target.files[0];
 
     if (!selected) return;
-    if (!/\.pdf$/i.test(selected.name) || selected.size > 10 * 1024 * 1024) {
-      showWarning("Archivo inválido", "Selecciona un archivo PDF de hasta 10 MB.");
+    if (!/\.pdf$/i.test(selected.name) || selected.size > 800 * 1024 * 1024) {
+      showWarning("Archivo inválido", "Selecciona un archivo PDF de hasta 800 MB.");
       event.target.value = "";
       return;
     }
@@ -109,7 +109,7 @@ function NewsForm({ news, onSaved, onCancel }) {
 
             <label htmlFor="news-document">Documento PDF</label>
             <input ref={documentRef} id="news-document" type="file" accept=".pdf,application/pdf" onChange={chooseDocument} aria-describedby="news-document-help" />
-            <small id="news-document-help">PDF. Máximo 10 MB. Los cambios se aplican al guardar la noticia.</small>
+            <small id="news-document-help">PDF. Máximo 800 MB. Los cambios se aplican al guardar la noticia.</small>
             {documentFile ? <p>Seleccionado: {documentFile.name}</p> : values.documento && <p>Documento actual: <a href={values.documento} target="_blank" rel="noopener noreferrer">{values.documento_nombre || "Documento PDF"}</a></p>}
             {(documentFile || values.documento) && <button className="admin-news-secondary" type="button" onClick={() => {
               setDocumentFile(null);

@@ -890,7 +890,7 @@
    ========================================================= */
 
 .siov-page .contact-footer {
-  background: var(--siov-primary);
+  background: linear-gradient(125deg, var(--siov-primary), #2542a1);
 
   color: #ffffff;
 
@@ -911,29 +911,90 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-.siov-page .contact-item {
-  display: flex;
+.siov-page .siov-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
 
-  align-items: center;
+.siov-page .siov-contact-grid > section {
+  min-width: 0;
+  width: min(100%, 320px);
+  justify-self: center;
+}
 
+.siov-page .siov-contact-grid h4 {
+  text-align: center;
+}
+
+.siov-page .siov-contact-links,
+.siov-page .siov-social-links {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.65rem;
+}
 
-  margin-bottom: 0.5rem;
-
-  color: rgba(255, 255, 255, 0.92);
-
+.siov-page .siov-contact-button {
+  --contact-accent: #8cb9ff;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  min-height: 60px;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-left: 3px solid var(--contact-accent);
+  border-radius: var(--siov-radius-small);
+  background: color-mix(in srgb, var(--contact-accent) 16%, transparent);
+  color: var(--siov-text-light);
   font-size: 0.9rem;
-
+  font-weight: 600;
   line-height: 1.45;
+  text-decoration: none;
+  transition: background-color 0.18s ease, border-color 0.18s ease;
+}
 
+.siov-page .siov-contact-button > span {
+  min-width: 0;
   overflow-wrap: anywhere;
 }
 
-.siov-page .contact-icon {
-  width: 28px;
-  height: 28px;
+.siov-page .siov-contact-button:visited {
+  color: var(--siov-text-light);
+}
 
-  flex: 0 0 28px;
+.siov-page .siov-contact-button:hover {
+  background: color-mix(in srgb, var(--contact-accent) 28%, transparent);
+  border-color: var(--contact-accent);
+}
+
+.siov-page .siov-contact-button:has(.bi-telephone) {
+  --contact-accent: #7ee2bc;
+}
+
+.siov-page .siov-contact-button:has(.bi-laptop) {
+  --contact-accent: #ffd080;
+}
+
+.siov-page .siov-contact-button:has(.bi-instagram) {
+  --contact-accent: #ffabd5;
+}
+
+.siov-page .siov-contact-button:has(.bi-tiktok) {
+  --contact-accent: #79e7ee;
+}
+
+.siov-page .contact-footer .siov-contact-button:focus-visible {
+  outline: 3px solid var(--siov-text-light);
+  outline-offset: 3px;
+}
+
+.siov-page .contact-icon {
+  width: 32px;
+  height: 32px;
+
+  flex: 0 0 32px;
 
   display: flex;
 
@@ -941,13 +1002,13 @@
 
   justify-content: center;
 
-  background: rgba(255, 255, 255, 0.13);
+  background: color-mix(in srgb, var(--contact-accent) 18%, transparent);
 
-  border-radius: 50%;
+  border-radius: var(--siov-radius-small);
 
-  color: #ffffff;
+  color: var(--contact-accent);
 
-  font-size: 0.85rem;
+  font-size: 1.2rem;
 }
 
 
@@ -1482,10 +1543,8 @@
     border-radius: 10px;
   }
 
-  .siov-page .contact-item {
-    align-items: flex-start;
-
-    font-size: 0.86rem;
+  .siov-page .siov-contact-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .siov-page .siov-chart {
@@ -2117,18 +2176,4 @@
 .siov-page .siov-orientation .btn { max-width: 100%; white-space: normal; }
 @media (max-width: 576px) {
   .siov-page .siov-orientation .btn { width: 100%; }
-}
-
-/* Enlaces del bloque de contacto del SIOV */
-.contact-footer a,
-.contact-footer a:visited {
-  color: #9ecbff;
-  font-weight: 500;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.contact-footer a,
-.contact-footer a:visited {
-  color: #ffffff;
 }

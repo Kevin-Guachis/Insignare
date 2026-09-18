@@ -22,10 +22,10 @@ export default function UniversityDocumentForm({ document,universityId,onSaved,o
   <div className="admin-news-field"><label htmlFor="university-document-file">Archivo PDF</label>
    <input ref={fileRef} id="university-document-file" type="file" accept=".pdf,application/pdf" required={!values.archivo&&!file} onChange={e=>{
     const selected=e.target.files[0];if(!selected)return;
-    if(!/\.pdf$/i.test(selected.name)||selected.size>10*1024*1024){showWarning("Archivo inválido", "Selecciona un PDF de hasta 10 MB.");e.target.value="";return;}
+    if(!/\.pdf$/i.test(selected.name)||selected.size>800 * 1024 * 1024){showWarning("Archivo inválido", "Selecciona un PDF de hasta 800 MB.");e.target.value="";return;}
     setFile(selected);
    }}/>
-   <small>Solo PDF. Máximo 10 MB. Selecciona otro archivo para reemplazar el actual.</small>
+   <small>Solo PDF. Máximo 800 MB. Selecciona otro archivo para reemplazar el actual.</small>
    {file?<p>Seleccionado: {file.name}</p>:values.archivo&&<p>Documento actual: <a href={values.archivo} target="_blank" rel="noopener noreferrer">{values.documento_nombre||"Documento PDF"}</a></p>}
    {file&&<button type="button" className="admin-news-secondary" onClick={()=>{setFile(null);fileRef.current.value="";}}>Cancelar selección</button>}
   </div>

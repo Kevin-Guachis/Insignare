@@ -27,11 +27,17 @@
   height: auto;
 }
 
+.site-brand__name,
+.site-footer__brand-name {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .site-brand__name {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 10px;
-  font-weight: 900;
-  line-height: 1.1;
+  font-size: 11px;
 }
 
 .site-nav {
@@ -285,8 +291,9 @@
 }
 
 .site-footer {
+  --footer-background: #102465;
   padding-top: 80px;
-  background: var(--color-primary);
+  background: var(--footer-background);
   color: var(--color-white);
 }
 
@@ -321,10 +328,7 @@
 }
 
 .site-footer__brand-name {
-  font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(19px, 1.5vw, 27px);
-  font-weight: 900;
-  line-height: 1.2;
 }
 
 .site-footer__about p,
@@ -371,7 +375,7 @@
 }
 
 .site-footer__icon {
-  color: color-mix(in srgb, var(--color-white) 50%, var(--color-primary));
+  color: color-mix(in srgb, var(--color-white) 75%, var(--footer-background));
   font-size: 18px;
   line-height: 1.5;
 }

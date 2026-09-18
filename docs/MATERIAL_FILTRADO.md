@@ -13,7 +13,7 @@ APIs bajo /api/material-resources/:
 
 PDFs: backend/uploads/documents/, nombres físicos aleatorios y nombre visible en file_name.
 El directorio existente debe ser escribible por PHP. Mantener su protección contra ejecución.
-PHP debe admitir upload_max_filesize=10M o superior y post_max_size mayor que 10M (por ejemplo 12M).
+PHP debe admitir upload_max_filesize=800M y post_max_size=820M. Consulta la configuración de subidas PDF en README.md.
 No se eliminan archivos físicos compartidos al borrar/reemplazar recursos; se actualiza la referencia.
 
 WhatsApp reutiliza frontend/src/config/siteConfig.js, igual que el botón flotante actual.

@@ -37,10 +37,10 @@ export default function AcademicOfferForm({ offer, universityId, onSaved, onCanc
    <div className="admin-news-field"><label htmlFor="offer-document">Documento PDF</label>
     <input ref={documentRef} id="offer-document" type="file" accept=".pdf,application/pdf" onChange={e=>{
      const file=e.target.files[0];if(!file)return;
-     if(!/\.pdf$/i.test(file.name)||file.size>10*1024*1024){showWarning("Archivo inválido", "Usa un PDF de hasta 10 MB.");e.target.value="";return;}
+     if(!/\.pdf$/i.test(file.name)||file.size>800 * 1024 * 1024){showWarning("Archivo inválido", "Usa un PDF de hasta 800 MB.");e.target.value="";return;}
      setDocument(file);
     }}/>
-    <small>PDF. Máximo 10 MB.</small>
+    <small>PDF. Máximo 800 MB.</small>
     {document?<p>Seleccionado: {document.name}</p>:values.documento&&<p>Documento actual: <a href={values.documento} target="_blank" rel="noopener noreferrer">{values.documento_nombre||"Documento PDF"}</a></p>}
     {(document||values.documento)&&<button type="button" className="admin-news-secondary" onClick={()=>{setDocument(null);setValues({...values,documento:"",documento_nombre:""});documentRef.current.value="";}}>Quitar documento</button>}
    </div>

@@ -62,7 +62,7 @@ la creación mediante un bloqueo MySQL. No existe registro público ni usuario p
 Terminal 1, desde la raíz:
 
 ```sh
-php -S localhost:8000 -t backend
+php -d upload_max_filesize=800M -d post_max_size=820M -d max_input_time=3600 -d max_execution_time=300 -S localhost:8000 -t backend
 ```
 
 Terminal 2, desde la raíz:
@@ -575,3 +575,11 @@ El servicio universityGallery y su hook actualizan al guardar, al enfocar y cada
 Migración, catálogo, privacidad, APIs y validación: [docs/SIOV.md](docs/SIOV.md).
 Importación inicial: php backend/scripts/import_siov.php. No sobrescribe contenido existente.
 
+
+## Subidas PDF de hasta 800 MB
+
+El límite por PDF es 800 × 1024 × 1024 bytes en noticias, documentos universitarios, oferta académica y material filtrado. Las imágenes conservan su límite de 5 MB.
+
+El comando local anterior aplica los límites al iniciar PHP; reinicia el backend con ese comando. En PHP-FPM/CGI se incluye `backend/.user.ini` con `upload_max_filesize=800M`, `post_max_size=820M`, `max_input_time=3600` y `max_execution_time=300`. Si el hosting no permite estos valores o utiliza mod_php, aplícalos desde su panel o php.ini y reinicia el servicio cuando corresponda. `.user.ini` no configura el servidor PHP incorporado.
+
+El servidor web y cualquier proxy deben permitir cuerpos de al menos 820 MB y tiempos de subida acordes a la conexión. Comprueba los límites del proveedor; un proxy puede rechazar la subida antes de que llegue a PHP. Debe haber espacio suficiente tanto en el directorio temporal de PHP como en `backend/uploads/documents/` para el archivo. La validación se realiza por bloques sin cargar todo el PDF en memoria.
