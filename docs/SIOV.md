@@ -95,10 +95,39 @@ el fetch lleva credentials: omit y referrerPolicy: no-referrer.
 ## Archivos y validación
 React en `frontend/src/components/siov/`:
 SiovIntro, SiovStudent, SiovTest, SiovResults, SiovCharts, SiovCareer,
-SiovUniversities, SiovContact; model.js, libraries.js y report.js.
+SiovUniversities, SiovContact; model.js y report.js.
 Entrada: pages/Siov.jsx. API: services/siov.js. Administración: components/admin/SiovAdmin.jsx.
 Estilos: styles/siov.css. Logo PDF: assets/images/siov-report-logo.png.
-Recursos existentes del original: public/siov/vendor/ (licencias conservadas).
+Chart.js 4.4.4 y jsPDF 2.5.1 se instalan desde npm con versiones exactas.
+SiovCharts y report.js usan imports ES Modules dinámicos, resueltos por Vite;
+chart.js/auto registra los mismos componentes que la distribución UMD anterior.
+libraries.js ya no es necesario. No se modifican la configuración de gráficos,
+los cálculos, los textos ni la maquetación del PDF.
+
+Recursos heredados en public/siov/vendor/ (conservados, no usados por React):
+- chart.umd.min.js: antes creaba window.Chart.
+- jspdf.umd.min.js: antes creaba window.jspdf y su constructor jsPDF.
+- index.html: aplicación autónoma antigua; carga ambas librerías desde CDN.
+- Chart.js-LICENSE.md y jsPDF-LICENSE.txt: avisos de licencia, sin ejecución.
+
+La carga anterior dependía de las dos URLs UMD absolutas mediante Promise.all:
+si faltaba cualquiera, fallaba la preparación de gráficos y del PDF aunque
+React siguiera cargando. Restaurar los cinco archivos restablecía esas dos
+dependencias; no demuestra que el HTML o las licencias fueran requisitos de
+ejecución. No hay referencias desde React al HTML ni a las licencias.
+No se ha inspeccionado la configuración ni los errores del servidor de producción.
+
+Vite copia los archivos heredados de public a dist, pero los módulos generados
+ya no los solicitan. La carpeta vendor puede retirarse del despliegue React.
+Antes de borrarla del repositorio, conservar el HTML histórico fuera de public
+para revisión y ajustar la prueba si se cambia su ruta; conservar también los
+avisos de licencia fuera de vendor. La prueba siov-model.test.mjs todavía lee
+public/siov/index.html, no public/siov/vendor/index.html.
+
+Antes de desplegar, probar el build con /siov/vendor bloqueado en Network y
+caché desactivada: completar el test, comprobar barras/radar, descargar varias
+veces el PDF y comparar con el anterior usando las mismas respuestas, con y
+sin comparador de carreras. Revisar textos, cifras, logo, gráficos y paginación.
 
 Validar con PHP local activo:
 ```sh

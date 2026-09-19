@@ -1,5 +1,4 @@
 import reportLogo from "../../assets/images/siov-report-logo.png";
-import { loadSiovLibraries } from "./libraries";
 import { studentError } from "./studentValidation";
 import { chartConfig } from "./chartConfig";
 import { reportText } from "./reportText";
@@ -16,12 +15,15 @@ export async function generarInformePDF({
   const invalid = studentError(state.estudiante);
   if (invalid) throw new Error(invalid.message);
 
-  await loadSiovLibraries();
+  const [{ default: Chart }, { jsPDF }] = await Promise.all([
+    import("chart.js/auto"),
+    import("jspdf"),
+  ]);
 
   const text = reportText({ state, resultadoAreas, AREAS });
   const e = state.estudiante;
 
-  const doc = new window.jspdf.jsPDF({
+  const doc = new jsPDF({
     unit: "pt",
     format: "a4",
     compress: true,
@@ -335,7 +337,7 @@ export async function generarInformePDF({
     canvas.width = Math.round(contentWidth);
     canvas.height = h;
 
-    const chart = new window.Chart(
+    const chart = new Chart(
       canvas,
       chartConfig(resultadoAreas, type, true)
     );

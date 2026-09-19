@@ -1,13 +1,12 @@
 import { useEffect } from "react";
-import { loadSiovLibraries } from "./libraries";
 import { chartConfig } from "./chartConfig";
 export default function SiovCharts({ results,barRef,radarRef,onReady,onError }){
  useEffect(()=>{
   let active=true,bar,radar;
-  loadSiovLibraries().then(()=>{
+  import("chart.js/auto").then(({ default: Chart })=>{
    if(!active)return;
-   bar=new window.Chart(barRef.current,chartConfig(results,"bar"));
-   radar=new window.Chart(radarRef.current,chartConfig(results,"radar"));
+   bar=new Chart(barRef.current,chartConfig(results,"bar"));
+   radar=new Chart(radarRef.current,chartConfig(results,"radar"));
    onReady();
   }).catch(e=>{if(active)onError(e.message);});
   return()=>{active=false;bar?.destroy();radar?.destroy();};
