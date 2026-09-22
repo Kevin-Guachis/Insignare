@@ -1,0 +1,799 @@
+{
+  "source": "uce_nivelacion.html",
+  "source_sha256": "18f7a6ccbe3e3b39b1153b7373f2e7e9712ab55237839dfa7d44656533799603",
+  "university_slug": "uce",
+  "faculties": [
+    {
+      "nombre": "Facultad de Artes",
+      "careers": [
+        {
+          "nombre": "Artes Escénicas",
+          "subjects": [
+            "Narración Creativa",
+            "Introducción a la Estética y Teoría del Arte",
+            "Preentrenamiento Actoral",
+            "Técnicas de Escritura Académica",
+            "Ética, Pensamiento Universitario y Sostenibilidad"
+          ]
+        },
+        {
+          "nombre": "Artes Plásticas",
+          "subjects": [
+            "Introducción a la Estética y Teoría del Arte",
+            "Técnicas de Escritura Académica",
+            "Taller de Introducción al Dibujo y la Pintura",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Modelado y Bidimensional"
+          ]
+        },
+        {
+          "nombre": "Artes Musicales",
+          "subjects": [
+            "Entrenamiento Auditivo y Ensamble",
+            "Introducción a la Estética y Teoría del Arte",
+            "Técnicas de Escritura Académica",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Armonía e Instrumento Complementario"
+          ]
+        },
+        {
+          "nombre": "Danza",
+          "subjects": [
+            "Introducción a la Anatomía Aplicada a la Danza",
+            "Introducción a la Estética y Teoría del Arte",
+            "Técnicas de Escritura Académica",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Introducción a la Danza Contemporánea"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Arquitectura y Urbanismo",
+      "careers": [
+        {
+          "nombre": "Arquitectura",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Geometría y Dibujo",
+            "Introducción a la Arquitectura: Principios Básicos de Composición",
+            "Matemática"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Ciencias",
+      "careers": [
+        {
+          "nombre": "Matemática",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Geometría y Dibujo",
+            "Matemática"
+          ]
+        },
+        {
+          "nombre": "Ciencia de Datos e Inteligencia Artificial",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Geometría y Dibujo",
+            "Matemática"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Ciencias Administrativas",
+      "careers": [
+        {
+          "nombre": "Administración de Empresas",
+          "subjects": [
+            "Expresión Oral y Escrita",
+            "Introducción a la Contabilidad",
+            "Administración/Administración Pública",
+            "EPUS-EMP-01",
+            "Fundamentos de Matemática"
+          ]
+        },
+        {
+          "nombre": "Administración Pública",
+          "subjects": [
+            "Expresión Oral y Escrita",
+            "Introducción a la Contabilidad",
+            "Administración/Administración Pública",
+            "EPUS-PUB-01",
+            "Fundamentos de Matemática"
+          ]
+        },
+        {
+          "nombre": "Contabilidad y Auditoría",
+          "subjects": [
+            "Expresión Oral y Escrita",
+            "Introducción a la Contabilidad",
+            "Administración/Administración Pública",
+            "Fundamentos de Matemática",
+            "Ética, Pensamiento Universitario y Sostenibilidad"
+          ]
+        },
+        {
+          "nombre": "Administración de Empresas Distancia",
+          "subjects": [
+            "Expresión Oral y Escrita",
+            "Introducción a la Contabilidad",
+            "Administración/Administración Pública",
+            "Fundamentos de Matemática",
+            "Ética, Pensamiento Universitario y Sostenibilidad"
+          ]
+        },
+        {
+          "nombre": "Administración Pública Distancia",
+          "subjects": [
+            "Expresión Oral y Escrita",
+            "Introducción a la Contabilidad",
+            "Administración/Administración Pública",
+            "PUBD-01-MAT",
+            "Ética, Pensamiento Universitario y Sostenibilidad"
+          ]
+        },
+        {
+          "nombre": "Contabilidad y Auditoría Distancia",
+          "subjects": [
+            "Expresión Oral y Escrita",
+            "Introducción a la Contabilidad",
+            "Administración/Administración Pública",
+            "Fundamentos de Matemática",
+            "Ética, Pensamiento Universitario y Sostenibilidad"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Ciencias Agrícolas",
+      "careers": [
+        {
+          "nombre": "Agronomía",
+          "subjects": [
+            "Biología",
+            "Ética, Pensamiento Universitario y Sostenibilidad (AGR - 01)",
+            "Lenguaje y Comunicación",
+            "Matemática",
+            "Química Básica"
+          ]
+        },
+        {
+          "nombre": "Turismo",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Introducción al Turismo",
+            "Matemática",
+            "Sociedad y Cultura",
+            "Técnicas de Estudio"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Ciencias Biológicas",
+      "careers": [
+        {
+          "nombre": "Biología",
+          "subjects": [
+            "Biología",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Matemática",
+            "Química"
+          ]
+        },
+        {
+          "nombre": "Recursos Naturales y Renovables",
+          "subjects": [
+            "Biología",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Matemática",
+            "Química"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Ciencias de la Discapacidad, Atención Prehospitalaria y Desastres",
+      "careers": [
+        {
+          "nombre": "Atención Prehospitalaria",
+          "subjects": [
+            "Anatomía",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Fisiología",
+            "Fundamentos de Biofísica",
+            "Lenguaje y Comunicación"
+          ]
+        },
+        {
+          "nombre": "Fisioterapia",
+          "subjects": [
+            "Anatomía",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Fisiología",
+            "Fundamentos de Biofísica",
+            "Lenguaje y Comunicación"
+          ]
+        },
+        {
+          "nombre": "Fonoaudiología",
+          "subjects": [
+            "Anatomía",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Fisiología",
+            "Fundamentos de Biofísica",
+            "Lenguaje y Comunicación"
+          ]
+        },
+        {
+          "nombre": "Terapia Ocupacional",
+          "subjects": [
+            "Anatomía",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Fisiología",
+            "Fundamentos de Biofísica",
+            "Lenguaje y Comunicación"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Ciencias Económicas",
+      "careers": [
+        {
+          "nombre": "Economía",
+          "subjects": [
+            "Contabilidad",
+            "Economía",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Matemática"
+          ]
+        },
+        {
+          "nombre": "Estadística",
+          "subjects": [
+            "Economía",
+            "Estadística",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Matemática"
+          ]
+        },
+        {
+          "nombre": "Finanzas",
+          "subjects": [
+            "Contabilidad",
+            "Economía",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Matemática"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Ciencias Médicas",
+      "careers": [
+        {
+          "nombre": "Enfermería",
+          "subjects": [
+            "Biología Humana",
+            "Ciencias Exactas para el Área de la Salud",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Principios Éticos de la Salud"
+          ]
+        },
+        {
+          "nombre": "Imagenología y Radiología",
+          "subjects": [
+            "Biología Humana",
+            "Ciencias Exactas para el Área de la Salud",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Principios Éticos de la Salud"
+          ]
+        },
+        {
+          "nombre": "Laboratorio Clínico",
+          "subjects": [
+            "Biología Humana",
+            "Ciencias Exactas para el Área de la Salud",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Principios Éticos de la Salud"
+          ]
+        },
+        {
+          "nombre": "Medicina",
+          "subjects": [
+            "Biología Humana 01",
+            "Ciencias Exactas para el Área de la Salud",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Principios Éticos de la Salud"
+          ]
+        },
+        {
+          "nombre": "Obstetricia",
+          "subjects": [
+            "Biología Humana",
+            "Ciencias Exactas para el Área de la Salud",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Principios Éticos de la Salud"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Ciencias Psicológicas",
+      "careers": [
+        {
+          "nombre": "Psicología Clínica",
+          "subjects": [
+            "Cosmovisión de la Psicología",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Habilidades Lingüísticas",
+            "Lógica del Pensamiento",
+            "Sociedad y Cultura"
+          ]
+        },
+        {
+          "nombre": "Psicología Educativa",
+          "subjects": [
+            "Cosmovisión de la Psicología",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Habilidades Lingüísticas",
+            "Lógica del Pensamiento",
+            "Sociedad y Cultura"
+          ]
+        },
+        {
+          "nombre": "Psicología Organizacional",
+          "subjects": [
+            "Cosmovisión de la Psicología",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Habilidades Lingüísticas",
+            "Lógica del Pensamiento",
+            "Sociedad y Cultura"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Ciencias Químicas",
+      "careers": [
+        {
+          "nombre": "Bioquímica y Farmacia",
+          "subjects": [
+            "BFA-01",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Matemática",
+            "Química"
+          ]
+        },
+        {
+          "nombre": "Química",
+          "subjects": [
+            "Biología",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Matemática",
+            "Química"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Ciencias Sociales y Humanas",
+      "careers": [
+        {
+          "nombre": "Antropología",
+          "subjects": [
+            "Estadística Aplicada a las Ciencias Sociales",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Introducción a la Antropología",
+            "Lenguaje Ciencia y Filosofía",
+            "Lógica"
+          ]
+        },
+        {
+          "nombre": "Filosofía",
+          "subjects": [
+            "Estadística Aplicada a las Ciencias Sociales",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Introducción a la Filosofía",
+            "Lenguaje, Ciencia y Filosofía",
+            "Lógica"
+          ]
+        },
+        {
+          "nombre": "Historia",
+          "subjects": [
+            "Estadística Aplicada a las Ciencias Sociales",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Introducción a la Historia",
+            "Lenguaje, Ciencia y Filosofía",
+            "Lógica"
+          ]
+        },
+        {
+          "nombre": "Políticas",
+          "subjects": [
+            "Estadística Aplicada a las Ciencias Sociales",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Introducción a la Teoría Social",
+            "Lenguaje, Ciencia y Filosofía",
+            "Lógica CPO"
+          ]
+        },
+        {
+          "nombre": "Sociología",
+          "subjects": [
+            "Estadística Aplicada a las Ciencias Sociales",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Introducción a la Teoría Social",
+            "Lenguaje, Ciencia y Filosofía",
+            "Lógica"
+          ]
+        },
+        {
+          "nombre": "Trabajo Social",
+          "subjects": [
+            "Estadística Aplicada a las Ciencias Sociales",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Introducción a la Teoría Social",
+            "Lenguaje Ciencia Filosofia",
+            "Lógica"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Comunicación Social",
+      "careers": [
+        {
+          "nombre": "Comunicación",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Lectura Comprensiva",
+            "Lenguaje y Comunicación",
+            "Sociedad y Cultura"
+          ]
+        },
+        {
+          "nombre": "Periodismo",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Lectura Comprensiva",
+            "Lenguaje y Comunicación",
+            "Sociedad y Cultura"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Cultura Física",
+      "careers": [
+        {
+          "nombre": "Entrenamiento Deportivo",
+          "subjects": [
+            "Preparación Física Aplicada al Entrenamiento Deportivo",
+            "Biología Funcional",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Lenguaje y Comunicación",
+            "Matemática-EDEP-01"
+          ]
+        },
+        {
+          "nombre": "Pedagogía de la Actividad Física y Deporte",
+          "subjects": [
+            "Matemática-PAFD-01",
+            "Biología del Ser Humano",
+            "Lenguaje y Comunicación",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Acondicionamiento Físico"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Ingeniería y Ciencias Aplicadas",
+      "careers": [
+        {
+          "nombre": "Computación",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Fundamentos de Programación",
+            "Matemática Computación-01"
+          ]
+        },
+        {
+          "nombre": "Diseño Industrial",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Geometría y Dibujo",
+            "Matemática"
+          ]
+        },
+        {
+          "nombre": "Ingeniería Civil",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física Ing Civil 01",
+            "Matemática",
+            "Química"
+          ]
+        },
+        {
+          "nombre": "Mecánica",
+          "subjects": [
+            "Dibujo Técnico",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Geometría y Trigonometría",
+            "Matemática"
+          ]
+        },
+        {
+          "nombre": "Sistemas de Información",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Introducción a Sistemas Información",
+            "Matemática Sistemas-01"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Filosofía, Letras y Ciencias de la Educación",
+      "careers": [
+        {
+          "nombre": "Educación Básica Presencial",
+          "subjects": [
+            "Sociedad y Educación",
+            "Introducción a la Carrera",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Matemática",
+            "Lenguaje y Comunicación"
+          ]
+        },
+        {
+          "nombre": "Educación Básica Semi-presencial",
+          "subjects": [
+            "Matemática",
+            "Sociedad y Educación",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Introducción a la Carrera",
+            "Lenguaje y Comunicación"
+          ]
+        },
+        {
+          "nombre": "Educación Inicial Presencial",
+          "subjects": [
+            "Sociedad y Educación",
+            "Introducción a la Carrera",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Matemática",
+            "Lenguaje y Comunicación EI 01"
+          ]
+        },
+        {
+          "nombre": "Educación Inicial Semi-presencial",
+          "subjects": [
+            "Sociedad y Educación",
+            "Introducción a la Carrera",
+            "Matemática",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Lenguaje y Comunicación"
+          ]
+        },
+        {
+          "nombre": "Pedagogía de la Historia y las Ciencias Sociales",
+          "subjects": [
+            "Sociedad y Educación",
+            "Introducción a la Carrera",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Matemática",
+            "Lenguaje y Comunicación"
+          ]
+        },
+        {
+          "nombre": "Pedagogía de la Lengua y la Literatura",
+          "subjects": [
+            "Lenguaje y Comunicación PLL01",
+            "Matemática",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Sociedad y Educación",
+            "Introducción a la Carrera"
+          ]
+        },
+        {
+          "nombre": "Pedagogía de las Ciencias Experimentales Informática",
+          "subjects": [
+            "Sociedad y Educación",
+            "Matemática",
+            "Introducción a la Carrera",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Lenguaje y Comunicación"
+          ]
+        },
+        {
+          "nombre": "Pedagogía de las Ciencias Experimentales Matemática y Física",
+          "subjects": [
+            "Sociedad y Educación",
+            "Introducción a la Carrera-001",
+            "Matemática",
+            "Lenguaje y Comunicación",
+            "Ética, Pensamiento Universitario y Sostenibilidad"
+          ]
+        },
+        {
+          "nombre": "Pedagogía de las Ciencias Experimentales Química y Biología",
+          "subjects": [
+            "Sociedad y Educación",
+            "Introducción a la Carrera",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Matemática 001",
+            "Lenguaje y Comunicación"
+          ]
+        },
+        {
+          "nombre": "Pedagogía de los Idiomas Nacionales y Extranjeros Inglés",
+          "subjects": [
+            "Lenguaje y Comunicación",
+            "Sociedad y Educación",
+            "Introducción a la Carrera",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Matemática"
+          ]
+        },
+        {
+          "nombre": "Pedagogía de los Idiomas Nacionales y Extranjeros Español - Francés - Inglés",
+          "subjects": [
+            "Matemática",
+            "Sociedad y Educación FRAN -01",
+            "Introducción a la Carrera",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Lenguaje y Comunicación"
+          ]
+        },
+        {
+          "nombre": "Pedagogía Técnica de la Mecatrónica",
+          "subjects": [
+            "Sociedad y Educación",
+            "Introducción a la Carrera",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Lenguaje y Comunicación",
+            "Matemática"
+          ]
+        },
+        {
+          "nombre": "Psicopedagogía",
+          "subjects": [
+            "Sociedad y Educación",
+            "Introducción a la Carrera",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Matemática",
+            "Lenguaje y Comunicación"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Ingeniería en Geología, Minas, Petróleos y Ambiental",
+      "careers": [
+        {
+          "nombre": "Geología",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Matemática",
+            "Química"
+          ]
+        },
+        {
+          "nombre": "Ingeniería Ambiental",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Matemática",
+            "Química"
+          ]
+        },
+        {
+          "nombre": "Minas",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Matemática",
+            "Química"
+          ]
+        },
+        {
+          "nombre": "Petróleos",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Matemática",
+            "Química"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Ingeniería Química",
+      "careers": [
+        {
+          "nombre": "Bioprocesos",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Expresión Oral y Escrita",
+            "Física",
+            "Geometría y Trigonometría",
+            "Matemática",
+            "Química"
+          ]
+        },
+        {
+          "nombre": "Ingeniería Química",
+          "subjects": [
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Expresión Oral y Escrita",
+            "Física",
+            "Geometría y Trigonometría",
+            "Matemática",
+            "Química"
+          ]
+        },
+        {
+          "nombre": "Materiales",
+          "subjects": [
+            "Expresión Oral y Escrita",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Física",
+            "Geometría y Trigonometría",
+            "Matemática",
+            "Química"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Jurisprudencia",
+      "careers": [
+        {
+          "nombre": "Derecho",
+          "subjects": [
+            "01 Ética, Pensamiento Universitario y Sostenibilidad",
+            "Geopolítica y Realidad Nacional",
+            "Lenguaje y Comunicación 01",
+            "Matemática",
+            "Problemas Filosóficos"
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Facultad de Medicina Veterinaria y Zootecnia",
+      "careers": [
+        {
+          "nombre": "Medicina Veterinaria",
+          "subjects": [
+            "Química",
+            "Biología",
+            "Ética, Pensamiento Universitario y Sostenibilidad",
+            "Matemática"
+          ]
+        }
+      ]
+    }
+  ]
+}

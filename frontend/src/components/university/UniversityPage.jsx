@@ -1,4 +1,5 @@
 import UniversitySectionRenderer from "./UniversitySectionRenderer";
+import UniversityHeading from "./UniversityHeading";
 import { useUniversitySections } from "../../hooks/useUniversitySections";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -17,14 +18,8 @@ export default function UniversityPage() {
  return <><Header/><main className="universities-page"><div className="container">
   <Link className="university-back" to="/ingreso-a-la-u">Volver a universidades</Link>
   {loading?<p role="status">Cargando universidad...</p>:error?<p role="alert">{error} <button type="button" className="university-button" onClick={reload}>Reintentar</button></p>:
-  <article className="university-detail">
-   {university.imagen_portada&&<img className="university-cover" src={university.imagen_portada} alt={university.nombre}/>}
-   <div className="university-detail__body">
-    {university.logo&&<img className="university-logo" src={university.logo} alt=""/>}
-    <h1>{university.nombre}</h1><p className="university-description">{university.descripcion}</p>
-   </div>
-  </article>}
+  <UniversityHeading university={university} />}
 
-  {university&&!loading&&!error&&(sectionState.loading?<p role="status">Cargando secciones...</p>:sectionState.error?<p role="alert">{sectionState.error} <button type="button" className="university-button" onClick={sectionState.reload}>Reintentar</button></p>:<UniversitySectionRenderer sections={sectionState.sections}/>)}
+  {university&&!loading&&!error&&(sectionState.loading?<p role="status">Cargando secciones...</p>:sectionState.error?<p role="alert">{sectionState.error} <button type="button" className="university-button" onClick={sectionState.reload}>Reintentar</button></p>:<UniversitySectionRenderer sections={sectionState.sections} university={university}/>)}
  </div></main><Footer/></>;
 }

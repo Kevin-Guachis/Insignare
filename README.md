@@ -100,6 +100,85 @@ y [password_hash](https://www.php.net/manual/en/function.password-hash.php).
 
 ## Validación
 
+### Nivelación universitaria por universidad
+
+Con la tabla `universities` existente, instala las tablas relacionales:
+
+```sh
+php backend/scripts/install_academic_catalog.php
+```
+
+También puedes importar `backend/database/academic_catalog_schema.sql` en la misma
+base. La migración es aditiva y se puede repetir; conserva las secciones, tarjetas
+y documentos existentes. No importa datos del HTML de referencia.
+
+Registra la sección independiente en las universidades existentes:
+
+```sh
+php backend/scripts/install_leveling_sections.php
+```
+
+En Universidades → Editar universidad → Nivelación universitaria, administra Facultades
+→ Carreras → Materias. Cada nivel permite editar nombre y orden, activar/desactivar
+y eliminar. Eliminar una facultad o carrera elimina sus descendientes; desactivarla
+solo los oculta y conserva sus estados individuales.
+
+La ruta pública es `/ingreso-a-la-u/:slug/nivelacion`, accesible desde la sección
+“Nivelación universitaria”. La jerarquía es independiente de la sección institucional
+`academic_offer`, que conserva sus imágenes, documentos y enlaces. El catálogo se
+publica para universidades y secciones de nivelación activas, y solo incluye ramas activas.
+
+#### Carga inicial de UCE
+
+Con la universidad existente de slug `uce` y las tablas instaladas, ejecuta desde
+la raíz del proyecto:
+
+```sh
+php backend/scripts/seed_uce_academic_catalog.php
+```
+
+La fuente versionada es `backend/database/seeds/uce_academic_catalog.json`, extraída
+del bloque de datos de `uce_nivelacion.html`, con su SHA-256 de procedencia.
+Incluye los nombres originales de facultades, carreras y materias de nivelación,
+incluidos los códigos y modalidades que aparecen en el HTML. El JSON solo es una
+fuente del seeder: los registros se insertan en las tres tablas relacionales.
+
+La carga usa una transacción y la UCE existente; no crea otra universidad. Detecta
+registros por nombre dentro del mismo padre, agrega solo los faltantes y conserva
+el nombre, estado y orden de los existentes. Se puede repetir sin duplicar datos;
+las ejecuciones simultáneas del seeder se serializan bloqueando la universidad.
+Un nombre renombrado manualmente deja de coincidir con el nombre de la fuente.
+Si ya existen varios registros con el mismo nombre y padre, cancela la carga.
+
+Después abre `/ingreso-a-la-u/uce/nivelacion`. Comprueba búsquedas como
+`Medicina` y `biologia humana`, y los controles “Expandir todo” y “Colapsar todo”.
+
+La prueba `frontend/tests/uce-catalog.browser.mjs` compara el catálogo público con
+la fuente y comprueba la ruta, búsqueda, acordeones y ancho móvil en un navegador
+Chromium con depuración remota. Con PHP/Vite activos y un navegador de pruebas
+en el puerto 9227:
+
+```sh
+node frontend/tests/uce-catalog.browser.mjs http://127.0.0.1:5173 http://127.0.0.1:9227
+```
+
+Esta prueba espera el catálogo inicial sin modificaciones administrativas.
+
+Los endpoints independientes se encuentran en `/api/leveling/`: `list.php` (GET público),
+`admin.php` (GET), `save.php` (POST crear/editar) y `delete.php` (DELETE).
+Los tres últimos exigen la sesión administrativa; `/api/academic-offers/` queda
+reservado para la oferta académica institucional.
+Las escrituras usan `type` (`faculty`, `career`, `subject`), `university_id`,
+`nombre`, `orden`, `activo` y el padre correspondiente (`faculty_id` o `career_id`).
+Para editar se añade `id`; para eliminar solo se envían `type`, `university_id` e `id`.
+
+Verificación del módulo (la prueba PHP usa la BD configurada y revierte sus datos):
+
+```sh
+node --test frontend/tests/academic-catalog.test.mjs
+php backend/tests/academic_catalog.php
+```
+
 Desde frontend: `npm run build` y `npm run lint`.
 
 En PowerShell, desde la raíz:

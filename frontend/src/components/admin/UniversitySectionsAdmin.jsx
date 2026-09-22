@@ -2,6 +2,7 @@ import { confirmAction, showSuccess, showError } from "../../utils/alerts";
 import UniversityGalleryAdmin from "./UniversityGalleryAdmin";
 import UniversityDocumentsAdmin from "./UniversityDocumentsAdmin";
 import AcademicOffersAdmin from "./AcademicOffersAdmin";
+import AcademicCatalogAdmin from "./AcademicCatalogAdmin";
 import ExamAdmin from "./ExamAdmin";
 import AdmissionAdmin from "./AdmissionAdmin";
 import { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ export default function UniversitySectionsAdmin({ university }) {
  const [galleryOpen,setGalleryOpen]=useState(false);
  const [documentsOpen,setDocumentsOpen]=useState(false);
  const [offersOpen,setOffersOpen]=useState(false);
+ const [levelingOpen,setLevelingOpen]=useState(false);
  const [examOpen,setExamOpen]=useState(false);
  const [admissionOpen,setAdmissionOpen]=useState(false);
  const [rows,setRows]=useState([]);
@@ -42,6 +44,7 @@ export default function UniversitySectionsAdmin({ university }) {
  if(galleryOpen)return <UniversityGalleryAdmin university={university} onClose={()=>setGalleryOpen(false)}/>;
  if(documentsOpen)return <UniversityDocumentsAdmin university={university} onClose={()=>setDocumentsOpen(false)}/>;
  if(offersOpen)return <AcademicOffersAdmin university={university} onClose={()=>setOffersOpen(false)}/>;
+ if(levelingOpen)return <AcademicCatalogAdmin university={university} onClose={()=>setLevelingOpen(false)}/>;
  if(examOpen)return <ExamAdmin university={university} onClose={()=>setExamOpen(false)}/>;
  if(admissionOpen)return <AdmissionAdmin university={university} onClose={()=>setAdmissionOpen(false)}/>;
  return <section className="admin-news__card" aria-labelledby="university-sections-admin-title">
@@ -64,6 +67,7 @@ export default function UniversitySectionsAdmin({ university }) {
      {row.tipo==="gallery"&&<button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} title="Administrar galería" aria-label="Administrar galería" onClick={()=>setGalleryOpen(true)}><i className="bi bi-images" aria-hidden="true"/></button>}
      {row.tipo==="documents"&&<button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} title="Administrar documentos" aria-label="Administrar documentos" onClick={()=>setDocumentsOpen(true)}><i className="bi bi-file-earmark-pdf" aria-hidden="true"/></button>}
      {row.tipo==="academic_offer"&&<button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} title="Administrar oferta académica" aria-label="Administrar oferta académica" onClick={()=>setOffersOpen(true)}><i className="bi bi-list-ol" aria-hidden="true"/></button>}
+     {row.tipo==="leveling"&&<button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} title="Administrar nivelación universitaria" aria-label="Administrar nivelación universitaria" onClick={()=>setLevelingOpen(true)}><i className="bi bi-list-ol" aria-hidden="true"/></button>}
      {row.tipo==="exam"&&<button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} title="Administrar estructura del examen" aria-label="Administrar estructura del examen" onClick={()=>setExamOpen(true)}><i className="bi bi-list-ol" aria-hidden="true"/></button>}
      {row.tipo==="admission"&&<button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} title="Administrar proceso de admisión" aria-label="Administrar proceso de admisión" onClick={()=>setAdmissionOpen(true)}><i className="bi bi-list-ol" aria-hidden="true"/></button>}
      <button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} onClick={()=>{setForm({...row});}} title="Editar sección" aria-label="Editar sección"><i className="bi bi-pencil" aria-hidden="true"/></button>

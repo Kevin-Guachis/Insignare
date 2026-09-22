@@ -7,6 +7,7 @@ import LoadingScreen from "./components/layout/LoadingScreen";
 import IngresoAU from "./pages/IngresoAU";
 import Siov from "./pages/Siov";
 import UniversityPage from "./components/university/UniversityPage";
+import UniversityLeveling from "./pages/UniversityLeveling";
 import ProtectedAdminRoute from "./components/admin/ProtectedAdminRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import Home from "./pages/Home";
@@ -88,6 +89,7 @@ function AnimatedRoutes() {
             path="/ingreso-a-la-u/:slug"
             element={<UniversityPage />}
           />
+          <Route path="/ingreso-a-la-u/:slug/nivelacion" element={<UniversityLeveling />} />
 
           <Route
             path="/"

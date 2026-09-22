@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__.'/universities.php';
-const UNIVERSITY_SECTION_TYPES=['admission','exam','academic_offer','documents','gallery'];
+const UNIVERSITY_SECTION_TYPES=['admission','exam','academic_offer','documents','gallery','leveling'];
 function university_section_values(array $input): array {
  $parent=university_id($input['university_id']??null);
  $type=$input['tipo']??null;$title=$input['titulo']??null;
