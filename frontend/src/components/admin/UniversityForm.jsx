@@ -1,8 +1,9 @@
+import { imageSize } from "../../services/api";
 import { showError, showWarning } from "../../utils/alerts";
 import { useEffect, useRef, useState } from "react";
 import { saveUniversity, uploadUniversityImage } from "../../services/universities";
 export default function UniversityForm({ university, onSaved, onCancel }) {
- const [values,setValues]=useState(()=>({...university,logo:university.logo||"",imagen_portada:university.imagen_portada||""}));
+ const [values,setValues]=useState(()=>({...university,tamano_logo:imageSize(university.tamano_logo),tamano_portada:imageSize(university.tamano_portada),logo:university.logo||"",imagen_portada:university.imagen_portada||""}));
  const [files,setFiles]=useState({});
  const [busy,setBusy]=useState(false);
  const nameRef=useRef(null);
@@ -36,6 +37,7 @@ export default function UniversityForm({ university, onSaved, onCancel }) {
       setFiles(current=>({...current,[key]:file}));
      }}/>
      <small>JPG, PNG o WebP. Máximo 5 MB.</small>
+     {key==="imagen_portada"&&<><label htmlFor="university-size-imagen_portada">Tamaño de imagen portada</label><input id="university-size-imagen_portada" type="range" min="25" max="100" step="1" value={values.tamano_portada} aria-valuetext={`${values.tamano_portada}%`} onChange={e=>setValues({...values,tamano_portada:imageSize(e.target.value)})}/><output htmlFor="university-size-imagen_portada">{values.tamano_portada}%</output></>}
      {(values[key]||files[key])&&<button className="admin-news-secondary" type="button" onClick={()=>{setValues(current=>({...current,[key]:""}));setFiles(current=>({...current,[key]:null}));document.getElementById("university-"+key).value="";}}>Quitar {label.toLowerCase()}</button>}
     </div>)}
    </div>

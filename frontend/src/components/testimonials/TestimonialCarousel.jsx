@@ -1,3 +1,4 @@
+import { imageSize } from "../../services/api";
 import { useEffect, useRef, useState } from "react";
 import { Stars } from "./ReviewFields";
 import TestimonialViewer from "./TestimonialViewer";
@@ -60,9 +61,9 @@ export default function TestimonialCarousel({ rows, kind }) {
    }
   }}>
    {rows.map((row, index) => <article className={"testimonial-card testimonial-slide" + (isPhoto ? " testimonial-slide--photo" : "")} key={row.id} aria-label={(index + 1) + " de " + rows.length}>
-    {isPhoto ? <button className="testimonial-photo-open" onClick={() => setViewer(index)} aria-label={"Ampliar: " + row.titulo}>
-     <span className="testimonial-photo-frame"><img src={row.imagen} alt={row.titulo} loading="lazy" /></span>
-     <span className="testimonial-photo-overlay">{row.titulo}</span>
+    {isPhoto ? <button className="testimonial-photo-open" onClick={() => setViewer(index)} aria-label={row.titulo?.trim() ? "Ampliar: " + row.titulo : "Ampliar imagen"}>
+     <span className="testimonial-photo-frame"><span className="image-size-wrapper" style={{width:`${imageSize(row.tamano_imagen)}%`}}><img src={row.imagen} alt={row.titulo} loading="lazy" /></span></span>
+     {row.titulo?.trim()&&<span className="testimonial-photo-overlay">{row.titulo}</span>}
     </button> : <div className="testimonial-body">
      <Stars value={row.calificacion} />
      <blockquote>{row.comentario}</blockquote>

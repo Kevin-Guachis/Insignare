@@ -1,8 +1,9 @@
+import { imageSize } from "../../services/api";
 import { showError, showWarning } from "../../utils/alerts";
 import { useEffect, useRef, useState } from "react";
 import { saveAdmissionStep, uploadAdmissionImage } from "../../services/admissions";
 export default function AdmissionStepForm({ step, admissionId, universityId, onSaved, onCancel }) {
- const [values,setValues]=useState(()=>({...step,fecha:step.fecha||"",imagen:step.imagen||"",boton_texto:step.boton_texto||"",boton_url:step.boton_url||""}));
+ const [values,setValues]=useState(()=>({...step,tamano_imagen:imageSize(step.tamano_imagen),fecha:step.fecha||"",imagen:step.imagen||"",boton_texto:step.boton_texto||"",boton_url:step.boton_url||""}));
  const [file,setFile]=useState(null);
  const [busy,setBusy]=useState(false);
  const titleRef=useRef(null);
@@ -18,6 +19,7 @@ export default function AdmissionStepForm({ step, admissionId, universityId, onS
  }
  return <form className="admin-news-form" onSubmit={submit}><fieldset disabled={busy}>
   <h3>{step.id?"Editar etapa":"Nueva etapa"}</h3>
+  <div className="admin-news-field"><label htmlFor="admission-step-size">Tamaño de imagen</label><input id="admission-step-size" type="range" min="25" max="100" step="1" value={values.tamano_imagen} aria-valuetext={`${values.tamano_imagen}%`} onChange={e=>setValues({...values,tamano_imagen:imageSize(e.target.value)})}/><output htmlFor="admission-step-size">{values.tamano_imagen}%</output></div>
   <div className="admin-news-field"><label htmlFor="admission-step-image">Imagen</label>
    {values.imagen&&<img className="admin-news-preview" src={values.imagen} alt="Imagen actual"/>}
    <input id="admission-step-image" type="file" accept=".jpg,.jpeg,.png,.webp" onChange={e=>{

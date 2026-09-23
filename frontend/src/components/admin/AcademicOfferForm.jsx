@@ -1,8 +1,9 @@
+import { imageSize } from "../../services/api";
 import { showError, showWarning } from "../../utils/alerts";
 import { useEffect, useRef, useState } from "react";
 import { saveAcademicOffer, uploadOfferImage, uploadOfferDocument } from "../../services/academicOffers";
 export default function AcademicOfferForm({ offer, universityId, onSaved, onCancel }){
- const [values,setValues]=useState(()=>({...offer,imagen:offer.imagen||"",documento:offer.documento||"",documento_nombre:offer.documento_nombre||"",boton_texto:offer.boton_texto||"",boton_url:offer.boton_url||""}));
+ const [values,setValues]=useState(()=>({...offer,tamano_imagen:imageSize(offer.tamano_imagen),imagen:offer.imagen||"",documento:offer.documento||"",documento_nombre:offer.documento_nombre||"",boton_texto:offer.boton_texto||"",boton_url:offer.boton_url||""}));
  const [image,setImage]=useState(null);
  const [document,setDocument]=useState(null);
  const [busy,setBusy]=useState(false);
@@ -21,6 +22,7 @@ export default function AcademicOfferForm({ offer, universityId, onSaved, onCanc
  }
  return <form className="admin-news-form" onSubmit={submit}><fieldset disabled={busy}>
   <h3>{offer.id?"Editar oferta académica":"Nueva oferta académica"}</h3>
+  <div className="admin-news-field"><label htmlFor="offer-size">Tamaño de imagen</label><input id="offer-size" type="range" min="25" max="100" step="1" value={values.tamano_imagen} aria-valuetext={`${values.tamano_imagen}%`} onChange={e=>setValues({...values,tamano_imagen:imageSize(e.target.value)})}/><output htmlFor="offer-size">{values.tamano_imagen}%</output></div>
   <div className="admin-news-field"><label htmlFor="offer-title">Título</label><input ref={titleRef} id="offer-title" name="titulo" required maxLength={190} value={values.titulo} onChange={change}/></div>
   <div className="admin-news-field"><label htmlFor="offer-description">Descripción</label><textarea id="offer-description" name="descripcion" rows="5" maxLength={8000} value={values.descripcion} onChange={change}/></div>
   <div className="admin-news-form__grid">

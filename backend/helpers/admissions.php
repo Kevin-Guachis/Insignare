@@ -3,6 +3,7 @@ declare(strict_types=1);
 require_once __DIR__.'/universities.php';
 function admission_row(array $row): array {
  foreach (['id','university_id','admission_id','orden','activo'] as $key) if (isset($row[$key])) $row[$key]=(int)$row[$key];
+ if(array_key_exists('imagen',$row))$row['tamano_imagen']=image_size($row['tamano_imagen']??null);
  return $row;
 }
 function admission_find(PDO $db,int $id,int $universityId): array {
@@ -57,6 +58,7 @@ function admission_step_values(array $input): array {
   if (!$filename||!is_file(__DIR__.'/../uploads/images/'.$filename)) error_response('Selecciona una imagen subida al sitio.',422);
  }
  $values['imagen']=$image;
+ $values['tamano_imagen']=image_size($input['tamano_imagen']??null);
  $url=admission_text($input,'boton_url',500);
  $label=admission_text($input,'boton_texto',190);
  if ($url!=='') {

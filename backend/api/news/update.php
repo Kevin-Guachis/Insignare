@@ -17,7 +17,7 @@ $active = $input['activo'] ?? $existing['activo'];
 if (!in_array($active, [0, 1], true)) error_response('Estado inválido.', 422);
 $values['activo'] = $active;
 $values['id'] = $id;
-$query = $db->prepare('UPDATE news SET titulo=:titulo, categoria=:categoria, fecha=:fecha,
-imagen=:imagen, descripcion=:descripcion, contenido=:contenido, documento=:documento, documento_nombre=:documento_nombre, activo=:activo WHERE id=:id');
+$query = image_size_prepare($db,'news','UPDATE news SET titulo=:titulo, categoria=:categoria, fecha=:fecha,
+imagen=:imagen,tamano_imagen=:tamano_imagen, descripcion=:descripcion, contenido=:contenido, documento=:documento, documento_nombre=:documento_nombre, activo=:activo WHERE id=:id',$values);
 $query->execute($values);
 success_response(find_news($db, $id));

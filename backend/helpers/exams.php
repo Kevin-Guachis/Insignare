@@ -3,6 +3,7 @@ declare(strict_types=1);
 require_once __DIR__.'/universities.php';
 function exam_row(array $row): array {
  foreach (['id','university_id','exam_id','orden','activo','cantidad_preguntas'] as $key) if (isset($row[$key])) $row[$key]=(int)$row[$key];
+ if(array_key_exists('imagen',$row))$row['tamano_imagen']=image_size($row['tamano_imagen']??null);
  return $row;
 }
 function exam_find(PDO $db,int $id,int $universityId): array {
@@ -59,7 +60,8 @@ function exam_category_values(array $input): array {
   $filename=news_image_filename($image);
   if (!$filename||!is_file(__DIR__.'/../uploads/images/'.$filename)) error_response('Selecciona una imagen subida al sitio.',422);
  }
- $values['imagen']=$image;return $values;
+ $values['imagen']=$image;
+ $values['tamano_imagen']=image_size($input['tamano_imagen']??null);return $values;
 }
 function exam_category_find(PDO $db,int $id,int $parent): array {
  $q=$db->prepare('SELECT * FROM exam_categories WHERE id=:id AND exam_id=:parent');

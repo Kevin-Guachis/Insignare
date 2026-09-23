@@ -17,7 +17,7 @@ export default function TestimonialViewer({ rows, initialIndex, onClose }) {
   };
  }, []);
  function move(delta) { setIndex(current => (current + delta + rows.length) % rows.length); }
- return createPortal(<dialog ref={dialog} className="testimonial-viewer" aria-labelledby="testimonial-viewer-title"
+ return createPortal(<dialog ref={dialog} className="testimonial-viewer" aria-label={row.titulo?.trim() ? undefined : "Imagen ampliada"} aria-labelledby={row.titulo?.trim() ? "testimonial-viewer-title" : undefined}
   onCancel={event => { event.preventDefault(); onClose(); }}
   onClick={event => { if (event.target === event.currentTarget) onClose(); }}
   onKeyDown={event => {
@@ -26,7 +26,7 @@ export default function TestimonialViewer({ rows, initialIndex, onClose }) {
    }
   }}>
   <div className="testimonial-viewer__panel">
-   <header><h2 id="testimonial-viewer-title">{row.titulo}</h2><button type="button" autoFocus onClick={onClose} aria-label="Cerrar visor">×</button></header>
+   <header>{row.titulo?.trim()&&<h2 id="testimonial-viewer-title">{row.titulo}</h2>}<button type="button" style={{marginLeft:"auto"}} autoFocus onClick={onClose} aria-label="Cerrar visor">×</button></header>
    <div className="testimonial-viewer__image"><img src={row.imagen} alt={row.titulo} /></div>
    <footer><button type="button" disabled={rows.length < 2} onClick={() => move(-1)} aria-label="Imagen anterior">‹</button><span aria-live="polite">{index + 1} / {rows.length}</span><button type="button" disabled={rows.length < 2} onClick={() => move(1)} aria-label="Imagen siguiente">›</button></footer>
   </div>

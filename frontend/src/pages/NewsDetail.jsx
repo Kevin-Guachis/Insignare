@@ -1,3 +1,4 @@
+import { imageSize } from "../services/api";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useNews } from "../hooks/useNews";
@@ -36,7 +37,7 @@ function NewsDetail() {
             </ol>
           </nav>
           <article className="news-detail__card">
-            {story.image && <img className="news-detail__image" src={story.image} alt={story.title} />}
+            {story.image && <span className="image-size-wrapper" style={{width:`${imageSize(story.tamano_imagen)}%`}}><img className="news-detail__image" src={story.image} alt={story.title} /></span>}
             <div className="news-detail__body">
               <span className="news-category">{story.category}</span>
               <h1>{story.title}</h1>

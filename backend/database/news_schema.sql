@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS news (
     categoria VARCHAR(100) NOT NULL,
     fecha DATE NOT NULL,
     imagen VARCHAR(255) DEFAULT NULL,
+ tamano_imagen TINYINT UNSIGNED NOT NULL DEFAULT 100,
     descripcion TEXT NOT NULL,
     contenido MEDIUMTEXT NOT NULL,
     activo TINYINT(1) NOT NULL DEFAULT 1,

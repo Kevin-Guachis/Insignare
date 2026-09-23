@@ -1,3 +1,4 @@
+import { imageSize } from "../../services/api";
 import { confirmAction, showError, showWarning, showSuccess } from "../../utils/alerts";
 import { reviewError } from "../testimonials/validation";
 import { useEffect, useState } from "react";
@@ -24,13 +25,13 @@ export default function TestimonialsAdmin() {
   return () => { active = false; };
  }, [kind, revision]);
  function refresh() { setLoading(true); setRevision(n => n + 1); }
- function edit(row) { setEditor({ ...row }); setFile(null); }
+ function edit(row) { setEditor(kind === "testimonials" ? { ...row, titulo: row.titulo ?? "", tamano_imagen: imageSize(row.tamano_imagen) } : { ...row }); setFile(null); }
  async function persist(row) {
   await saveTestimonial(kind, row); setEditor(null); setFile(null); refresh();
  }
  async function submit(event) {
   event.preventDefault();
-  const invalid = kind === "reviews" ? reviewError(editor) : (!editor.titulo.trim() || editor.titulo.length > 190 ? "Escribe un título (máximo 190 caracteres)." : "");
+  const invalid = kind === "reviews" ? reviewError(editor) : (editor.titulo.length > 190 ? "Escribe un título (máximo 190 caracteres)." : "");
   if (invalid) { await showWarning("Datos incompletos", invalid); return; }
   if (kind === "testimonials" && (!Number.isInteger(editor.orden) || editor.orden < 0 || editor.orden > 2147483647)) { await showWarning("Orden inválido", "Escribe un número entero mayor o igual a cero."); return; }
   if (kind === "testimonials" && !file && !editor.imagen) { await showWarning("Fotografía pendiente", "Selecciona una fotografía para el testimonio."); return; }
@@ -72,7 +73,8 @@ export default function TestimonialsAdmin() {
    {kind === "testimonials" && <>
 
     <div className="testimonial-field"><label htmlFor="testimonial-photo">Fotografía *</label><input id="testimonial-photo" type="file" accept=".jpg,.jpeg,.png,.webp" onChange={selectFile} /><small>JPG, PNG o WEBP. Máximo 5 MB.</small>{file ? <p>Fotografía seleccionada: {file.name}</p> : editor.imagen && <img className="testimonial-preview" src={editor.imagen} alt="Fotografía actual" />}</div>
-    <div className="testimonial-field"><label htmlFor="testimonial-title">Título *</label><input id="testimonial-title" required maxLength={190} value={editor.titulo} onChange={e => setEditor({ ...editor, titulo: e.target.value })} /></div>
+    <div className="testimonial-field"><label htmlFor="testimonial-title">Título (opcional)</label><input id="testimonial-title" maxLength={190} value={editor.titulo} onChange={e => setEditor({ ...editor, titulo: e.target.value })} /></div>
+    <div className="testimonial-field"><label htmlFor="testimonial-size">Tamaño de imagen</label><input id="testimonial-size" type="range" min="25" max="100" step="1" value={editor.tamano_imagen} aria-valuetext={`${editor.tamano_imagen}%`} onChange={e=>setEditor({...editor,tamano_imagen:imageSize(e.target.value)})}/><output htmlFor="testimonial-size">{editor.tamano_imagen}%</output></div>
     <div className="testimonial-field"><label htmlFor="testimonial-order">Orden</label><input id="testimonial-order" type="number" min="0" max="2147483647" value={editor.orden} onChange={e => setEditor({ ...editor, orden: e.target.value === "" ? "" : Number(e.target.value) })} /></div>
    </>}
    <label className="admin-news-check"><input type="checkbox" checked={editor.activo === 1} onChange={e => setEditor({ ...editor, activo: e.target.checked ? 1 : 0 })} />Visible</label>
