@@ -1,3 +1,4 @@
+import { imageSize } from "../../services/api";
 import { showError, showWarning } from "../../utils/alerts";
 import { useEffect, useRef, useState } from "react";
 import { saveNews, uploadNewsImage, uploadNewsDocument } from "../../services/news";
@@ -8,6 +9,7 @@ function NewsForm({ news, onSaved, onCancel }) {
     categoria: news?.categoria || "Admisiones",
     fecha: news?.fecha || new Date().toLocaleDateString("en-CA"),
     imagen: news?.imagen || "",
+    tamano_imagen: imageSize(news?.tamano_imagen),
     documento: news?.documento || "",
     documento_nombre: news?.documento_nombre || "",
     descripcion: news?.descripcion || "",
@@ -96,6 +98,8 @@ function NewsForm({ news, onSaved, onCancel }) {
               <input id="news-date" name="fecha" type="date" value={values.fecha} onChange={update} min="1000-01-01" max="9999-12-31" required />
             </div>
             <div className="admin-news-field">
+              <label htmlFor="news-image-size">Tamaño de imagen</label>
+              <input id="news-image-size" type="range" min="25" max="100" step="1" value={values.tamano_imagen} aria-valuetext={`${values.tamano_imagen}%`} onChange={e=>setValues({...values,tamano_imagen:imageSize(e.target.value)})}/><output htmlFor="news-image-size">{values.tamano_imagen}%</output>
               <label htmlFor="news-image">Imagen</label>
               <input id="news-image" type="file" accept=".jpg,.jpeg,.png,.webp" onChange={chooseImage} aria-describedby="news-image-help" />
               <small id="news-image-help">JPG, PNG o WebP. Máximo 5 MB.</small>

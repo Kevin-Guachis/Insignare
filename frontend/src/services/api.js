@@ -1,3 +1,9 @@
+export const imageSize = value => {
+  if (typeof value !== "number" && typeof value !== "string") return 100;
+  const size = Number(value);
+  return Number.isInteger(size) && size >= 25 && size <= 100 ? size : 100;
+};
+
 export class ApiError extends Error {
   constructor(message, status = 0) {
     super(message);

@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS admission_steps (
  descripcion TEXT NOT NULL,
  fecha DATE NULL,
  imagen VARCHAR(255) NULL,
+ tamano_imagen TINYINT UNSIGNED NOT NULL DEFAULT 100,
  boton_texto VARCHAR(190) NULL,
  boton_url VARCHAR(500) NULL,
  orden INT UNSIGNED NOT NULL DEFAULT 0,

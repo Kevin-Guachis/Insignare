@@ -456,3 +456,4 @@
     overflow-wrap: break-word;
   }
 }
+.admin-news .admin-news-form input[type="range"] { width:100%; padding:0; border:0; min-height:32px; background:transparent; accent-color:var(--color-primary); cursor:pointer; }

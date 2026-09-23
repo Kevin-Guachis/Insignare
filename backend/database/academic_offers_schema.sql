@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS university_academic_offers (
  titulo VARCHAR(190) NOT NULL,
  descripcion TEXT NOT NULL,
  imagen VARCHAR(255) NULL,
+ tamano_imagen TINYINT UNSIGNED NOT NULL DEFAULT 100,
  documento VARCHAR(255) NULL,
  documento_nombre VARCHAR(255) NULL,
  boton_texto VARCHAR(190) NULL,

@@ -20,6 +20,8 @@ function university_values(array $input): array {
   }
   $values[$key]=$image;
  }
+ $values['tamano_logo']=image_size($input['tamano_logo']??null);
+ $values['tamano_portada']=image_size($input['tamano_portada']??null);
  $order=filter_var($input['orden']??0,FILTER_VALIDATE_INT,['options'=>['min_range'=>0,'max_range'=>2147483647]]);
  $active=$input['activo']??1;
  if ($order===false||!in_array($active,[0,1],true)) error_response('Orden o estado inválido.',422);
@@ -28,6 +30,8 @@ function university_values(array $input): array {
 }
 function university_row(array $row): array {
  foreach (['id','orden','activo'] as $key) $row[$key]=(int)$row[$key];
+ $row['tamano_logo']=image_size($row['tamano_logo']??null);
+ $row['tamano_portada']=image_size($row['tamano_portada']??null);
  return $row;
 }
 function university_find(PDO $db,int $id): array {

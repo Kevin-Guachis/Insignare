@@ -1,3 +1,4 @@
+import { imageSize } from "../../services/api";
 import { useNews } from "../../hooks/useNews";
 import { Link } from "react-router-dom";
 import { getNewsPath } from "../../data/news";
@@ -37,7 +38,7 @@ function TopStories() {
                 <li className="top-stories__item" key={story.id}>
                   <Link className="top-stories__link" to={getNewsPath(story)} tabIndex={copyIndex > 0 ? -1 : undefined}>
                     {story.image ? (
-                      <img className="top-stories__thumbnail" src={story.image} alt="" width="40" height="40" />
+                      <span className="top-stories__thumbnail"><span className="image-size-wrapper" style={{width:`${imageSize(story.tamano_imagen)}%`}}><img src={story.image} alt="" width="40" height="40" /></span></span>
                     ) : (
                       <span className="top-stories__placeholder" aria-hidden="true">{story.university}</span>
                     )}

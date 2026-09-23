@@ -3,6 +3,7 @@ declare(strict_types=1);
 require_once __DIR__.'/universities.php';
 function academic_offer_row(array $row): array {
  foreach(['id','university_id','orden','activo'] as $key)$row[$key]=(int)$row[$key];
+ if(array_key_exists('imagen',$row))$row['tamano_imagen']=image_size($row['tamano_imagen']??null);
  return $row;
 }
 function academic_offer_find(PDO $db,int $id,int $parent): array {
@@ -34,6 +35,7 @@ function academic_offer_values(array $input): array {
   if(!$filename||!is_file(__DIR__.'/../uploads/images/'.$filename))error_response('Selecciona una imagen subida al sitio.',422);
  }
  $values['imagen']=$image;
+ $values['tamano_imagen']=image_size($input['tamano_imagen']??null);
  $document=$input['documento']??null;if($document==='')$document=null;
  if($document!==null){
   if(!is_string($document)||strlen($document)>255||!preg_match('~^/api/news/document\\.php\\?file=([a-f0-9]{32}\\.pdf)$~D',$document,$matches)

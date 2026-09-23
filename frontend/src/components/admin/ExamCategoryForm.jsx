@@ -1,8 +1,9 @@
+import { imageSize } from "../../services/api";
 import { showError, showWarning } from "../../utils/alerts";
 import { useEffect, useRef, useState } from "react";
 import { saveExamCategory, uploadExamImage } from "../../services/exams";
 export default function ExamCategoryForm({ category, examId, universityId, onSaved, onCancel }) {
- const [values,setValues]=useState(()=>({...category,imagen:category.imagen||"",cantidad_preguntas:category.cantidad_preguntas??""}));
+ const [values,setValues]=useState(()=>({...category,tamano_imagen:imageSize(category.tamano_imagen),imagen:category.imagen||"",cantidad_preguntas:category.cantidad_preguntas??""}));
  const [file,setFile]=useState(null);
  const [busy,setBusy]=useState(false);
  const nameRef=useRef(null);
@@ -19,6 +20,7 @@ export default function ExamCategoryForm({ category, examId, universityId, onSav
  }
  return <form className="admin-news-form" onSubmit={submit}><fieldset disabled={busy}>
   <h3>{category.id?"Editar categoría":"Nueva categoría"}</h3>
+  <div className="admin-news-field"><label htmlFor="exam-category-size">Tamaño de imagen</label><input id="exam-category-size" type="range" min="25" max="100" step="1" value={values.tamano_imagen} aria-valuetext={`${values.tamano_imagen}%`} onChange={e=>setValues({...values,tamano_imagen:imageSize(e.target.value)})}/><output htmlFor="exam-category-size">{values.tamano_imagen}%</output></div>
   <div className="admin-news-field"><label htmlFor="exam-category-image">Imagen</label>
    {values.imagen&&<img className="admin-news-preview" src={values.imagen} alt="Imagen actual"/>}
    <input ref={fileRef} id="exam-category-image" type="file" accept=".jpg,.jpeg,.png,.webp" onChange={e=>{

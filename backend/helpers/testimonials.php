@@ -11,7 +11,7 @@ function testimonial_text(array $input, string $key, int $max, bool $required = 
  return $value;
 }
 function testimonial_values(array $input, bool $review, bool $public = false): array {
- $values=$review ? ['nombre'=>testimonial_text($input,'nombre',120),'comentario'=>testimonial_text($input,'comentario',2000)] : ['titulo'=>testimonial_text($input,'titulo',190)];
+ $values=$review ? ['nombre'=>testimonial_text($input,'nombre',120),'comentario'=>testimonial_text($input,'comentario',2000)] : ['titulo'=>testimonial_text($input,'titulo',190,false)];
  // Los visitantes no pueden enviar estados de moderación ni ocultar su envío.
  $active=$public?1:($input['activo']??1);
  if(!in_array($active,[0,1],true)) error_response('Estado inválido.',422);
@@ -25,6 +25,7 @@ function testimonial_values(array $input, bool $review, bool $public = false): a
   $image=$input['imagen']??'';
   if(!is_string($image)||!($file=news_image_filename($image))||!is_file(__DIR__.'/../uploads/images/'.$file)) error_response('Selecciona una fotografía subida al sitio.',422);
   $values['imagen']=$image;
+ $values['tamano_imagen']=image_size($input['tamano_imagen']??null);
   $order=$input['orden']??0;
   if(!is_int($order)||$order<0||$order>2147483647) error_response('Orden inválido.',422);
   $values['orden']=$order;
@@ -34,6 +35,7 @@ function testimonial_values(array $input, bool $review, bool $public = false): a
 function testimonial_row(array $row): array {
  unset($row["comentario_legacy"], $row["detalle_legacy"]);
  foreach(['id','activo','orden','calificacion'] as $key) if(isset($row[$key]))$row[$key]=(int)$row[$key];
+ if(array_key_exists('imagen',$row))$row['tamano_imagen']=image_size($row['tamano_imagen']??null);
  return $row;
 }
 function testimonial_find(PDO $db,string $table,int $id): array {
@@ -49,7 +51,7 @@ function testimonial_write(PDO $db,string $table,array $values,?int $id): array 
   $sql="UPDATE $table SET ".implode(',',array_map(static fn($k)=>"$k=:$k",$keys))." WHERE id=:id";
   $values['id']=$id;
  }else{$sql="INSERT INTO $table (".implode(',',$keys).") VALUES (:".implode(',:',$keys).")";}
- $db->prepare($sql)->execute($values);
+ image_size_prepare($db,$table,$sql,$values)->execute($values);
  return testimonial_find($db,$table,$id??(int)$db->lastInsertId());
 }
 function testimonial_list(PDO $db,string $table,bool $admin): array {

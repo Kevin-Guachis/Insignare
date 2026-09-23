@@ -1,3 +1,4 @@
+import { imageSize } from "../../services/api";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getNewsPath } from "../../data/news";
@@ -24,7 +25,7 @@ function FeaturedNews({ stories = [] }) {
       <article key={story.id} className="featured-news__card featured-news__card--enter">
         <Link className="featured-news__image-link" to={path} aria-label={`Leer ${story.title}`}>
           {story.image ? (
-            <img className="featured-news__image" src={story.image} alt={story.title} />
+            <span className="image-size-wrapper" style={{width:`${imageSize(story.tamano_imagen)}%`}}><img className="featured-news__image" src={story.image} alt={story.title} /></span>
           ) : (
             <span className="featured-news__placeholder">{story.university}</span>
           )}

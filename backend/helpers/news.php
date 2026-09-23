@@ -4,6 +4,33 @@ declare(strict_types=1);
 require_once __DIR__ . '/response.php';
 require_once __DIR__ . '/../config/database.php';
 
+function image_size($value): int
+{
+    if ((!is_int($value) && !is_float($value) && !is_string($value)) || !is_numeric($value)) return 100;
+    $size = (float)$value;
+    return is_finite($size) && floor($size) === $size && $size >= 25 && $size <= 100 ? (int)$size : 100;
+}
+
+// Compatibilidad hasta aplicar el ALTER TABLE manual. Identificadores internos únicamente.
+function image_size_prepare(PDO $db, string $table, string $sql, array &$values): PDOStatement
+{
+    $fields = array_intersect(['tamano_imagen','tamano_logo','tamano_portada'], array_keys($values));
+    if ($fields) {
+        $columns = array_column($db->query("SHOW COLUMNS FROM `$table`")->fetchAll(), 'Field');
+        foreach ($fields as $field) {
+            if (in_array($field, $columns, true)) continue;
+            if ($values[$field] !== 100) {
+                error_response('Falta actualizar la base de datos para guardar tamaños de imagen. Aplica el ALTER TABLE pendiente y vuelve a guardar. Mientras tanto puedes usar 100%.', 409);
+            }
+            unset($values[$field]);
+            $sql = preg_replace('/\b'.$field.'\s*=\s*:'.$field.'\s*,\s*/', '', $sql);
+            $sql = preg_replace('/(?<![:\w])'.$field.'\s*,\s*/', '', $sql);
+            $sql = preg_replace('/:'.$field.'\s*,\s*/', '', $sql);
+        }
+    }
+    return $db->prepare($sql);
+}
+
 function news_id($value): int
 {
     $id = filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
@@ -59,6 +86,7 @@ function news_values(array $input): array
         error_response('Selecciona una imagen subida al sitio.', 422);
     }
     $values['imagen'] = $image === '' ? null : $image;
+    $values['tamano_imagen'] = image_size($input['tamano_imagen'] ?? null);
 
     $document = $input['documento'] ?? null;
     $legacy = ['/documents/uce-admision-artes-2026-2027.pdf', '/documents/epn-lineamientos-admision.pdf', '/documents/epn-guia-estudio-2026.pdf'];
@@ -82,6 +110,7 @@ function news_values(array $input): array
 
 function news_row(array $row): array
 {
+    $row['tamano_imagen'] = image_size($row['tamano_imagen'] ?? null);
     $row['id'] = (int) $row['id'];
     $row['activo'] = (int) $row['activo'];
     return $row;
