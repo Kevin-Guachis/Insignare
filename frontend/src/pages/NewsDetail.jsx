@@ -1,5 +1,5 @@
 import { imageSize } from "../services/api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useNews } from "../hooks/useNews";
 import { refreshNews } from "../services/news";
@@ -14,6 +14,7 @@ function NewsDetail() {
   const { slug } = useParams();
   const { news, loading, error } = useNews();
   const story = news.find((item) => item.slug === slug);
+  const [galleryPosition, setGalleryPosition] = useState({ slug: null, index: 0 });
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -24,6 +25,11 @@ function NewsDetail() {
   if (loading || error) return <><Header /><main className="news-detail"><div className="container">{loading ? <p role="status">Cargando noticia...</p> : <p role="alert">{error} <button type="button" onClick={refreshNews}>Reintentar</button></p>}</div></main><Footer /></>;
   if (!story) return <NotFound />;
   const attachments = (story.attachments ?? []).filter((attachment) => attachment.url);
+  const images = story.additional_images ?? [];
+  const imageIndex = galleryPosition.slug === slug ? Math.min(galleryPosition.index, Math.max(0, images.length - 1)) : 0;
+  function moveImage(direction) {
+    setGalleryPosition({ slug, index: (imageIndex + direction + images.length) % images.length });
+  }
 
   return (
     <>
@@ -48,10 +54,14 @@ function NewsDetail() {
                   {story.content.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
                 </div>
               )}
-              {story.additional_images.length > 0 && <section aria-labelledby="news-additional-title">
-                <h2 id="news-additional-title">Imágenes adicionales</h2>
-                <div className="news-additional-images">
-                  {story.additional_images.map((image, index) => <ContentImage key={image.id} src={image.imagen} alt={`${story.title}: imagen adicional ${index + 1}`} loading="lazy" />)}
+              {images.length > 0 && <section className="news-image-carousel" aria-label="Galería de la noticia" aria-roledescription="carrusel">
+                <div className="news-image-carousel__image">
+                  <ContentImage key={images[imageIndex].id} src={images[imageIndex].imagen} alt={`${story.title}: imagen adicional ${imageIndex + 1}`} loading="lazy" />
+                </div>
+                <div className="news-image-carousel__controls">
+                  <button type="button" onClick={() => moveImage(-1)} disabled={images.length < 2} aria-label="Imagen anterior">‹</button>
+                  <span role="status" aria-atomic="true">{imageIndex + 1} / {images.length}</span>
+                  <button type="button" onClick={() => moveImage(1)} disabled={images.length < 2} aria-label="Imagen siguiente">›</button>
                 </div>
               </section>}
               {attachments.map((attachment) => (
