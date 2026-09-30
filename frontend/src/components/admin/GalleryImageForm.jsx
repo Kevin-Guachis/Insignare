@@ -1,3 +1,4 @@
+import { ContentImage } from "../university/GallerySection";
 import { imageSize } from "../../services/api";
 import { showError, showWarning } from "../../utils/alerts";
 import { useEffect, useRef, useState } from "react";
@@ -29,7 +30,7 @@ export default function GalleryImageForm({ image,universityId,onSaved,onCancel }
     setFile(selected);
    }}/>
    <small>JPG, PNG o WEBP. Máximo 5 MB. Selecciona otro archivo para reemplazar el actual.</small>
-   {file?<p>Seleccionado: {file.name}</p>:values.imagen&&<img className="gallery-admin-preview" src={values.imagen} alt={values.titulo||"Imagen actual"}/>}
+   {values.imagen&&<><small>Imagen guardada</small><ContentImage className="gallery-admin-preview" src={values.imagen} alt={values.titulo||"Imagen actual"}/></>}{file&&<><small>Nueva imagen: {file.name}</small><ContentImage file={file} className="gallery-admin-preview" alt="Nueva imagen"/></>}
    {file&&<button type="button" className="admin-news-secondary" onClick={()=>{setFile(null);fileRef.current.value="";}}>Cancelar selección</button>}
   </div>
   <div className="admin-news-field"><label htmlFor="university-gallery-order">Orden</label><input id="university-gallery-order" type="number" min="0" max="2147483647" step="1" required value={values.orden} onChange={e=>setValues({...values,orden:e.target.value===""?"":Number(e.target.value)})}/></div>

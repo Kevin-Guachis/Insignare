@@ -2,6 +2,7 @@ import { imageSize } from "../../services/api";
 import { showError, showWarning } from "../../utils/alerts";
 import { useEffect, useRef, useState } from "react";
 import { saveNews, uploadNewsImage, uploadNewsDocument } from "../../services/news";
+import { ContentImage } from "../university/GallerySection";
 
 function NewsForm({ news, onSaved, onCancel }) {
   const [values, setValues] = useState(() => ({
@@ -19,12 +20,13 @@ function NewsForm({ news, onSaved, onCancel }) {
   const [file, setFile] = useState(null);
   const [documentFile, setDocumentFile] = useState(null);
   const documentRef = useRef(null);
-  const [preview, setPreview] = useState("");
+  const imageRef = useRef(null);
+  const imageKey = useRef(0);
+  const [additionalImages, setAdditionalImages] = useState(() => (news?.additional_images ?? []).map(image => ({ ...image, key: `saved-${image.id}` })));
   const [saving, setSaving] = useState(false);
   const titleRef = useRef(null);
 
   useEffect(() => { titleRef.current?.focus(); }, []);
-  useEffect(() => () => { if (preview) URL.revokeObjectURL(preview); }, [preview]);
 
   function update(event) {
     setValues((current) => ({ ...current, [event.target.name]: event.target.value }));
@@ -40,7 +42,20 @@ function NewsForm({ news, onSaved, onCancel }) {
       return;
     }
     setFile(selected);
-    setPreview(URL.createObjectURL(selected));
+  }
+
+  function chooseAdditionalImages(event) {
+    const files = Array.from(event.target.files ?? []);
+    event.target.value = "";
+    if (additionalImages.length + files.length > 5) {
+      showWarning("Límite de imágenes", "Puedes agregar hasta 5 imágenes adicionales en total, incluidas las guardadas.");
+      return;
+    }
+    if (files.some(image => !/\.(jpe?g|png|webp)$/i.test(image.name) || image.size > 5 * 1024 * 1024 || !image.size)) {
+      showWarning("Archivo inválido", "Selecciona imágenes JPG, PNG o WebP de hasta 5 MB cada una.");
+      return;
+    }
+    setAdditionalImages(current => [...current, ...files.map(file => ({ key: `new-${++imageKey.current}`, file }))]);
   }
 
   function chooseDocument(event) {
@@ -65,13 +80,20 @@ function NewsForm({ news, onSaved, onCancel }) {
       // Si guardar falla, conserva la imagen ya subida para poder reintentar.
       setValues((current) => ({ ...current, imagen: image }));
       setFile(null);
-      setPreview("");
+      if (imageRef.current) imageRef.current.value = "";
+      const additional = [];
+      for (const item of additionalImages) {
+        const uploaded = item.file ? (await uploadNewsImage(item.file, true)).imagen : item.imagen;
+        additional.push(item.id ? { id: item.id } : { imagen: uploaded });
+        // Conservar cada subida completada si una posterior o el guardado falla.
+        if (item.file) setAdditionalImages(current => current.map(image => image.key === item.key ? { ...image, imagen: uploaded, file: null } : image));
+      }
       const uploaded = documentFile ? await uploadNewsDocument(documentFile) : null;
       const document = uploaded ? uploaded.documento : values.documento;
       const documentName = uploaded ? uploaded.documento_nombre : values.documento_nombre;
       setValues((current) => ({ ...current, documento: document, documento_nombre: documentName }));
       setDocumentFile(null);
-      const saved = await saveNews({ ...values, imagen: image, documento: document, documento_nombre: documentName, ...(news ? { id: news.id } : {}) });
+      const saved = await saveNews({ ...values, imagen: image, additional_images: additional, documento: document, documento_nombre: documentName, ...(news ? { id: news.id } : {}) });
       onSaved(saved);
     } catch(error){showError(error.message);
     } finally {
@@ -101,14 +123,28 @@ function NewsForm({ news, onSaved, onCancel }) {
               <label htmlFor="news-image-size">Tamaño de imagen</label>
               <input id="news-image-size" type="range" min="25" max="100" step="1" value={values.tamano_imagen} aria-valuetext={`${values.tamano_imagen}%`} onChange={e=>setValues({...values,tamano_imagen:imageSize(e.target.value)})}/><output htmlFor="news-image-size">{values.tamano_imagen}%</output>
               <label htmlFor="news-image">Imagen</label>
-              <input id="news-image" type="file" accept=".jpg,.jpeg,.png,.webp" onChange={chooseImage} aria-describedby="news-image-help" />
+              <input ref={imageRef} id="news-image" type="file" accept=".jpg,.jpeg,.png,.webp" onChange={chooseImage} aria-describedby="news-image-help" />
               <small id="news-image-help">JPG, PNG o WebP. Máximo 5 MB.</small>
-              {(preview || values.imagen) && <img className="admin-news-preview" src={preview || values.imagen} alt="Vista previa de la noticia" />}
+              {values.imagen && <><small>Imagen guardada</small><ContentImage className="admin-news-preview" src={values.imagen} alt="Imagen principal actual" /></>}
+              {file && <><small>Nueva imagen seleccionada</small><ContentImage className="admin-news-preview" file={file} alt="Nueva imagen principal" /><button className="admin-news-secondary" type="button" onClick={() => { setFile(null); imageRef.current.value = ""; }}>Cancelar selección</button></>}
               {(file || values.imagen) && <button className="admin-news-secondary" type="button" onClick={() => {
-                setFile(null); setPreview(""); setValues((current) => ({ ...current, imagen: "" }));
+                setFile(null); imageRef.current.value = ""; setValues((current) => ({ ...current, imagen: "" }));
               }}>Quitar imagen</button>}
             </div>
           </div>
+          <section className="admin-news-field" aria-labelledby="news-additional-heading">
+            <h3 id="news-additional-heading">Imágenes adicionales</h3>
+            <label htmlFor="news-additional-images">Seleccionar imágenes</label>
+            <input id="news-additional-images" type="file" multiple accept=".jpg,.jpeg,.png,.webp" onChange={chooseAdditionalImages} aria-describedby="news-additional-help" />
+            <small id="news-additional-help">Puedes agregar hasta 5 imágenes adicionales. JPG, PNG o WebP, máximo 5 MB cada una. {additionalImages.length}/5 seleccionadas. Los cambios se aplican al guardar.</small>
+            {additionalImages.length > 0 && <div className="news-additional-images">
+              {additionalImages.map((image, index) => <div key={image.key}>
+                <p>{image.id ? "Imagen guardada" : "Nueva imagen"} {index + 1}</p>
+                <ContentImage className="admin-news-preview" src={image.imagen} file={image.file} alt={`Imagen adicional ${index + 1}`} />
+                <button className="admin-news-secondary" type="button" aria-label={`Quitar imagen adicional ${index + 1}`} onClick={() => setAdditionalImages(current => current.filter(item => item.key !== image.key))}>Quitar imagen</button>
+              </div>)}
+            </div>}
+          </section>
           <div className="admin-news-field">
 
             <label htmlFor="news-document">Documento PDF</label>

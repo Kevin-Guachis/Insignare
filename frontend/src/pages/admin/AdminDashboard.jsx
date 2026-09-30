@@ -1,3 +1,4 @@
+import { ContentImage } from "../../components/university/GallerySection";
 import { confirmAction, showSuccess, showError } from "../../utils/alerts";
 import MaterialResourcesAdmin from "../../components/admin/MaterialResourcesAdmin";
 import ContactSettingsForm from "../../components/admin/ContactSettingsForm";
@@ -124,7 +125,7 @@ function AdminDashboard() {
                     <tbody>
                       {rows.map((row) => (
                         <tr key={row.id}>
-                          <td data-label="Imagen">{row.imagen ? <img src={row.imagen} alt="" width="56" height="56" /> : "—"}</td>
+                          <td data-label="Imagen">{row.imagen ? <ContentImage src={row.imagen} alt="" width="56" height="56" /> : "—"}</td>
                           <td data-label="Título">{row.titulo}</td><td data-label="Categoría">{row.categoria}</td><td data-label="Fecha"><time dateTime={row.fecha}>{row.fecha}</time></td>
                           <td data-label="Estado"><span className={row.activo ? "admin-status admin-status--active" : "admin-status admin-status--inactive"}>{row.activo ? "Visible" : "Oculto"}</span></td>
                           <td data-label="Acciones"><div className="admin-news-actions">

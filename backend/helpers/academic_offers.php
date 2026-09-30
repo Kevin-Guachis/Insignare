@@ -19,7 +19,6 @@ function academic_offer_values(array $input): array {
   if(!is_string($value)||strlen($value)>$max||strpos($value,"\0")!==false)error_response('Campo inválido: '.$key,422);
   $values[$key]=trim($value);
  }
- if($values['titulo']==='')error_response('El título es obligatorio.',422);
  $url=$values['boton_url'];
  if($url!==''){
   $local=preg_match('~^/(?!/)~',$url);
@@ -35,6 +34,7 @@ function academic_offer_values(array $input): array {
   if(!$filename||!is_file(__DIR__.'/../uploads/images/'.$filename))error_response('Selecciona una imagen subida al sitio.',422);
  }
  $values['imagen']=$image;
+ if ($values['titulo']==='' && $image===null) error_response('Indica un título o selecciona una imagen.',422);
  $values['tamano_imagen']=image_size($input['tamano_imagen']??null);
  $document=$input['documento']??null;if($document==='')$document=null;
  if($document!==null){

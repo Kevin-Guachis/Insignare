@@ -43,7 +43,7 @@ function admission_values(array $input): array {
  return [...admission_order_state($input),'titulo'=>admission_text($input,'titulo',190,true),'descripcion_general'=>admission_text($input,'descripcion_general',8000),'university_id'=>university_id($input['university_id']??null)];
 }
 function admission_step_values(array $input): array {
- $values=[...admission_order_state($input),'titulo'=>admission_text($input,'titulo',190,true),'descripcion'=>admission_text($input,'descripcion',8000)];
+ $values=[...admission_order_state($input),'titulo'=>admission_text($input,'titulo',190),'descripcion'=>admission_text($input,'descripcion',8000)];
  $date=$input['fecha']??null;
  if ($date==='') $date=null;
  if ($date!==null) {
@@ -58,6 +58,7 @@ function admission_step_values(array $input): array {
   if (!$filename||!is_file(__DIR__.'/../uploads/images/'.$filename)) error_response('Selecciona una imagen subida al sitio.',422);
  }
  $values['imagen']=$image;
+ if ($values['titulo']==='' && $image===null) error_response('Indica un título o selecciona una imagen.',422);
  $values['tamano_imagen']=image_size($input['tamano_imagen']??null);
  $url=admission_text($input,'boton_url',500);
  $label=admission_text($input,'boton_texto',190);

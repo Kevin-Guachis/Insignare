@@ -1,3 +1,4 @@
+import { ContentImage } from "../university/GallerySection";
 import { confirmAction, showSuccess, showError } from "../../utils/alerts";
 import { useEffect, useState } from "react";
 import { listAdminAcademicOffers, saveAcademicOffer, deleteAcademicOffer } from "../../services/academicOffers";
@@ -22,7 +23,7 @@ export default function AcademicOffersAdmin({ university,onClose }){
   catch(e){showError(e.message);}finally{setBusy(false);}
  }
  async function remove(target) {
-  if (busy || !await confirmAction("¿Eliminar oferta?", `La oferta “${target.titulo}” se eliminará definitivamente.\n\nEsta acción no se puede deshacer.`, "Eliminar")) return;
+  if (busy || !await confirmAction("¿Eliminar oferta?", `La oferta “${target.titulo||"Oferta con imagen"}” se eliminará definitivamente.\n\nEsta acción no se puede deshacer.`, "Eliminar")) return;
   setBusy(true);setError("");
   try{await deleteAcademicOffer(target.id,university.id);setRows(current=>current.filter(row=>row.id!==target.id));showSuccess("Oferta eliminada.");}
   catch(e){showError(e.message);}finally{setBusy(false);}
@@ -34,7 +35,7 @@ export default function AcademicOffersAdmin({ university,onClose }){
   {editor?<AcademicOfferForm key={editor.id||"new"} offer={editor} universityId={university.id} onCancel={()=>setEditor(null)} onSaved={row=>{setRows(current=>sorted([...current.filter(item=>item.id!==row.id),row]));setEditor(null);showSuccess("Oferta guardada correctamente.");}}/>:<>
    <div className="admin-news__toolbar"><button type="button" className="admin-news-primary" disabled={busy||loading} onClick={()=>{setEditor({...blank});}}>Nueva oferta</button></div>
    {loading?<p role="status">Cargando ofertas...</p>:<div className="admin-news-table-wrapper"><table className="admin-news-table"><thead><tr><th>Título</th><th>Estado</th><th>Orden</th><th>Acciones</th></tr></thead><tbody>
-    {rows.map(row=><tr key={row.id}><td data-label="Título">{row.titulo}</td><td data-label="Estado"><span className={row.activo ? "admin-status admin-status--active" : "admin-status admin-status--inactive"}>{row.activo ? "Activo" : "Inactivo"}</span></td><td data-label="Orden">{row.orden}</td><td data-label="Acciones"><div className="admin-news-actions">
+    {rows.map(row=><tr key={row.id}><td data-label="Título">{row.titulo||<>{row.imagen&&<ContentImage src={row.imagen} alt="Oferta académica" width="56" height="56"/>}<span>Oferta con imagen</span></>}</td><td data-label="Estado"><span className={row.activo ? "admin-status admin-status--active" : "admin-status admin-status--inactive"}>{row.activo ? "Activo" : "Inactivo"}</span></td><td data-label="Orden">{row.orden}</td><td data-label="Acciones"><div className="admin-news-actions">
      <button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} onClick={()=>{setEditor({...row});}} title="Editar oferta" aria-label="Editar oferta"><i className="bi bi-pencil" aria-hidden="true"/></button>
      <button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} onClick={()=>toggle(row)} title={row.activo?"Desactivar oferta":"Activar oferta"} aria-label={row.activo?"Desactivar oferta":"Activar oferta"}><i className={row.activo?"bi bi-eye":"bi bi-eye-slash"} aria-hidden="true"/></button>
      <button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} onClick={()=>remove(row)} title="Eliminar oferta" aria-label="Eliminar oferta"><i className="bi bi-trash" aria-hidden="true"/></button>

@@ -1,3 +1,4 @@
+import { ContentImage } from "../university/GallerySection";
 import { imageSize } from "../../services/api";
 import { showError, showWarning } from "../../utils/alerts";
 import { useEffect, useRef, useState } from "react";
@@ -23,11 +24,12 @@ export default function AcademicOfferForm({ offer, universityId, onSaved, onCanc
  return <form className="admin-news-form" onSubmit={submit}><fieldset disabled={busy}>
   <h3>{offer.id?"Editar oferta académica":"Nueva oferta académica"}</h3>
   <div className="admin-news-field"><label htmlFor="offer-size">Tamaño de imagen</label><input id="offer-size" type="range" min="25" max="100" step="1" value={values.tamano_imagen} aria-valuetext={`${values.tamano_imagen}%`} onChange={e=>setValues({...values,tamano_imagen:imageSize(e.target.value)})}/><output htmlFor="offer-size">{values.tamano_imagen}%</output></div>
-  <div className="admin-news-field"><label htmlFor="offer-title">Título</label><input ref={titleRef} id="offer-title" name="titulo" required maxLength={190} value={values.titulo} onChange={change}/></div>
+  <div className="admin-news-field"><label htmlFor="offer-title">Título (opcional si hay imagen)</label><input ref={titleRef} id="offer-title" name="titulo" required={!image&&!values.imagen} maxLength={190} value={values.titulo} onChange={change}/></div>
   <div className="admin-news-field"><label htmlFor="offer-description">Descripción</label><textarea id="offer-description" name="descripcion" rows="5" maxLength={8000} value={values.descripcion} onChange={change}/></div>
   <div className="admin-news-form__grid">
    <div className="admin-news-field"><label htmlFor="offer-image">Imagen</label>
-    {values.imagen&&<img className="admin-news-preview" src={values.imagen} alt="Imagen actual"/>}
+    {values.imagen&&<><small>Imagen guardada</small><ContentImage className="admin-news-preview" src={values.imagen} alt="Imagen actual"/></>}
+ {image&&<><small>Nueva imagen seleccionada</small><ContentImage file={image} className="admin-news-preview" alt="Nueva imagen"/><button type="button" className="admin-news-secondary" onClick={()=>{setImage(null);document.getElementById("offer-image").value="";}}>Cancelar selección</button></>}
     <input ref={imageRef} id="offer-image" type="file" accept=".jpg,.jpeg,.png,.webp" onChange={e=>{
      const file=e.target.files[0];if(!file)return;
      if(!/\.(jpe?g|png|webp)$/i.test(file.name)||file.size>5*1024*1024){showWarning("Archivo inválido", "Usa JPG, PNG o WebP de hasta 5 MB.");e.target.value="";return;}

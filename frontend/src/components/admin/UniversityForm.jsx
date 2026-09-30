@@ -1,3 +1,4 @@
+import { ContentImage } from "../university/GallerySection";
 import { imageSize } from "../../services/api";
 import { showError, showWarning } from "../../utils/alerts";
 import { useEffect, useRef, useState } from "react";
@@ -30,7 +31,7 @@ export default function UniversityForm({ university, onSaved, onCancel }) {
    <div className="admin-news-form__grid">
     {[["logo","Logo"],["imagen_portada","Imagen portada"]].map(([key,label])=><div className="admin-news-field" key={key}>
      <label htmlFor={"university-"+key}>{label}</label>
-     {values[key]&&<img className="admin-news-preview" src={values[key]} alt={label+" actual"}/>}
+     {key==="logo" ? values[key]&&<img className="admin-news-preview" src={values[key]} alt={label+" actual"}/> : <>{values[key]&&<><small>Imagen guardada</small><ContentImage className="admin-news-preview" src={values[key]} alt="Portada actual"/></>}{files[key]&&<><small>Nueva portada</small><ContentImage file={files[key]} className="admin-news-preview" alt="Nueva portada"/><button type="button" onClick={()=>{setFiles(current=>({...current,[key]:null}));document.getElementById("university-"+key).value="";}}>Cancelar selección</button></>}</>}
      <input id={"university-"+key} type="file" accept=".jpg,.jpeg,.png,.webp" onChange={e=>{
       const file=e.target.files[0];if(!file)return;
       if(!/\.(jpe?g|png|webp)$/i.test(file.name)||file.size>5*1024*1024){showWarning("Archivo inválido", "Usa JPG, PNG o WebP de hasta 5 MB.");e.target.value="";return;}

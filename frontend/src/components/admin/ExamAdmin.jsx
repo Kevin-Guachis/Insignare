@@ -1,3 +1,4 @@
+import { ContentImage } from "../university/GallerySection";
 import { confirmAction, showSuccess, showError } from "../../utils/alerts";
 import { useEffect, useState } from "react";
 import { getAdminExam, saveExam, deleteExam, saveExamCategory, deleteExamCategory } from "../../services/exams";
@@ -29,7 +30,7 @@ export default function ExamAdmin({ university, onClose }) {
   catch(e){showError(e.message);}finally{setBusy(false);}
  }
  async function remove(confirmation) {
-  if (busy || !await confirmAction(confirmation.kind === "exam" ? "¿Eliminar examen?" : "¿Eliminar categoría?", confirmation.kind === "exam" ? "Se eliminarán el examen y todas sus categorías. Esta acción no se puede deshacer." : `La categoría “${confirmation.category.nombre}” se eliminará definitivamente. Esta acción no se puede deshacer.`, "Eliminar")) return;
+  if (busy || !await confirmAction(confirmation.kind === "exam" ? "¿Eliminar examen?" : "¿Eliminar categoría?", confirmation.kind === "exam" ? "Se eliminarán el examen y todas sus categorías. Esta acción no se puede deshacer." : `La categoría “${confirmation.category.nombre||"Categoría con imagen"}” se eliminará definitivamente. Esta acción no se puede deshacer.`, "Eliminar")) return;
   setBusy(true);setError("");
   try{
    if(confirmation.kind==="exam"){await deleteExam(exam.id,university.id);setExam({...blank});setCategories([]);setEditor(null);}
@@ -59,7 +60,7 @@ export default function ExamAdmin({ university, onClose }) {
    <div className="admin-news__toolbar"><h3>Categorías</h3><button type="button" className="admin-news-primary" disabled={busy||!!editor} onClick={()=>{setEditor({...blankCategory});}}>Nueva categoría</button></div>
    {editor?<ExamCategoryForm key={editor.id||"new"} category={editor} examId={exam.id} universityId={university.id} onCancel={()=>setEditor(null)} onSaved={row=>{setCategories(current=>sorted([...current.filter(item=>item.id!==row.id),row]));setEditor(null);showSuccess("Categoría guardada correctamente.");}}/>:
    <div className="admin-news-table-wrapper"><table className="admin-news-table"><thead><tr><th>Imagen</th><th>Nombre</th><th>Preguntas</th><th>Orden</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>
-    {categories.map(category=><tr key={category.id}><td data-label="Imagen">{category.imagen?<img src={category.imagen} alt="" width="56" height="56"/>:"—"}</td><td data-label="Nombre">{category.nombre}</td><td data-label="Preguntas">{category.cantidad_preguntas??"—"}</td><td data-label="Orden">{category.orden}</td><td data-label="Estado"><span className={category.activo ? "admin-status admin-status--active" : "admin-status admin-status--inactive"}>{category.activo ? "Activo" : "Inactivo"}</span></td><td data-label="Acciones"><div className="admin-news-actions">
+    {categories.map(category=><tr key={category.id}><td data-label="Imagen">{category.imagen?<ContentImage src={category.imagen} alt="" width="56" height="56"/>:"—"}</td><td data-label="Nombre">{category.nombre||"Categoría con imagen"}</td><td data-label="Preguntas">{category.cantidad_preguntas??"—"}</td><td data-label="Orden">{category.orden}</td><td data-label="Estado"><span className={category.activo ? "admin-status admin-status--active" : "admin-status admin-status--inactive"}>{category.activo ? "Activo" : "Inactivo"}</span></td><td data-label="Acciones"><div className="admin-news-actions">
      <button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} onClick={()=>{setEditor({...category});}} title="Editar categoría" aria-label="Editar categoría"><i className="bi bi-pencil" aria-hidden="true"/></button>
      <button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} onClick={()=>toggle(category)} title={category.activo?"Desactivar categoría":"Activar categoría"} aria-label={category.activo?"Desactivar categoría":"Activar categoría"}><i className={category.activo?"bi bi-eye":"bi bi-eye-slash"} aria-hidden="true"/></button>
      <button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} onClick={()=>remove({kind:"category",category})} title="Eliminar categoría" aria-label="Eliminar categoría"><i className="bi bi-trash" aria-hidden="true"/></button>

@@ -1,3 +1,4 @@
+import { ContentImage } from "./GallerySection";
 import { imageSize } from "../../services/api";
 export default function ExamSection({ exam, categories=[], headingId }) {
  if(!exam||!exam.activo)return null;
@@ -10,9 +11,9 @@ export default function ExamSection({ exam, categories=[], headingId }) {
   </dl>}
   <div className="exam-categories">
    {[...categories].filter(category=>category.activo===1).sort((a,b)=>a.orden-b.orden||a.id-b.id).map(category=><article className="exam-category" key={category.id}>
-    {category.imagen&&<span className="image-size-wrapper" style={{width:`${imageSize(category.tamano_imagen)}%`}}><img className="exam-category__image" src={category.imagen} alt=""/></span>}
+    {category.imagen&&<span className="image-size-wrapper" style={{width:`${imageSize(category.tamano_imagen)}%`}}><ContentImage className="exam-category__image" src={category.imagen} alt={category.nombre||"Categoría del examen"}/></span>}
     <div className="exam-category__body">
-     <h3>{category.nombre}</h3>
+     {category.nombre&&<h3>{category.nombre}</h3>}
      {category.cantidad_preguntas!=null&&<p>{category.cantidad_preguntas} preguntas</p>}
      <p className="university-description">{category.descripcion}</p>
     </div>

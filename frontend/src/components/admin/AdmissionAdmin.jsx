@@ -1,3 +1,4 @@
+import { ContentImage } from "../university/GallerySection";
 import { confirmAction, showSuccess, showError } from "../../utils/alerts";
 import { useEffect, useState } from "react";
 import { getAdminAdmission, saveAdmission, deleteAdmission, saveAdmissionStep, deleteAdmissionStep } from "../../services/admissions";
@@ -29,7 +30,7 @@ export default function AdmissionAdmin({ university, onClose }) {
   catch(e){showError(e.message);}finally{setBusy(false);}
  }
  async function remove(confirmation) {
-  if (busy || !await confirmAction(confirmation.kind === "process" ? "¿Eliminar proceso de admisión?" : "¿Eliminar etapa?", confirmation.kind === "process" ? "Se eliminarán el proceso y todas sus etapas. Esta acción no se puede deshacer." : `La etapa “${confirmation.step.titulo}” se eliminará definitivamente. Esta acción no se puede deshacer.`, "Eliminar")) return;
+  if (busy || !await confirmAction(confirmation.kind === "process" ? "¿Eliminar proceso de admisión?" : "¿Eliminar etapa?", confirmation.kind === "process" ? "Se eliminarán el proceso y todas sus etapas. Esta acción no se puede deshacer." : `La etapa “${confirmation.step.titulo||"Etapa con imagen"}” se eliminará definitivamente. Esta acción no se puede deshacer.`, "Eliminar")) return;
   setBusy(true);setError("");
   try{
    if(confirmation.kind==="process"){await deleteAdmission(process.id,university.id);setProcess({...blank});setSteps([]);setEditor(null);}
@@ -55,7 +56,7 @@ export default function AdmissionAdmin({ university, onClose }) {
    <div className="admin-news__toolbar"><h3>Etapas</h3><button type="button" className="admin-news-primary" disabled={busy||!!editor} onClick={()=>{setEditor({...blankStep});}}>Nueva etapa</button></div>
    {editor?<AdmissionStepForm key={editor.id||"new"} step={editor} admissionId={process.id} universityId={university.id} onCancel={()=>setEditor(null)} onSaved={row=>{setSteps(current=>sorted([...current.filter(item=>item.id!==row.id),row]));setEditor(null);showSuccess("Etapa guardada correctamente.");}}/>:
    <div className="admin-news-table-wrapper"><table className="admin-news-table"><thead><tr><th>Imagen</th><th>Título</th><th>Fecha</th><th>Orden</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>
-    {steps.map(step=><tr key={step.id}><td data-label="Imagen">{step.imagen?<img src={step.imagen} alt="" width="56" height="56"/>:"—"}</td><td data-label="Título">{step.titulo}</td><td data-label="Fecha">{step.fecha||"Sin fecha"}</td><td data-label="Orden">{step.orden}</td><td data-label="Estado"><span className={step.activo ? "admin-status admin-status--active" : "admin-status admin-status--inactive"}>{step.activo ? "Activo" : "Inactivo"}</span></td><td data-label="Acciones"><div className="admin-news-actions">
+    {steps.map(step=><tr key={step.id}><td data-label="Imagen">{step.imagen?<ContentImage src={step.imagen} alt="" width="56" height="56"/>:"—"}</td><td data-label="Título">{step.titulo||"Etapa con imagen"}</td><td data-label="Fecha">{step.fecha||"Sin fecha"}</td><td data-label="Orden">{step.orden}</td><td data-label="Estado"><span className={step.activo ? "admin-status admin-status--active" : "admin-status admin-status--inactive"}>{step.activo ? "Activo" : "Inactivo"}</span></td><td data-label="Acciones"><div className="admin-news-actions">
      <button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} onClick={()=>{setEditor({...step});}} title="Editar etapa" aria-label="Editar etapa"><i className="bi bi-pencil" aria-hidden="true"/></button>
      <button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} onClick={()=>toggle(step)} title={step.activo?"Desactivar etapa":"Activar etapa"} aria-label={step.activo?"Desactivar etapa":"Activar etapa"}><i className={step.activo?"bi bi-eye":"bi bi-eye-slash"} aria-hidden="true"/></button>
      <button type="button" className="admin-news-secondary admin-icon-button" disabled={busy} onClick={()=>remove({kind:"step",step})} title="Eliminar etapa" aria-label="Eliminar etapa"><i className="bi bi-trash" aria-hidden="true"/></button>

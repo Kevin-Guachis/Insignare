@@ -1,3 +1,4 @@
+import { ContentImage } from "../university/GallerySection";
 import { imageSize } from "../../services/api";
 import { showError, showWarning } from "../../utils/alerts";
 import { useEffect, useRef, useState } from "react";
@@ -22,7 +23,8 @@ export default function ExamCategoryForm({ category, examId, universityId, onSav
   <h3>{category.id?"Editar categoría":"Nueva categoría"}</h3>
   <div className="admin-news-field"><label htmlFor="exam-category-size">Tamaño de imagen</label><input id="exam-category-size" type="range" min="25" max="100" step="1" value={values.tamano_imagen} aria-valuetext={`${values.tamano_imagen}%`} onChange={e=>setValues({...values,tamano_imagen:imageSize(e.target.value)})}/><output htmlFor="exam-category-size">{values.tamano_imagen}%</output></div>
   <div className="admin-news-field"><label htmlFor="exam-category-image">Imagen</label>
-   {values.imagen&&<img className="admin-news-preview" src={values.imagen} alt="Imagen actual"/>}
+   {values.imagen&&<><small>Imagen guardada</small><ContentImage className="admin-news-preview" src={values.imagen} alt="Imagen actual"/></>}
+ {file&&<><small>Nueva imagen seleccionada</small><ContentImage file={file} className="admin-news-preview" alt="Nueva imagen"/><button type="button" className="admin-news-secondary" onClick={()=>{setFile(null);document.getElementById("exam-category-image").value="";}}>Cancelar selección</button></>}
    <input ref={fileRef} id="exam-category-image" type="file" accept=".jpg,.jpeg,.png,.webp" onChange={e=>{
     const selected=e.target.files[0];if(!selected)return;
     if(!/\.(jpe?g|png|webp)$/i.test(selected.name)||selected.size>5*1024*1024){showWarning("Archivo inválido", "Usa JPG, PNG o WebP de hasta 5 MB.");e.target.value="";return;}
@@ -31,7 +33,7 @@ export default function ExamCategoryForm({ category, examId, universityId, onSav
    <small>JPG, PNG o WebP. Máximo 5 MB.</small>
    {(file||values.imagen)&&<button className="admin-news-secondary" type="button" onClick={()=>{setFile(null);setValues({...values,imagen:""});fileRef.current.value="";}}>Quitar imagen</button>}
   </div>
-  <div className="admin-news-field"><label htmlFor="exam-category-name">Nombre</label><input ref={nameRef} id="exam-category-name" name="nombre" maxLength={190} required value={values.nombre} onChange={change}/></div>
+  <div className="admin-news-field"><label htmlFor="exam-category-name">Nombre (opcional si hay imagen)</label><input ref={nameRef} id="exam-category-name" name="nombre" maxLength={190} required={!file&&!values.imagen} value={values.nombre} onChange={change}/></div>
   <div className="admin-news-field"><label htmlFor="exam-category-description">Descripción</label><textarea id="exam-category-description" name="descripcion" maxLength={8000} rows="5" value={values.descripcion} onChange={change}/></div>
   <div className="admin-news-form__grid">
    <div className="admin-news-field"><label htmlFor="exam-category-count">Cantidad de preguntas (opcional)</label><input id="exam-category-count" type="number" min="0" max="2147483647" step="1" value={values.cantidad_preguntas} onChange={e=>setValues({...values,cantidad_preguntas:e.target.value===""?"":Number(e.target.value)})}/></div>

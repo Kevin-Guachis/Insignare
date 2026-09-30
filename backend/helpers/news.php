@@ -122,7 +122,100 @@ function find_news(PDO $db, int $id): array
     $query->execute(['id' => $id]);
     $row = $query->fetch();
     if (!$row) error_response('Noticia no encontrada.', 404);
-    return news_row($row);
+    return news_attach_images($db, [news_row($row)])[0];
+}
+
+function news_images_available(PDO $db): bool
+{
+    static $available = null;
+    if ($available !== null) return $available;
+    try {
+        $db->query('SELECT id FROM news_images LIMIT 0');
+        return $available = true;
+    } catch (PDOException $error) {
+        if (($error->errorInfo[1] ?? null) !== 1146) throw $error;
+        return $available = false;
+    }
+}
+
+function news_attach_images(PDO $db, array $rows): array
+{
+    foreach ($rows as &$row) $row['additional_images'] = [];
+    unset($row);
+    if (!$rows || !news_images_available($db)) return $rows;
+    $ids = array_column($rows, 'id');
+    $query = $db->prepare('SELECT id, news_id, imagen, orden FROM news_images WHERE news_id IN (' . implode(',', array_fill(0, count($ids), '?')) . ') ORDER BY news_id, orden, id');
+    $query->execute($ids);
+    $images = [];
+    foreach ($query->fetchAll() as $image) {
+        $images[(int)$image['news_id']][] = ['id'=>(int)$image['id'], 'imagen'=>$image['imagen'], 'orden'=>(int)$image['orden']];
+    }
+    foreach ($rows as &$row) $row['additional_images'] = $images[$row['id']] ?? [];
+    unset($row);
+    return $rows;
+}
+
+// El cliente envía la lista final: IDs existentes y rutas recién subidas en esta sesión.
+// La validación se realiza bajo el bloqueo de la noticia, antes de modificar registros.
+function news_additional_values(PDO $db, array $input, array $existing = []): ?array
+{
+    if (!array_key_exists('additional_images', $input)) return null;
+    $items = $input['additional_images'];
+    if (!is_array($items) || !array_is_list($items) || count($items) > 5) {
+        error_response('Puedes agregar hasta 5 imágenes adicionales.', 422);
+    }
+    if (!news_images_available($db)) {
+        if ($items) error_response('Aplica primero news_images_schema.sql para guardar imágenes adicionales.', 409);
+        return null;
+    }
+    $byId = array_column($existing, null, 'id');
+    $result = [];
+    $seen = [];
+    foreach ($items as $item) {
+        if (!$item instanceof stdClass && !is_array($item)) error_response('Imagen adicional inválida.',422);
+        $item = (array)$item;
+        if (isset($item['id'])) {
+            $id = news_id($item['id']);
+            if (!isset($byId[$id])) error_response('La imagen no pertenece a esta noticia o fue eliminada. Recarga el formulario.',422);
+            $path = $byId[$id]['imagen'];
+        } else {
+            $id = null;
+            $path = $item['imagen'] ?? null;
+            if (!is_string($path) || !isset($_SESSION['news_additional_uploads'][$path])) {
+                error_response('Selecciona una imagen adicional subida en esta sesión.',422);
+            }
+        }
+        $filename = news_image_filename($path);
+        $fullPath = __DIR__ . '/../uploads/images/' . ($filename ?? '');
+        $info = $filename && is_file($fullPath) ? @getimagesize($fullPath) : false;
+        if (!$info || !in_array($info['mime'], ['image/jpeg','image/png','image/webp'], true)
+            || filesize($fullPath) > 5 * 1024 * 1024 || isset($seen[$path])) {
+            error_response('Imagen adicional inválida o repetida.',422);
+        }
+        $seen[$path] = true;
+        $result[] = ['id'=>$id, 'imagen'=>$path];
+    }
+    return $result;
+}
+
+function news_save_additional(PDO $db, int $newsId, ?array $images): void
+{
+    if ($images === null) return;
+    // Liberar posiciones antes de reordenar, conservando los IDs de las imágenes retenidas.
+    $query = $db->prepare('UPDATE news_images SET orden=orden+10 WHERE news_id=?');
+    $query->execute([$newsId]);
+    $retained = array_values(array_filter(array_column($images, 'id')));
+    $sql = 'DELETE FROM news_images WHERE news_id=?';
+    if ($retained) $sql .= ' AND id NOT IN (' . implode(',', array_fill(0,count($retained),'?')) . ')';
+    $db->prepare($sql)->execute([$newsId, ...$retained]);
+    foreach ($images as $index=>$image) {
+        if ($image['id'] !== null) {
+            $db->prepare('UPDATE news_images SET orden=? WHERE id=? AND news_id=?')->execute([$index+1,$image['id'],$newsId]);
+        } else {
+            $db->prepare('INSERT INTO news_images (news_id,imagen,orden) VALUES (?,?,?)')->execute([$newsId,$image['imagen'],$index+1]);
+        }
+    }
+    // Igual que destroy.php: conservar archivos físicos potencialmente compartidos.
 }
 
 // Multipart no puede usar read_json_request. Conserva las mismas barreras de origen.

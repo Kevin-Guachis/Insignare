@@ -52,7 +52,7 @@ function exam_values(array $input): array {
 function exam_category_values(array $input): array {
  $order=$input['orden']??0;
  if (!is_int($order)||$order<0||$order>2147483647) error_response('Orden inválido.',422);
- $values=['nombre'=>exam_text($input,'nombre',190,true),'descripcion'=>exam_text($input,'descripcion',8000),
+ $values=['nombre'=>exam_text($input,'nombre',190),'descripcion'=>exam_text($input,'descripcion',8000),
  'cantidad_preguntas'=>exam_count($input['cantidad_preguntas']??null),'orden'=>$order,'activo'=>exam_active($input)];
  $image=$input['imagen']??null;if ($image==='')$image=null;
  if ($image!==null) {
@@ -61,6 +61,7 @@ function exam_category_values(array $input): array {
   if (!$filename||!is_file(__DIR__.'/../uploads/images/'.$filename)) error_response('Selecciona una imagen subida al sitio.',422);
  }
  $values['imagen']=$image;
+ if ($values['nombre']==='' && $image===null) error_response('Indica un nombre o selecciona una imagen.',422);
  $values['tamano_imagen']=image_size($input['tamano_imagen']??null);return $values;
 }
 function exam_category_find(PDO $db,int $id,int $parent): array {

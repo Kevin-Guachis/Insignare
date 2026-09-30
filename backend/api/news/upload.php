@@ -33,4 +33,8 @@ if (!is_dir($directory) || !is_writable($directory)) {
 if (!move_uploaded_file($file['tmp_name'], $directory . '/' . $name)) {
     error_response('No se pudo guardar la imagen.', 500);
 }
-success_response(['imagen' => '/api/news/image.php?file=' . $name]);
+$path = '/api/news/image.php?file=' . $name;
+if (($_POST['purpose'] ?? '') === 'news_additional') {
+    $_SESSION['news_additional_uploads'][$path] = true;
+}
+success_response(['imagen' => $path]);

@@ -8,6 +8,7 @@ import Footer from "../components/layout/Footer";
 import NewsMeta from "../components/ui/NewsMeta";
 import WhatsAppButton from "../components/ui/WhatsAppButton";
 import NotFound from "./NotFound";
+import { ContentImage } from "../components/university/GallerySection";
 
 function NewsDetail() {
   const { slug } = useParams();
@@ -37,7 +38,7 @@ function NewsDetail() {
             </ol>
           </nav>
           <article className="news-detail__card">
-            {story.image && <span className="image-size-wrapper" style={{width:`${imageSize(story.tamano_imagen)}%`}}><img className="news-detail__image" src={story.image} alt={story.title} /></span>}
+            {story.image && <span className="image-size-wrapper" style={{width:`${imageSize(story.tamano_imagen)}%`}}><ContentImage className="news-detail__image" src={story.image} alt={story.title} /></span>}
             <div className="news-detail__body">
               <span className="news-category">{story.category}</span>
               <h1>{story.title}</h1>
@@ -47,6 +48,12 @@ function NewsDetail() {
                   {story.content.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
                 </div>
               )}
+              {story.additional_images.length > 0 && <section aria-labelledby="news-additional-title">
+                <h2 id="news-additional-title">Imágenes adicionales</h2>
+                <div className="news-additional-images">
+                  {story.additional_images.map((image, index) => <ContentImage key={image.id} src={image.imagen} alt={`${story.title}: imagen adicional ${index + 1}`} loading="lazy" />)}
+                </div>
+              </section>}
               {attachments.map((attachment) => (
                 <section className="news-attachment" key={attachment.url} aria-label={attachment.name}>
                   <div className="news-attachment__header">

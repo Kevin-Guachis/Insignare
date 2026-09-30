@@ -10,6 +10,7 @@ export function toNewsStory(row) {
     date: row.fecha,
     dateLabel: `${month} ${date.getDate()}, ${date.getFullYear()}`,
     image: row.imagen,
+    additional_images: row.additional_images ?? [],
     tamano_imagen: row.tamano_imagen,
     excerpt: row.descripcion,
     content: row.contenido ? row.contenido.split(/\r?\n\s*\r?\n/).filter(Boolean) : [],

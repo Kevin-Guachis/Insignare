@@ -61,9 +61,10 @@ export async function notifyNewsChanged() {
 export const listAdminNews = () => api("/api/news/admin_list.php");
 export const saveNews = (data) => api(`/api/news/${data.id ? "update" : "create"}.php`, { method: "POST", body: data });
 export const hideNews = (id) => api("/api/news/delete.php", { method: "POST", body: { id } });
-export function uploadNewsImage(file) {
+export function uploadNewsImage(file, additional = false) {
   const body = new FormData();
   body.append("imagen", file);
+  if (additional) body.append("purpose", "news_additional");
   return api("/api/news/upload.php", { method: "POST", body });
 }
 

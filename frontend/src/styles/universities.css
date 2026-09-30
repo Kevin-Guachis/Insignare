@@ -89,7 +89,7 @@
 .university-gallery-lightbox__close:focus-visible { outline:3px solid #fff; outline-offset:3px; }
 @media(prefers-reduced-motion:reduce){.university-gallery-lightbox,.university-gallery-lightbox::backdrop,.university-gallery-lightbox img{transition:none;}}
 .university-gallery__item figcaption { padding:16px; font-weight:600; overflow-wrap:anywhere; }
-.gallery-admin-thumbnail { width:80px; height:60px; object-fit:cover; border-radius:8px; }
+.gallery-admin-thumbnail { width:80px; height:60px; object-fit:contain; border-radius:8px; }
 .gallery-admin-preview { display:block; width:100%; max-width:320px; height:auto; border-radius:12px; }
 @media(max-width:1000px){.university-gallery > .university-gallery__item{flex-basis:calc((100% - 20px) / 2);}}
 @media(max-width:600px){.university-gallery > .university-gallery__item{flex-basis:100%;}}
@@ -108,3 +108,11 @@
 .academic-catalog__subjects { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0; }
 .academic-catalog__subjects li { background: var(--color-background); border-radius: 8px; padding: 10px 14px; max-width: 100%; overflow-wrap: anywhere; }
 @media(max-width:600px){.academic-catalog__toggle{padding:14px;}.academic-catalog__content{padding:10px;}}
+
+.content-image-open { display:inline-block; max-width:100%; min-width:0; padding:0; border:0; background:transparent; cursor:zoom-in; justify-self:start; }
+.content-image-open img { display:block; max-width:100%; object-fit:contain; }
+.content-image-open:focus-visible { outline:3px solid var(--color-primary); outline-offset:3px; }
+.image-size-wrapper > .content-image-open { display:block; width:100%; }
+.image-size-wrapper > .content-image-open > img { width:100%; height:auto; max-height:none; }
+.university-gallery-lightbox__navigation { position:absolute; bottom:8px; display:flex; gap:16px; align-items:center; color:white; background:#171717; padding:4px 12px; border-radius:8px; }
+.university-gallery-lightbox__navigation button { color:white; background:transparent; border:1px solid white; min-width:44px; min-height:44px; cursor:pointer; }

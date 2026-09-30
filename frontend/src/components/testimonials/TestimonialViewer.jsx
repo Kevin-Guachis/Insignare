@@ -1,34 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useState } from "react";
+import { UniversityImageLightbox } from "../university/GallerySection";
 
 export default function TestimonialViewer({ rows, initialIndex, onClose }) {
- const dialog = useRef(null);
- const [index, setIndex] = useState(initialIndex);
- const row = rows[index];
- useEffect(() => {
-  const element = dialog.current;
-  const previousFocus = document.activeElement;
-  const overflow = document.body.style.overflow;
-  element.showModal();
-  document.body.style.overflow = "hidden";
-  return () => {
-   element.close(); document.body.style.overflow = overflow;
-   if (previousFocus?.isConnected) previousFocus.focus({ preventScroll: true });
-  };
- }, []);
- function move(delta) { setIndex(current => (current + delta + rows.length) % rows.length); }
- return createPortal(<dialog ref={dialog} className="testimonial-viewer" aria-label={row.titulo?.trim() ? undefined : "Imagen ampliada"} aria-labelledby={row.titulo?.trim() ? "testimonial-viewer-title" : undefined}
-  onCancel={event => { event.preventDefault(); onClose(); }}
-  onClick={event => { if (event.target === event.currentTarget) onClose(); }}
-  onKeyDown={event => {
-   if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
-    event.preventDefault(); move(event.key === "ArrowLeft" ? -1 : 1);
-   }
-  }}>
-  <div className="testimonial-viewer__panel">
-   <header>{row.titulo?.trim()&&<h2 id="testimonial-viewer-title">{row.titulo}</h2>}<button type="button" style={{marginLeft:"auto"}} autoFocus onClick={onClose} aria-label="Cerrar visor">×</button></header>
-   <div className="testimonial-viewer__image"><img src={row.imagen} alt={row.titulo} /></div>
-   <footer><button type="button" disabled={rows.length < 2} onClick={() => move(-1)} aria-label="Imagen anterior">‹</button><span aria-live="polite">{index + 1} / {rows.length}</span><button type="button" disabled={rows.length < 2} onClick={() => move(1)} aria-label="Imagen siguiente">›</button></footer>
-  </div>
- </dialog>, document.body);
+ const [index,setIndex]=useState(initialIndex);
+ const move=delta=>setIndex(current=>(current+delta+rows.length)%rows.length);
+ return <UniversityImageLightbox image={{...rows[index],alt:rows[index].titulo||"Fotografía de testimonios"}} onClose={onClose}
+  position={(index+1)+" / "+rows.length} onPrevious={rows.length>1?()=>move(-1):undefined} onNext={rows.length>1?()=>move(1):undefined}/>;
 }
