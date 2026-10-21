@@ -1,4 +1,5 @@
 import { api } from "./api";
+import { uploadPdf, savePdfResource } from "./pdfUpload.js";
 import { toNewsStory } from "../data/news";
 
 const listeners = new Set();
@@ -59,7 +60,7 @@ export async function notifyNewsChanged() {
 }
 
 export const listAdminNews = () => api("/api/news/admin_list.php");
-export const saveNews = (data) => api(`/api/news/${data.id ? "update" : "create"}.php`, { method: "POST", body: data });
+export const saveNews = (data) => savePdfResource(`/api/news/${data.id ? "update" : "create"}.php`, { method: "POST", body: data });
 export const hideNews = (id) => api("/api/news/delete.php", { method: "POST", body: { id } });
 export function uploadNewsImage(file, additional = false) {
   const body = new FormData();
@@ -68,10 +69,8 @@ export function uploadNewsImage(file, additional = false) {
   return api("/api/news/upload.php", { method: "POST", body });
 }
 
-export function uploadNewsDocument(file) {
-  const body = new FormData();
-  body.append("documento", file);
-  return api("/api/news/upload_document.php", { method: "POST", body });
+export function uploadNewsDocument(file, onProgress) {
+  return uploadPdf("/api/news/upload_document.php", file, onProgress);
 }
 
 

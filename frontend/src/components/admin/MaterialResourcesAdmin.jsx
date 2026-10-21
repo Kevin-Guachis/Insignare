@@ -1,4 +1,4 @@
-import { confirmAction, showSuccess, showError, showWarning } from "../../utils/alerts";
+import { confirmAction, showSuccess, showError, showWarning, showPdfUploadProgress } from "../../utils/alerts";
 import { useEffect, useState } from "react";
 import { listAdminUniversities } from "../../services/universities";
 import { listAdminMaterialResources, saveMaterialResource, deleteMaterialResource, uploadMaterialPdf, filterMaterials } from "../../services/materialResources";
@@ -20,18 +20,25 @@ export default function MaterialResourcesAdmin() {
  function edit(row){setEditor({...row});setFile(null);}
  async function save(event){
   event.preventDefault();
+  if(busy)return;
   if(!editor.title.trim()||!editor.description.trim()||!editor.university_id||(!file&&!editor.file_path)){
    await showWarning("Datos incompletos","Selecciona la universidad, título, descripción y un PDF.");return;
   }
   setBusy(true);
+  const feedback=file?showPdfUploadProgress(file):null;
   try{
-   const uploaded=file?await uploadMaterialPdf(file):{};
+   const uploaded=file?await uploadMaterialPdf(file,feedback.update):{};
+   feedback?.saving();
    const row={...editor,...uploaded};
    // Conservar una subida correcta si la validación posterior necesita corrección.
    setEditor(row);setFile(null);
    await saveMaterialResource(row);setEditor(null);refresh();
+   feedback?.close();
    await showSuccess("Recurso guardado","El material se actualizó correctamente.");
-  }catch(e){await showError(e.message);}finally{setBusy(false);}
+  }catch(e){
+   feedback?.close();
+   showError(e.message);
+  }finally{feedback?.close();setBusy(false);}
  }
  async function toggle(row){
   setBusy(true);try{await saveMaterialResource({...row,visible:row.visible?0:1});refresh();}

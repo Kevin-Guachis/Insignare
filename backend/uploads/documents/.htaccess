@@ -1,1 +1,6 @@
 Require all denied
+
+# Defensa adicional: los documentos nunca deben usar un handler PHP/CGI.
+SetHandler none
+RemoveHandler .pdf .php .phtml .php3 .php4 .php5 .php7 .php8 .phar
+RemoveType .pdf .php .phtml .phar

@@ -1,12 +1,12 @@
-import { api } from "./api";
+import { api } from "./api.js";
+import { uploadPdf, savePdfResource } from "./pdfUpload.js";
 const base = "/api/material-resources/";
 export const listMaterialResources = () => api(base + "index.php");
 export const listAdminMaterialResources = () => api(base + "admin.php");
-export const saveMaterialResource = body => api(base + "index.php", { method: body.id ? "PUT" : "POST", body });
+export const saveMaterialResource = body => savePdfResource(base + "index.php", { method: body.id ? "PUT" : "POST", body });
 export const deleteMaterialResource = id => api(base + "index.php", { method: "DELETE", body: { id } });
-export async function uploadMaterialPdf(file) {
- const body = new FormData(); body.append("documento", file);
- const row = await api(base + "upload.php", { method: "POST", body });
+export async function uploadMaterialPdf(file, onProgress) {
+ const row = await uploadPdf(base + "upload.php", file, onProgress);
  return { file_path: row.documento, file_name: row.documento_nombre };
 }
 export const materialFileUrl = (id, download = false) => base + "file.php?id=" + encodeURIComponent(id) + (download ? "&download=1" : "");

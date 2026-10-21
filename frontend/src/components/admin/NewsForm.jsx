@@ -1,5 +1,5 @@
 import { imageSize } from "../../services/api";
-import { showError, showWarning } from "../../utils/alerts";
+import { showError, showWarning, showPdfUploadProgress } from "../../utils/alerts";
 import { useEffect, useRef, useState } from "react";
 import { saveNews, uploadNewsImage, uploadNewsDocument } from "../../services/news";
 import { ContentImage } from "../university/GallerySection";
@@ -74,6 +74,7 @@ function NewsForm({ news, onSaved, onCancel }) {
     event.preventDefault();
     if (saving) return;
     setSaving(true);
+    let feedback;
 
     try {
       const image = file ? (await uploadNewsImage(file)).imagen : values.imagen;
@@ -88,15 +89,18 @@ function NewsForm({ news, onSaved, onCancel }) {
         // Conservar cada subida completada si una posterior o el guardado falla.
         if (item.file) setAdditionalImages(current => current.map(image => image.key === item.key ? { ...image, imagen: uploaded, file: null } : image));
       }
-      const uploaded = documentFile ? await uploadNewsDocument(documentFile) : null;
+      feedback = documentFile ? showPdfUploadProgress(documentFile) : null;
+      const uploaded = documentFile ? await uploadNewsDocument(documentFile, feedback.update) : null;
       const document = uploaded ? uploaded.documento : values.documento;
       const documentName = uploaded ? uploaded.documento_nombre : values.documento_nombre;
       setValues((current) => ({ ...current, documento: document, documento_nombre: documentName }));
       setDocumentFile(null);
+      feedback?.saving();
       const saved = await saveNews({ ...values, imagen: image, additional_images: additional, documento: document, documento_nombre: documentName, ...(news ? { id: news.id } : {}) });
-      onSaved(saved);
-    } catch(error){showError(error.message);
+      feedback?.close();onSaved(saved);
+    } catch(error){feedback?.close();showError(error.message);
     } finally {
+      feedback?.close();
       setSaving(false);
     }
   }

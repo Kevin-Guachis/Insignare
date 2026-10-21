@@ -1,4 +1,4 @@
-import { showError, showWarning } from "../../utils/alerts";
+import { showError, showWarning, showPdfUploadProgress } from "../../utils/alerts";
 import { useEffect, useRef, useState } from "react";
 import { saveUniversityDocument, uploadUniversityDocument } from "../../services/universityDocuments";
 export default function UniversityDocumentForm({ document,universityId,onSaved,onCancel }){
@@ -9,11 +9,14 @@ export default function UniversityDocumentForm({ document,universityId,onSaved,o
  useEffect(()=>{titleRef.current?.focus();},[]);
  async function submit(e){
   e.preventDefault();if(busy)return;setBusy(true);
+  const feedback=file?showPdfUploadProgress(file):null;
   try{
-   const uploaded=file?await uploadUniversityDocument(file):{archivo:values.archivo,documento_nombre:values.documento_nombre};
+   const uploaded=file?await uploadUniversityDocument(file,feedback.update):{archivo:values.archivo,documento_nombre:values.documento_nombre};
    setValues(current=>({...current,...uploaded}));setFile(null);
-   onSaved(await saveUniversityDocument({...values,...uploaded,university_id:universityId}));
-  }catch(e){showError(e.message);}finally{setBusy(false);}
+   feedback?.saving();
+   const saved=await saveUniversityDocument({...values,...uploaded,university_id:universityId});
+   feedback?.close();onSaved(saved);
+  }catch(e){feedback?.close();showError(e.message);}finally{feedback?.close();setBusy(false);}
  }
  return <form className="admin-news-form" onSubmit={submit}><fieldset disabled={busy}>
   <h3>{document.id?"Editar documento":"Nuevo documento"}</h3>

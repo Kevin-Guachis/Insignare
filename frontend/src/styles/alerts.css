@@ -14,6 +14,25 @@
 .app-alert-cancel { background: var(--admin-secondary, #64748b); }
 .app-alert button:hover { filter: brightness(.92); }
 .app-alert button:focus-visible { outline: 3px solid var(--admin-primary, #1b4f82); outline-offset: 3px; }
+.pdf-upload { text-align: left; white-space: normal; }
+.pdf-upload__icon { display: grid; place-items: center; width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 20px; background: #eaf2fa; color: var(--admin-primary, #1b4f82); font-size: 32px; }
+.pdf-upload__file { margin: 0 0 10px; text-align: center; font-weight: 600; overflow-wrap: anywhere; }
+.pdf-upload__description { min-height: 3.1em; margin: 0 0 22px; color: #526173; font-size: 14px; text-align: center; }
+.pdf-upload__meter { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; font-size: 13px; }
+.pdf-upload__percent { color: var(--admin-primary, #1b4f82); font-size: 18px; font-variant-numeric: tabular-nums; }
+.pdf-upload__bar { display: block; width: 100%; height: 12px; margin: 10px 0 22px; border: 0; border-radius: 99px; overflow: hidden; appearance: none; background: #e8edf3; accent-color: var(--admin-primary, #1b4f82); }
+.pdf-upload__bar::-webkit-progress-bar { background: #e8edf3; border-radius: 99px; }
+.pdf-upload__bar::-webkit-progress-value { background: var(--admin-primary, #1b4f82); border-radius: 99px; transition: width .2s ease; }
+.pdf-upload__bar::-moz-progress-bar { background: var(--admin-primary, #1b4f82); border-radius: 99px; }
+.pdf-upload__bar:indeterminate { background: linear-gradient(90deg, #e8edf3 25%, #1b4f82 50%, #e8edf3 75%); background-size: 200% 100%; animation: pdf-upload-wait 1.8s linear infinite; }
+.pdf-upload__bar:indeterminate::-webkit-progress-bar { background: transparent; }
+.pdf-upload__steps { display: flex; padding: 0; margin: 0; list-style: none; gap: 8px; }
+.pdf-upload__step { flex: 1; color: #526173; font-size: 12px; text-align: center; border-top: 3px solid #e8edf3; padding-top: 8px; }
+.pdf-upload__step.is-current { color: var(--admin-primary, #1b4f82); font-weight: 700; border-color: var(--admin-primary, #1b4f82); }
+.pdf-upload__step.is-complete { color: #237453; border-color: #237453; }
+.pdf-upload__hint { margin: 22px 0 0; color: #526173; font-size: 12px; text-align: center; }
+@keyframes pdf-upload-wait { to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .pdf-upload__bar:indeterminate { animation: none; } .pdf-upload__bar::-webkit-progress-value { transition: none; } }
 @media (max-width: 400px) {
   .swal2-popup.app-alert { padding: 16px; }
   .app-alert .swal2-actions { width: 100%; }

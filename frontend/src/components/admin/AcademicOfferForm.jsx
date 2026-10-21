@@ -1,6 +1,6 @@
 import { ContentImage } from "../university/GallerySection";
 import { imageSize } from "../../services/api";
-import { showError, showWarning } from "../../utils/alerts";
+import { showError, showWarning, showPdfUploadProgress } from "../../utils/alerts";
 import { useEffect, useRef, useState } from "react";
 import { saveAcademicOffer, uploadOfferImage, uploadOfferDocument } from "../../services/academicOffers";
 export default function AcademicOfferForm({ offer, universityId, onSaved, onCancel }){
@@ -13,13 +13,17 @@ export default function AcademicOfferForm({ offer, universityId, onSaved, onCanc
  function change(e){setValues(current=>({...current,[e.target.name]:e.target.value}));}
  async function submit(e){
   e.preventDefault();if(busy)return;setBusy(true);
+  let feedback;
   try{
    const imagen=image?(await uploadOfferImage(image)).imagen:values.imagen;
    setValues(current=>({...current,imagen}));setImage(null);
-   const uploaded=document?await uploadOfferDocument(document):{documento:values.documento,documento_nombre:values.documento_nombre};
+   feedback=document?showPdfUploadProgress(document):null;
+   const uploaded=document?await uploadOfferDocument(document,feedback.update):{documento:values.documento,documento_nombre:values.documento_nombre};
    setValues(current=>({...current,...uploaded}));setDocument(null);
-   onSaved(await saveAcademicOffer({...values,imagen,...uploaded,university_id:universityId}));
-  }catch(e){showError(e.message);}finally{setBusy(false);}
+   feedback?.saving();
+   const saved=await saveAcademicOffer({...values,imagen,...uploaded,university_id:universityId});
+   feedback?.close();onSaved(saved);
+  }catch(e){feedback?.close();showError(e.message);}finally{feedback?.close();setBusy(false);}
  }
  return <form className="admin-news-form" onSubmit={submit}><fieldset disabled={busy}>
   <h3>{offer.id?"Editar oferta académica":"Nueva oferta académica"}</h3>
